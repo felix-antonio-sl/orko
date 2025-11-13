@@ -9,6 +9,7 @@
   - [§6. DESDE I5: HAIC (Human-AI Collaboration)](#6-desde-i5-haic-human-ai-collaboration)
   - [§7. DESDE I6: TRAJECTORY-AWARENESS](#7-desde-i6-trajectory-awareness)
   - [§8. DESDE I7: EMERGENCIA COMPLEJIDAD](#8-desde-i7-emergencia-complejidad)
+  - [§9. MÉTRICAS OPERABLES (AOC + Kelly): PD-AOC + PD-TD](#9-métricas-operables-aoc--kelly-pd-aoc--pd-td)
   - [§10. DESDE I8 (Parametrización Contextual): PD36-PD40](#10-desde-i8-parametrización-contextual-pd36-pd40)
   - [WAVE 0: PRINCIPIOS DEFINICIONALES (PD46-50)](#wave-0-principios-definicionales-pd46-50)
     - [PD46: Composition Acyclicity Transitive (desde G26)](#pd46-composition-acyclicity-transitive-desde-g26)
@@ -804,6 +805,77 @@ PD35_Incompatibilidad_δ_ε:
     
   Test:
     IF capacity combina(discover, validate) THEN warning("Role conflict")
+```
+
+## §9. MÉTRICAS OPERABLES (AOC + Kelly): PD-AOC + PD-TD
+
+```yaml
+PD-AOC_Coherencia_Resonancia_Flujo:
+  "Operacionalizar métricas AOC como gates verificables"
+  
+  Origen: Meyer AOC (Quantum Organizational Architecture)
+  
+  Q_AOC_01_Coherencia:
+    Fórmula: Coherencia = Σ(Valor_entregado)/Σ(Energía)
+    Energía: Esfuerzo + Fricción + Interferencia
+    Gate: Coherencia ≥ θ_coh
+    Uso: Alimenta Health Score Integrado y f_evaluate'
+    
+  Q_AOC_02_Resonancia:
+    Fórmula: Resonancia = Profundidad_Especialización × Amplitud_Conexión
+    Gate: Resonancia ≥ θ_res
+    Uso: Detectar T-shaped individuals, cross-functional teams
+    
+  Q_AOC_03_Flujo:
+    Fórmula: Flujo = Tasa_Creación/(1+Fricción_Transferencia)
+    Gate: Flujo ≥ θ_flu
+    Uso: Optimización handoffs, flow efficiency
+    
+  Thresholds_Sugeridos:
+    θ_coh = 0.7  # Coherencia mínima aceptable
+    θ_res = 0.65
+    θ_flu = 0.6
+    
+  Observabilidad:
+    Estas queries deben tener paneles en D1, D3 y D4
+    
+PD-TD_Small_Batches_Flow_Quality_Speed:
+  "Operacionalizar principios Kelly Transformation Discipline"
+  
+  Origen: Kelly Digital Transformation
+  
+  Q_TD_01_Small_Batches:
+    Fórmula: % lotes ≤ tamaño objetivo
+    Gate: ≥ θ_sb (típico 0.80)
+    Anti-Pattern: "Grandes lotes por defecto"
+    
+  Q_TD_02_Flow:
+    Fórmula: Lead time medio ≤ umbral
+    Gate: ≤ θ_lt (contextual por industria)
+    Métrica: p50, p95 lead time
+    
+  Q_TD_03_Quality_Equals_Speed:
+    Fórmula: Defect_rate × Cycle_time (proxy inverso)
+    Gate: ≤ θ_qs
+    Interpretación: Baja calidad ralentiza (rework loops)
+    
+  Thresholds_Sugeridos:
+    θ_sb = 0.80  # 80% work en small batches
+    θ_lt = contextual (tech: 7d, gov: 30d)
+    θ_qs = contextual
+    
+Health_Score_Inputs_Extendidos:
+  "Agregar {Coherencia, Resonancia, Flujo} como inputs del Health Score"
+  
+  Extensión:
+    H_org = f(H1_Architecture, H2_Perception, H3_Decision, H4_Operation, H5_Governance)
+    
+  Donde componentes ahora incluyen:
+    H1_Architecture ← incluye AOC_Coherencia
+    H4_Operation ← incluye AOC_Flujo, TD_Small_Batches, TD_Quality_Speed
+    
+  Normalización: Todas métricas AOC/TD normalizadas a [0..1] antes agregación
+  Pesos: Configurables por contexto organizacional
 ```
 
 ## §10. DESDE I8 (Parametrización Contextual): PD36-PD40

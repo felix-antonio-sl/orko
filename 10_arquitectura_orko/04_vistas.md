@@ -165,6 +165,9 @@ Invariantes_RACI:
 - Exactamente 1 'A' por decisión (accountability única, I5)
 - Al menos 1 'R' (alguien ejecuta)
 - 'A' debe ser Capacidad substrate ∈ {Humano, Mixto}
+- **INV_GOLDEN_RULE**: Verificación automática por fila
+  → Capacidad con 'A' debe tener authority_scope para esa decisión
+  → Si violación detectada: requerir waiver (rationale, sponsor, expiry)
 
 Implementación_Modelo:
   Límite {
@@ -552,6 +555,51 @@ Interpretación:
   P_Score < 70: Blind spots críticos
 ```
 
+### D. ARTEFACTO D2.2: COMPLIANCE LOG
+
+```yaml
+Definición:
+  "Registro de cumplimiento límites regulatorios vinculado a C4.limit_type y evidence"
+  
+Estructura:
+  compliance_event_id: UUID
+  timestamp: Timestamp
+  limit_id: UUID  # → C4 Límite
+  limit_type: {Legal, Regulatorio, Ético, Presupuestario, Político}
+  norm_level: {Ley, Reglamento, Norma_Técnica, Contrato, Política_Interna}
+  
+  jurisdiction: String  # Ej: "CHL", "EU", "USA"
+  source_ref: String    # Ej: "Ley_21180_Art18", "GDPR_Art25"
+  
+  compliance_status: {Compliant, At_Risk, Violated, Remediated}
+  
+  # Si violated
+  violation:
+    severity: {Minor, Moderate, Major, Critical}
+    detected_at: Timestamp
+    detected_by: UUID  # Capacity ID
+    affected_entities: List<{type, id}>
+    
+  evidence:
+    audit_trail: URI  # Link a evidencia compliance
+    policy_ref: String
+    last_review: Timestamp
+    next_review: Timestamp
+    
+  remediation:
+    status: {Open, In_Progress, Resolved, Accepted}
+    plan: String
+    responsible: UUID  # Capacity ID
+    deadline: Date
+    resolution_date: Date | null
+    
+Uso:
+  - Auditoría por jurisdicción y criticidad
+  - Tracking compliance continuo
+  - Alertas automáticas si violations Critical
+  - Reportes regulatorios
+```
+
 ## §4. VISTA D3: DECISIÓN
 
 ```yaml
@@ -645,6 +693,34 @@ Uso_Metodología:
 - Pre-planning (1 semana antes quarter)
 - Planning session (facilitated, 4 horas)
 - Review & commit (alignment check con parent)
+
+Sección_Especial_OKR_Societal:
+  "Para contexto e-Government: agregar panel OKR Societal"
+  
+  Campos_Adicionales:
+    public_value:
+      weights:
+        accountability: Float[0..1]
+        transparency: Float[0..1]
+        efficiency: Float[0..1]
+        effectiveness: Float[0..1]
+        responsiveness: Float[0..1]
+        justice: Float[0..1]
+        equality: Float[0..1]
+        equity: Float[0..1]
+      # Suma ≤ 1.0
+    
+    jurisdiction: String  # Ej: "CHL", "EU", "USA"
+    legal_basis_refs: List<String>  # Ej: ["Ley_21180_Art18", "DS_83"]
+    
+  Ejemplo:
+    Objective: "Digitalizar expedientes judiciales"
+    public_value:
+      transparency: 0.40
+      efficiency: 0.35
+      accountability: 0.25
+    jurisdiction: "CHL"
+    legal_basis_refs: ["Ley_21180_Art18"]
 
 ### B. ARTEFACTO D3.2: PORTFOLIO BOARD
 
@@ -756,6 +832,54 @@ Interpretación:
   D_Score ≥ 80: Decisión excelente (data-driven, aligned, ejecutando)
   D_Score 70-79: Funcional pero mejorable
   D_Score < 70: Problemas decisión (slow, misaligned, o no ejecuta)
+```
+
+### D. ARTEFACTO D3.3: DECISION AUDIT TRAIL
+
+```yaml
+Definición:
+  "Registro auditable de decisiones críticas (PD62) - Obligatorio para substrate algorítmico"
+  
+Estructura:
+  decision_id: UUID
+  timestamp: Timestamp
+  decision_type: {Strategic, Tactical, Operational}
+  decided_by: UUID  # Capacity ID
+  substrate: {Humano, Algorítmico, Mixto}
+  
+  # Si substrate = Algorítmico
+  delegation_info:
+    delegated_from: UUID  # Humano accountable
+    delegation_mode: {M1..M6}
+    guardrails_applied: List<String>
+    
+  inputs:
+    information_assets: List<UUID>
+    context: JSON
+    
+  decision:
+    option_selected: String
+    alternatives_considered: List<String>
+    rationale: String
+    confidence_score: Float[0..1]  # Si algorítmico
+    
+  impacts:
+    affected_purposes: List<UUID>
+    affected_limits: List<UUID>
+    estimated_cost: Float
+    risk_level: {Low, Medium, High, Critical}
+    
+  audit:
+    explainability: String  # Cómo se llegó a la decisión
+    override_available: Boolean
+    review_required: Boolean
+    reviewer_id: UUID | null
+
+Uso:
+  - Obligatorio para decisiones con substrate=Algorítmico (PD62)
+  - Recomendado para decisiones Strategic y High risk
+  - Permite auditoría compliance y HAIC
+  - Alimenta trajectory learning (I6)
 ```
 
 ## §5. VISTA D4: OPERACIÓN
@@ -960,7 +1084,7 @@ Definición:
   "Registro estructurado incidentes producción."
 
 Estructura:
-  Basado_En: Flujo(incident_response) executions
+  Basado_En: Flujo(incident_response) executions + E7.workaround + E7.handoff_friction_score
   
   Campos_Por_Incidente:
     - incident_id: UUID
@@ -972,6 +1096,19 @@ Estructura:
     - resolution: String (cómo se resolvió)
     - preventive_actions: List<Action> (evitar recurrencia)
     - status: {Open, Investigating, Resolved, Closed}
+    
+    # Nuevos campos vinculados a E7
+    - workaround:
+        flag: Boolean
+        kind: {improvisation, bricolage, policy_gap}
+        description: String
+        frequency: Integer  # Debt acumulado si > threshold
+    
+    - handoff_friction_score: Integer[0..100]
+        # Meyer friction: costo transferencia entre steps/roles
+        # Si > 70 → indicador handoff problemático
+    
+    - linked_execution_id: UUID  # E7 FlowExecution que resolvió
 
 Clasificación_Severidad:
   P0_Critical:

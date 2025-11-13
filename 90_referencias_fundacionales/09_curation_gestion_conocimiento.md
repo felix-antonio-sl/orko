@@ -19,6 +19,7 @@ Conocimiento ≡ Software Code
 ```
 
 **Axioma de Refactoring**:
+
 ```
 Curation ≠ Summarization
 Curation = Format_Refactoring + Zero_Information_Loss
@@ -29,12 +30,15 @@ Curation = Format_Refactoring + Zero_Information_Loss
 ### 1.2 Los 5 Principios (Transversales a STS/SFD/KHM)
 
 **P1. Fidelidad Absoluta**
+
 ```
 ∀artefacto_curado: Information(artefacto_curado) = Information(source)
 ```
+
 Distillation transforma formato, NO omite contenido ("meat").
 
 **P2. Source of Truth Autocontenida**
+
 ```
 ∀concepto: ∃!definición_en_artefacto
 Referencias internas: Ref: ID_interno
@@ -42,16 +46,20 @@ Referencias externas: Solo contextuales (Ctx:)
 ```
 
 **P3. Estructura = Significado**
+
 - Jerarquía (headers), IDs, tablas, listas → Son "meat", no "fat"
 - Prohibición: Markdown estilístico (bold, italics)
 
 **P4. Densidad Máxima (Zero Fat)**
+
 ```
 Densidad(artefacto) = Meat_tokens / Total_tokens → max
 ```
+
 Eliminar verborrea; traducir matices a keywords explícitos
 
 **P5. Invariancia de Lenguaje**
+
 ```
 Control_Language (Keywords) = EN (fixed)
 Content_Language (EssentialData) = Original_Language (preservado)
@@ -70,6 +78,7 @@ Content_Language (EssentialData) = Original_Language (preservado)
 ### 2.2 Componentes Mandatorios
 
 #### Control Metadata Block
+
 ```markdown
 ID: ARTIFACT-DOMAIN-CONCEPT-NUM
 Version: MAJOR.MINOR.PATCH (semver)
@@ -84,6 +93,7 @@ Ctx: <scope>
 ```
 
 #### LLM Parsing Instructions
+
 ```
 BEGIN_LLM_INSTRUCTIONS
 
@@ -124,6 +134,7 @@ Keyword: EssentialData
 ```
 
 **Proceso de Traducción de Intención**:
+
 ```
 "No olvides..." → Req:
 "Sería bueno considerar..." → Rec:
@@ -137,6 +148,7 @@ Keyword: EssentialData
 **Cross-References**: `Ref: ID_interno`
 
 **Teorema de Unicidad**:
+
 ```
 ∀concepto c: ∃!sección s: Define(s, c)
 ∀otra_mención: Ref: ID(s)
@@ -167,6 +179,7 @@ END_EMBEDDED_BLOCK:: <BLOCK_ID>
 ### 3.2 Misión
 
 Transcribir formularios con **fidelidad funcional**:
+
 - Estructura completa
 - Metadata
 - Reglas de validación
@@ -177,9 +190,11 @@ Transcribir formularios con **fidelidad funcional**:
 ### 3.3 Arquitectura de Componentes
 
 #### Form-Section
+
 Header `###` que agrupa campos lógicamente
 
 #### Form-Field
+
 Unidad atómica bajo header `####`, definida por KeyTerms:
 
 | KeyTerm | Mandatory | Definición |
@@ -268,6 +283,7 @@ END_EMBEDDED_BLOCK:: RISK-DECL-FORM-01
 ```
 
 **Componentes**:
+
 - `tipo`: `kb` (knowledge base) | `guide` (meta-documento)
 - `dominio`: `core` | `gn` (GORE Ñuble) | ...
 - `id-num`: 3 dígitos (001, 002, ...)
@@ -275,6 +291,7 @@ END_EMBEDDED_BLOCK:: RISK-DECL-FORM-01
 - `formato`: `sts` | `sfd` (si es standalone, raro)
 
 **Ejemplos**:
+
 - `kb_gn_001_contexto-regional_sts.md`
 - `guide_core_002_alm-master_sts.md`
 - `kb_gn_005_formulario-postulacion_sts.md` (con bloque SFD embebido)
@@ -284,6 +301,7 @@ END_EMBEDDED_BLOCK:: RISK-DECL-FORM-01
 **Archivo maestro**: `knowledge/catalog/catalog_master_sts.md`
 
 **Entrada por artefacto**:
+
 ```markdown
 ### kb_gn_001_contexto-regional_sts.md
 ID: CATALOG-GN-KB-001
@@ -314,6 +332,7 @@ Cpt: Skeleton.
 ### 4.5 Prohibición: Branching para Configuraciones
 
 **Anti-Pattern Crítico**:
+
 ```
 ✗ feature/agent-A-kb branch
 ✗ feature/agent-B-kb branch
@@ -321,6 +340,7 @@ Cpt: Skeleton.
 ```
 
 **Pattern Correcto: Composición Declarativa**:
+
 ```yaml
 # agents/agent_A/agent.yaml
 knowledge_base_interaction_and_governance_rules:
@@ -356,20 +376,24 @@ kb(core_002): fix typo in ALM Phase 3 description
 ### 5.1 STS: Ciclo Iterativo (4 fases)
 
 **Fase 1: Arquitectura**
+
 1. Analizar "meat" del source
 2. Diseñar jerarquía de secciones
 3. Asignar IDs únicos
 
 **Fase 2: Población de Meat**
+
 1. Eliminar "fat"
 2. Convertir a `Keyword: EssentialData`
 3. Preservar tablas/listas
 
 **Fase 3: Sistema Nervioso**
+
 1. Conectar nodos con `Ref:`
 2. Principio SSOT
 
 **Fase 4: Audit de Compliance**
+
 - [ ] Metadata + LLM instructions completos
 - [ ] IDs únicos y compliant
 - [ ] Refs apuntan a IDs internos válidos
@@ -411,12 +435,14 @@ Source Material (PDF/docx/txt)
 ## §6. ANTI-PATRONES CRÍTICOS
 
 **AP1: Summarization**
+
 ```
 ✗ "Resumir el documento original"
 ✓ "Refactorizar formato preservando 100% información"
 ```
 
 **AP2: Keywords Secuenciales**
+
 ```
 ✗ Req-1:, Req-2:, Act-A:, Act-B:
 ✓ Lista Markdown con mismo keyword:
@@ -425,18 +451,21 @@ Source Material (PDF/docx/txt)
 ```
 
 **AP3: Ref: Externos**
+
 ```
 ✗ Ref: EXTERNAL-DOC-ID (apunta fuera del artefacto)
 ✓ Ctx: Basado en EXTERNAL-DOC (solo contextual)
 ```
 
 **AP4: Git Branches para Configs**
+
 ```
 ✗ feature/agent-X-kb branch
 ✓ Composición en agent.yaml (source_files list)
 ```
 
 **AP5: Stylistic Markdown en STS**
+
 ```
 ✗ **negrita**, *italics*
 ✓ Keywords explícitos: Warn:, Req:
@@ -449,15 +478,18 @@ Source Material (PDF/docx/txt)
 ### Mapeo a Layers
 
 **Layer 2 (Tejidos)**: TF4 (Knowledge Fabric)
+
 - STS/SFD/KHM operacionalizan completamente TF4
 - Curation pipeline desde source → staging → knowledge
 - RAG optimizado (density principle)
 
 **Layer 3 (Metodología)**: Playbooks de curation
+
 - Fase específica: Knowledge Asset Management
 - Integrada en ciclo ALM (ver 10_ingenieria_agentes_conversacionales.md)
 
 **Layer 4 (Plataforma)**: CI/CD para KB
+
 - Linters STS compliance
 - Automated catalog updates
 - KB sync protocols
@@ -465,6 +497,7 @@ Source Material (PDF/docx/txt)
 ### Contratos Canónicos (from SIGMA)
 
 **ContratoDeConocimiento** (extendido con STS/SFD/KHM):
+
 ```yaml
 type: knowledge_contract
 collection: normativa_interna
@@ -484,25 +517,30 @@ audit: {compliance_checklist: STS-PHASE4, snapshots: true}
 ## §8. TEOREMAS Y COROLARIOS
 
 **Teorema de Fidelidad**:
+
 ```
 ∀s ∈ Sources, ∀a ∈ Artifacts:
   a = STS_Refactor(s) ⇒ Information(a) = Information(s)
 ```
 
 **Teorema de Densidad**:
+
 ```
 ∀chunk ∈ RAG_Retrieval:
   Relevance(chunk) ∝ Density(chunk) × Self_Containment(chunk)
 ```
+
 STS maximiza ambos factores.
 
 **Teorema de Composición (KHM)**:
+
 ```
 ∀agent: KB(agent) = ⋃ {artifact_i ∈ source_files}
 No branching required; composition = declarative list
 ```
 
 **Corolario de Governance**:
+
 ```
 Git versiona ARCHIVOS individuales (knowledge/*.md)
 Agent configs componen SETS de archivos (agent.yaml)
@@ -514,30 +552,35 @@ Agent configs componen SETS de archivos (agent.yaml)
 ## §9. MÉTRICAS DE CALIDAD
 
 **M1. Fidelity Score**
+
 ```
 Fidelity = |Information(curated)| / |Information(source)|
 Target: 1.0 (100%)
 ```
 
 **M2. Density Ratio**
+
 ```
 Density = Meat_tokens / (Meat_tokens + Fat_tokens)
 Target: > 0.9
 ```
 
 **M3. Compliance Rate**
+
 ```
 Compliance = Passed_checks / Total_checks (STS Phase 4)
 Target: 1.0 (100% pass)
 ```
 
 **M4. Reference Integrity**
+
 ```
 Integrity = Valid_Refs / Total_Refs
 Target: 1.0 (all Ref: point to valid internal IDs)
 ```
 
 **M5. Catalog Coverage**
+
 ```
 Coverage = Cataloged_artifacts / Published_artifacts
 Target: 1.0 (every artifact has catalog entry)
@@ -550,6 +593,7 @@ Target: 1.0 (every artifact has catalog entry)
 ### Linters y Validators
 
 **STS Compliance Linter**:
+
 - Check metadata completeness
 - Validate ID format
 - Verify Ref: integrity
@@ -557,11 +601,13 @@ Target: 1.0 (every artifact has catalog entry)
 - Measure density ratio
 
 **SFD Validator**:
+
 - Check Field-Type vocabulary
 - Validate Field-Constraint syntax
 - Verify Field-Logic references
 
 **KHM Naming Validator**:
+
 - Regex: `^(kb|guide)_(core|[a-z]{2})_\d{3}_[a-z0-9-]{2,}_(sts|sfd)\.md$`
 - Check domain exists in `/knowledge/domains/`
 

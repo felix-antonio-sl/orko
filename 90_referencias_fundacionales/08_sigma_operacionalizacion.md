@@ -1,6 +1,9 @@
 # SIGMA: Operacionalización Tecnológica
 
 **ID**: ORKO-REF-SIGMA-01  
+**Versión**: 1.1.0  
+**Última actualización**: 2025-01-13  
+**Changelog 1.1.0**: Refactorizado P7 (KM+RAG) con referencia explícita a Doc 09, elimina redundancia  
 **Fuente**: SIGMA - Sistemas Inteligentes Gobernados por Métricas y Autonomía  
 **Propósito**: Operacionalizar Layer 2 (Tejidos Tecnológicos) de ORKO
 
@@ -9,13 +12,16 @@
 ## §1. DEFINICIÓN Y ALCANCE
 
 ### Objetivo SIGMA
+
 Alinear estrategia, datos, conocimiento, procesos y agentes IA en Sistema de Trabajo gobernado por:
+
 - Contratos semánticos
 - Guardrails
 - SLO/SLA
 - Operación observable end-to-end
 
 ### Fundamentos
+
 1. Marco estratégico "Agentes Digitales" y espectro autonomía/rol
 2. Ingeniería software empresarial (C4/ADR/CI-CD/observabilidad/seguridad/FinOps)
 3. BPA con BPMN/EDA/RPA y CoE
@@ -38,7 +44,21 @@ Alinear estrategia, datos, conocimiento, procesos y agentes IA en Sistema de Tra
 
 **P6. Automatiza Procesos (no solo tareas)**: BPMN/EDA orquestan; RPA último recurso
 
-**P7. KM + RAG Confiable**: Curation documental, indexación híbrida, respuestas citables
+**P7. KM + RAG Confiable**: Knowledge curation + RAG con citaciones exactas
+
+```yaml
+Descripción: RAG responses require curated knowledge with exact citations
+Protocolo: Aplicar STS/SFD/KHM (Ref: Doc 09 - Curation y Gestión Conocimiento)
+Invariantes:
+  - citation_policy: required_exact (SIGMA Invariante I-SIGMA-1)
+  - fidelity_score: 1.0 (100% información preservada, STS Teorema Fidelidad)
+  - density_score: >0.9 (STS Principio P4 - Zero Fat)
+Métricas:
+  - citation_exactness: ≥0.95
+  - no_answer_correctness: precision/recall
+  - corpus_coverage: %documentos con al menos 1 retrieval
+Implementación: Ver Doc 09 para ciclo completo (Sourcing → Publishing → Maintenance)
+```
 
 ---
 
@@ -71,28 +91,36 @@ Alinear estrategia, datos, conocimiento, procesos y agentes IA en Sistema de Tra
 **SistemaDeTrabajo**: Contexto sociotécnico conteniendo Proceso, AgenteDigital, ActorHumano, ProductoDeDatos
 
 **AgenteDigital**: LLM + herramientas
+
 - Atributos: capabilities, guardrails, autonomía, rol, contratoAgente
 
 **Proceso**: BPMN/EDA
+
 - Atributos: flujo, tareas, SLA, HITL, compensaciones
 
 **Tarea**: Automatizable
+
 - Clase: API, UI/RPA, humana, agente
 - Atributos: idempotencia, reintentos
 
 **Evento**: EDA
+
 - Atributos: esquema, contratoEvento, orden, exactly/at-least once
 
 **ProductoDeDatos**:
+
 - Atributos: contratoDatos, SLO, linaje, clasificación, métricas
 
 **Documento y Chunk** (KM/RAG):
+
 - Atributos: taxonomía, vigencia, ACL, citas exactas
 
 **Contrato** (abstracta):
+
 - Tipos: ContratoDeDatos, ContratoDeProceso, ContratoDeAgente, ContratoDeConocimiento
 
 **Métrica/SLO/SLA y Guardrail**:
+
 - Tipos guardrail: entrada, salida, operacional, ético
 
 **Política** (policy-as-code), **Riesgo**, **Incidente**, **Linaje**
@@ -102,6 +130,7 @@ Alinear estrategia, datos, conocimiento, procesos y agentes IA en Sistema de Tra
 ## §5. CONTRATOS CANÓNICOS
 
 ### Contrato de Datos (resumen)
+
 ```yaml
 type: data_contract
 product: billing_invoices
@@ -115,6 +144,7 @@ changes: {policy: semver, deprecation_window_days: 120}
 ```
 
 ### Contrato de Proceso
+
 ```yaml
 type: process_contract
 process: invoice_approval
@@ -127,6 +157,7 @@ rpa_fallback: {enabled, guardrails}
 ```
 
 ### Contrato de Agente
+
 ```yaml
 type: agent_contract
 agent: pre_reviewer
@@ -140,6 +171,7 @@ hitl_checkpoints: ["score<0.85", "conflict_detected"]
 ```
 
 ### Contrato de Conocimiento
+
 ```yaml
 type: knowledge_contract
 collection: normativa_interna
@@ -156,17 +188,20 @@ audit: {chain_of_custody: true, snapshots: true}
 ## §6. ESPECTROS INTEGRADOS
 
 ### Autonomía
+
 ```
 Aumentación (RAG) → Agente ReAct → Plan-and-Execute
 ```
 
 ### Responsabilidad (Marco AR)
+
 ```
 Monitorear → Proveer info/capacidades → Controlar →
 Coproducir → Ejecutar
 ```
 
 ### Interacción
+
 ```
 Máquina-en-el-bucle → Iniciativa mixta →
 Humano-en-el-bucle → Autónomo supervisado
@@ -201,6 +236,7 @@ Humano-en-el-bucle → Autónomo supervisado
 ## §8. TEJIDOS ESPECÍFICOS
 
 ### Tejido de Procesos (BPMN/EDA/RPA)
+
 - **Orquestación**: BPMN + Sagas (compensación, SLAs)
 - **Coreografía**: EDA (desacoplamiento)
 - **HITL**: Colas excepciones, escalamiento
@@ -208,6 +244,7 @@ Humano-en-el-bucle → Autónomo supervisado
 - **RPA**: Attended/unattended como fallback a legacy
 
 ### Tejido de Datos (DaP)
+
 - **Lakehouse**: ACID, time-travel, bronze→silver→gold
 - **DQ**: Declarativa, checks automáticos
 - **Contratos y SLOs**: Publicados, monitoreados
@@ -215,6 +252,7 @@ Humano-en-el-bucle → Autónomo supervisado
 - **Evolución**: Backward-compatible, CDC log-based
 
 ### Tejido de Conocimiento (KM→RAG)
+
 - **Curation**: Autoridad, vigencia, metadata mín-suficiente
 - **Indexación**: Híbrida (BM25+vector), filtros vigencia/ACL
 - **Reranking**: Por autoridad/entidades
@@ -222,6 +260,7 @@ Humano-en-el-bucle → Autónomo supervisado
 - **Audit**: Chain of custody, snapshots
 
 ### Tejido de Agentes (IA en Producción)
+
 - **Motor cognitivo** + herramientas + orquestación
 - **Guardrails**: entrada/salida/ops/éticos
 - **Evaluación**: Fidelidad, citation-exactness, latencia, coste
@@ -232,6 +271,7 @@ Humano-en-el-bucle → Autónomo supervisado
 ## §9. MÉTRICAS Y SLOS
 
 ### Por Proceso
+
 - Cycle time p95
 - STP % (Straight-Through Processing)
 - Tasa error
@@ -239,6 +279,7 @@ Humano-en-el-bucle → Autónomo supervisado
 - MTTR excepciones
 
 ### Por Datos
+
 - Frescura p95
 - Latencia p95 (ingesta/transform/serving)
 - Violaciones DQ/1k filas
@@ -246,6 +287,7 @@ Humano-en-el-bucle → Autónomo supervisado
 - Error budget
 
 ### Por IA (Agente/RAG)
+
 - Fidelidad
 - Citation-exactness
 - No-answer correcto
@@ -254,6 +296,7 @@ Humano-en-el-bucle → Autónomo supervisado
 - Drift
 
 ### Por KM
+
 - % respuestas con cita válida
 - Cobertura corpus
 - Lag ingestión
@@ -288,24 +331,28 @@ Humano-en-el-bucle → Autónomo supervisado
 ### Patrones Clave
 
 **Sagas + ReAct**:
+
 ```
 Agente planifica → ejecuta pasos con tools →
 confirma pre-commit → compensa on failure
 ```
 
 **RAG con Policy-as-Code**:
+
 ```
 Filtros vigencia/ACL en retrieval (ABAC/RLS) →
 Citation-gate en output
 ```
 
 **Linaje 2D**:
+
 ```
 OpenLineage para tablas +
 Trace para tool-calls de agentes
 ```
 
 **FinOps**:
+
 ```
 Showback/chargeback por dominio +
 Presupuesto tokens/cómputo por agent_contract
@@ -316,6 +363,7 @@ Presupuesto tokens/cómputo por agent_contract
 ## §12. ROADMAP IMPLEMENTACIÓN
 
 ### 90 días
+
 - Charter SIGMA
 - Templates contratos
 - 1 proceso orquestado (Sagas/HITL)
@@ -324,6 +372,7 @@ Presupuesto tokens/cómputo por agent_contract
 - CI/CD + observabilidad base
 
 ### 180 días
+
 - 3-5 agentes (ReAct/plan)
 - Metric store
 - ABAC/RLS E2E
@@ -331,6 +380,7 @@ Presupuesto tokens/cómputo por agent_contract
 - CoE BPA activo
 
 ### 365 días
+
 - Dominios federados
 - MDM entidad crítica
 - Privacy by default
@@ -371,6 +421,7 @@ Presupuesto tokens/cómputo por agent_contract
 **Aplicación en ORKO**: SIGMA operacionaliza completamente Layer 2 (Tejidos Tecnológicos), proveyendo especificaciones ejecutables para TF1-TF7. Conecta teoría (Layer 0-1) con implementación (Layer 4) vía contratos semánticos.
 
 **Mapeo a Tejidos ORKO**:
+
 - TF1 (Data Fabric) = Tejido de Datos
 - TF2 (Automation Fabric) = Tejido de Procesos
 - TF4 (Knowledge Fabric) = Tejido de Conocimiento

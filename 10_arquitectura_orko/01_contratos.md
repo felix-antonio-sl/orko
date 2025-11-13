@@ -99,6 +99,20 @@ Invariantes:
   INV_C6: archetype.type NOT NULL → archetype.purity_pct > 0.80
   INV_C7: incompatibilidades de arquetipo (α↔β, γ↔δ, γ↔ε, δ↔ε) → warning del sistema
   INV_C8: lifecycle.current_state = Retired → terminal (G11)
+  
+  INV_GOLDEN_RULE:
+    description: "Autoridad y Accountability deben coincidir (Golden Rule Meyer)"
+    rule: owner.accountability_scope == owner.authority_scope
+    OR waiver_id EXISTS
+    
+    waiver:
+      waiver_id: UUID
+      rationale: String  # Por qué excepción necesaria
+      sponsor: UUID      # Capacity_ID (Humano, C-level)
+      expiry: Date       # Fecha revisión obligatoria
+      risk_acceptance: String  # Qué puede salir mal y por qué se acepta
+      
+    enforcement: Preventivo (block en create/update si violado sin waiver)
 
 Interfaces:
   D1_Arquitectura:

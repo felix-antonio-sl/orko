@@ -185,6 +185,22 @@ components:
               minimum: 0
               maximum: 1
               description: Consistency across datasets
+            
+            fidelity_score:
+              type: integer
+              minimum: 0
+              maximum: 100
+              description: "Fidelidad (STS): exactitud respecto a la fuente - GATE CURACIÓN"
+            density_score:
+              type: integer
+              minimum: 0
+              maximum: 100
+              description: "Densidad informacional (SFD): zero-fat ratio - GATE CURACIÓN"
+            citation_policy:
+              type: string
+              enum: [required_exact, optional, none]
+              default: required_exact
+              description: "Política de citación (KHM) - GATE CURACIÓN"
         
         governance:
           type: object

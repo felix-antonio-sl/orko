@@ -429,6 +429,55 @@ R13_Delegación_HAIC:
   Propiedad_Trazabilidad:
     ∀ output algorítmico: audit_trail registra humano accountable
     + modo delegación aplicado + timestamp
+  
+  Extensión_ADP_ALM:
+    "Integración con protocolo ADP/ALM (Ref: ingenieria_agentes_conversacionales.md)"
+    
+    agent_contract_id: String
+      Descripción: ID del agente según ADP (Agent Definition Protocol)
+      Formato: AGENT-TYPE-DOMAIN-VERSION
+      Ejemplo: ASIS-IPR-GN-V3 (Asistente IPR GORE Ñuble v3)
+      Requerido: Si substrate=Algorítmico AND capacity_type ≥ C1
+      Ubicación: Definido en header de agent.yaml (primeras líneas)
+      
+    agent_definition_uri: URI
+      Descripción: Path al archivo agent.yaml en repositorio
+      Ejemplo: /agents/asis_ipr_gn/agent.yaml
+      Propósito: Trazabilidad especificación → ejecución
+      
+    alm_phase: {Conception, KB_Curation, Programming, Testing, Maintenance}
+      Descripción: Fase ALM actual del agente (5-phase lifecycle)
+      Uso: Governance y audit trail de evolución
+      
+    guardrails_ref: URI
+      Descripción: Policy-as-code vigente (OPA, Rego, YAML)
+      Ejemplo: policy://agents/mlmodel_churn/guardrails.rego
+      Mapea_a: safety_constraints_and_behavioral_guardrails en agent.yaml
+      
+    mode_policy: Function(impact, irreversibility, risk) → M1..M6
+      Descripción: Función determina modo delegación según contexto
+      Propiedades:
+        - Determinística (mismos inputs → mismo output)
+        - Auditable (lógica explícita, test cases documentados)
+        - Parametrizable (thresholds configurables por contexto)
+      Implementación: Puede ser código Python/JS o reglas declarativas
+      
+    kb_sync_protocol: String
+      Descripción: Método sincronización KB (Manual | CI/CD | Drive_Sync)
+      Referencia: ALM Phase 2 Act 2.3 (KB Synchronization Protocol)
+      Propósito: Coherencia Git SSOT ↔ Platform KB Store
+      
+  Validaciones:
+    - agent_contract_id REQUIRED si substrate=Algorítmico y capacity_type ≥ C1
+    - agent_contract_id DEBE coincidir con ID en agent.yaml header
+    - agent_definition_uri DEBE apuntar a archivo válido agent.yaml
+    - guardrails_ref DEBE existir y ser accesible en auditoría E7.override
+    - mode_policy DEBE tener test_cases documentados para regresión
+    - alm_phase DEBE reflejar estado real lifecycle
+    
+  Trazabilidad_Completa:
+    Capacidad(Algorítmica) → agent_contract_id → agent.yaml (ADP) →
+      defined_states + workflows → KB guidance maps → Information assets (TF3)
 ```
 
 R14_State_Transitions (G1):

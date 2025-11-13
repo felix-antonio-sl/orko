@@ -9,6 +9,7 @@
 ## §1. FILOSOFÍA CORE
 
 ### Transición Paradigmática
+
 ```
 De: Prompt Crafting (natural language text)
 A:  Agent Engineering (software artifact)
@@ -17,12 +18,14 @@ A:  Agent Engineering (software artifact)
 ### Separación de Concerns
 
 **Code vs Data**:
+
 ```
 Code = agent.yaml (HOW: comportamiento declarativo)
 Data = KB/*.md (WHAT: conocimiento estructurado)
 ```
 
 **Public vs Private**:
+
 ```
 Public:  public_behavior_workflows_and_states (QUÉ hace)
 Private: private_internal_reasoning_processes (CÓMO piensa)
@@ -32,6 +35,7 @@ Private: private_internal_reasoning_processes (CÓMO piensa)
 ### Principios Arquitectónicos
 
 **P1. Explicit Knowledge Cartography**
+
 ```
 Query → Document: Explicit, deterministic map
 
@@ -40,12 +44,14 @@ Query → Document: Explicit, deterministic map
 ```
 
 **P2. Semantic Abstraction**
+
 ```
 ∀comunicación_usuario: NO system-level jargon
 Prohibido: State IDs, filenames, framework acronyms
 ```
 
 **P3. Categorical Coherence**
+
 ```
 Agent = Category
   Objects: States
@@ -76,6 +82,7 @@ Phase 5: Maintenance → Drift detection + Evolution
 **Proceso Detallado**:
 
 1. **Clasificar Tipo de Agente**:
+
    ```
    Agent-as-Product:
      - Self-contained dentro de platform
@@ -91,6 +98,7 @@ Phase 5: Maintenance → Drift detection + Evolution
    ```
 
 2. **Inventariar Constraints de Platform**:
+
    ```yaml
    # Platform Capability Matrix (Template)
    platform_limits:
@@ -125,6 +133,7 @@ Phase 5: Maintenance → Drift detection + Evolution
 #### Act 1.2: Agent's Charter Elaboration
 
 **Framework FTCF** (Function-Task-Context-Format):
+
 ```
 F (Function): ¿Cuál es el ROL del agente? (asesor, validador, coordinador)
 T (Task): ¿Cuál es el OBJETIVO final? (guiar formuladores, validar forms)
@@ -133,6 +142,7 @@ F (Format): ¿En qué IDIOMA/FORMATO opera? (es-CL, formal, técnico)
 ```
 
 **Mapeo FTCF → ADP**:
+
 ```yaml
 agent_identity_and_global_configuration:
   primary_role_objective_and_audience:
@@ -144,6 +154,7 @@ agent_identity_and_global_configuration:
 ```
 
 **Ejemplo IPR Assistant**:
+
 ```yaml
 agent_identity_and_global_configuration:
   primary_role_objective_and_audience:
@@ -155,6 +166,7 @@ agent_identity_and_global_configuration:
 ```
 
 **Elaborar Bootloader Instruction** (si Indirect Execution):
+
 ```text
 You are an interpreter for a declaratively defined AI agent.
 
@@ -173,6 +185,7 @@ Operational process:
 ```
 
 **Resultado**: `agent.yaml` inicial con:
+
 - AGENT RUNTIME DIRECTIVE completo
 - `agent_identity_and_global_configuration` poblado
 - `safety_constraints_and_behavioral_guardrails` con Minimum Guard Set
@@ -182,6 +195,7 @@ Operational process:
 **Propósito**: Asegurar configuración seguridad base ANTES de continuar
 
 **Checklist Automático**:
+
 ```yaml
 # Verificación obligatoria en CI/CD
 safety_constraints_and_behavioral_guardrails:
@@ -204,6 +218,7 @@ safety_constraints_and_behavioral_guardrails:
 **Pregunta Central**: ¿RAG o Fine-tuning?
 
 **Decision Tree**:
+
 ```
 ¿Datos de entrenamiento > 1000 ejemplos de calidad?
   NO → RAG (costo bajo, iteración rápida)
@@ -223,6 +238,7 @@ safety_constraints_and_behavioral_guardrails:
 ```
 
 **Documentar en Model Strategy Brief**:
+
 ```markdown
 # Model Strategy Brief - [Agent Name]
 
@@ -258,6 +274,7 @@ safety_constraints_and_behavioral_guardrails:
 **Proceso STS** (Structured Telegraphic Style):
 
 1. **Identificar Sources**:
+
    ```
    /sources/
      ├── pdf_original_normativa.pdf
@@ -267,6 +284,7 @@ safety_constraints_and_behavioral_guardrails:
    ```
 
 2. **Aplicar Refactoring STS** (Ref: Doc 09 §5.1):
+
    ```
    Phase 1: Arquitectura (diseñar skeleton)
    Phase 2: Población de Meat (eliminar fat, convertir a Keywords)
@@ -275,6 +293,7 @@ safety_constraints_and_behavioral_guardrails:
    ```
 
 3. **Mover a /knowledge/**:
+
    ```
    /knowledge/domains/gore_nuble/
      ├── kb_gn_001_contexto-regional_sts.md       ✓ Compliant
@@ -285,6 +304,7 @@ safety_constraints_and_behavioral_guardrails:
 **Proceso SFD** (Structured Form Definition):
 
 Para formularios, aplicar transcripción funcional (Ref: Doc 09 §5.2):
+
 ```markdown
 # Document: Formulario Postulación IPR
 ID: FORM-IPR-POST-01
@@ -310,6 +330,7 @@ END_EMBEDDED_BLOCK:: FORM-IPR-POSTULACION
 ```
 
 **Métricas de Calidad**:
+
 ```yaml
 # Target metrics para artefactos curados
 fidelity_score: 1.0     # 100% información preservada vs source
@@ -349,6 +370,7 @@ END_EMBEDDED_BLOCK:: KB-GN-026-FRIL
 **Solución 2: Indirect Execution Model**:
 
 Si platform soporta "instruction via KB file":
+
 ```
 /knowledge/
   ├── kb_pack_financiamiento.md       (conocimiento consolidado)
@@ -356,6 +378,7 @@ Si platform soporta "instruction via KB file":
 ```
 
 **Bootloader en instruction field** apunta a ambos:
+
 ```text
 <AGENT_DEFINITION>
 [Cargar desde: knowledge/agent.yaml]
@@ -369,6 +392,7 @@ Si platform soporta "instruction via KB file":
 **Solución 3: External KB via Actions**:
 
 Si KB excede límites platform completamente:
+
 ```yaml
 # En agent.yaml
 external_tools_and_functions:
@@ -401,6 +425,7 @@ Platform KB Store (Deployment)
 **Protocol Options**:
 
 **Option A: Manual Upload**:
+
 ```bash
 # Script: sync_kb_to_platform.sh
 #!/bin/bash
@@ -415,6 +440,7 @@ platform-cli kb list --project-id=XYZ
 ```
 
 **Option B: CI/CD Automated**:
+
 ```yaml
 # .github/workflows/deploy-kb.yml
 name: Deploy KB to Platform
@@ -441,6 +467,7 @@ jobs:
 ```
 
 **Option C: Google Drive Sync** (para Gemini):
+
 ```python
 # sync_to_gdrive.py
 from google.oauth2 import service_account
@@ -451,6 +478,7 @@ from googleapiclient.discovery import build
 ```
 
 **Documentar Protocol**:
+
 ```markdown
 # KB Synchronization Protocol - [Agent Name]
 
@@ -469,6 +497,7 @@ from googleapiclient.discovery import build
 ```
 
 **Resultado Phase 2**:
+
 - `/knowledge/` directory con artefactos STS/SFD validados
 - KB package consolidado (si aplica)
 - KB Sync Protocol documentado y probado
@@ -485,6 +514,7 @@ from googleapiclient.discovery import build
 **Proc 3.1.1: Verificar AGENT RUNTIME DIRECTIVE**
 
 MUST ser primera línea de `agent.yaml`:
+
 ```yaml
 # ADP Definition for GPT-ASISTENTE-IPR
 # ID: ASIS-IPR-GN-V3
@@ -500,6 +530,7 @@ MUST ser primera línea de `agent.yaml`:
 **Proc 3.2.1: Implementar Workflows y States**
 
 **Diseño State Machine**:
+
 ```
 [S-DISPATCHER] ─┐
        ↓         │
@@ -514,6 +545,7 @@ MUST ser primera línea de `agent.yaml`:
 ```
 
 **Implementación**:
+
 ```yaml
 public_behavior_workflows_and_states:
   defined_workflows:
@@ -650,6 +682,7 @@ self_evaluation_and_correction_mechanisms:
 #### Act 3.3: Platform-Specific Prompting Strategy
 
 **Anthropic Claude**: Chain-of-Thought con `<thinking>` tags
+
 ```yaml
 # En instrucciones del agente
 input_output_style_format_and_interaction:
@@ -659,6 +692,7 @@ input_output_style_format_and_interaction:
 ```
 
 **OpenAI GPT-4**: Agentic Reminders (Persistence, Tool-use, Planning)
+
 ```yaml
 # En process de states críticos
 process:
@@ -668,6 +702,7 @@ process:
 ```
 
 **Google Gemini**: Persona/Task/Context/Format
+
 ```yaml
 # Estructura de instrucciones
 agent_identity_and_global_configuration:
@@ -688,6 +723,7 @@ agent_identity_and_global_configuration:
 #### Act 4.1: Test Plan Design & Execution
 
 **Test Pyramid para Agents**:
+
 ```
          /\
         /  \  E2E Tests (5%)
@@ -699,6 +735,7 @@ agent_identity_and_global_configuration:
 ```
 
 **Unit Tests** (Reglas lógicas):
+
 ```python
 # test_agent_logic.py
 def test_cm_kb_guidance_routing():
@@ -718,6 +755,7 @@ def test_no_logic_exposure():
 ```
 
 **Integration Tests** (Workflow completo):
+
 ```python
 # test_agent_workflows.py
 def test_advisory_workflow_happy_path():
@@ -741,6 +779,7 @@ def test_advisory_workflow_happy_path():
 ```
 
 **E2E Tests** (Usuario real simulation):
+
 ```python
 # test_agent_e2e.py
 @pytest.mark.e2e
@@ -765,6 +804,7 @@ def test_complete_user_journey():
 #### Act 4.2: Observability Strategy Implementation
 
 **Métricas Clave**:
+
 ```yaml
 # observability_config.yaml
 metrics:
@@ -784,6 +824,7 @@ metrics:
 ```
 
 **Logging Strategy**:
+
 ```python
 # logger_config.py
 import structlog
@@ -809,6 +850,7 @@ logger.info(
 **Técnicas Prompt Engineering Debugging**:
 
 **Tactic 1: Rephrasing**
+
 ```yaml
 # Original (no funciona)
 process:
@@ -822,6 +864,7 @@ process:
 ```
 
 **Tactic 2: Order Sensitivity**
+
 ```yaml
 # Para OpenAI: Critical info al INICIO Y FINAL
 process:
@@ -838,6 +881,7 @@ process:
 ```
 
 **Tactic 3: Forced Reasoning** (Chain of Thought interno)
+
 ```yaml
 # Agregar paso thinking explícito
 process:
@@ -847,6 +891,7 @@ process:
 ```
 
 **Tactic 4: Few-Shot Example Tuning**
+
 ```yaml
 few_shot_behavior_examples:
   EXAMPLE-CITATION-CORRECT:
@@ -901,6 +946,7 @@ jobs:
 #### Act 4.5: Deployment
 
 **Direct Execution**:
+
 ```bash
 # 1. Copy agent.yaml content
 cat agents/asis_ipr/agent.yaml | pbcopy
@@ -910,6 +956,7 @@ cat agents/asis_ipr/agent.yaml | pbcopy
 ```
 
 **Indirect Execution**:
+
 ```bash
 # 1. Paste Bootloader en instruction field
 cat bootloader_instruction.txt | pbcopy
@@ -935,6 +982,7 @@ Ya cubierto en §3 (Git Mono-Repository)
 #### Act 5.2: User Feedback Collection Protocol
 
 **Explicit Feedback**:
+
 ```yaml
 # En respuestas del agent (opcional)
 input_output_style_format_and_interaction:
@@ -944,6 +992,7 @@ input_output_style_format_and_interaction:
 ```
 
 **Implicit Feedback** (logs analysis):
+
 ```python
 # analyze_feedback.py
 def detect_failure_modes(logs):
@@ -969,6 +1018,7 @@ def detect_failure_modes(logs):
 #### Act 5.3: Drift Detection Protocol
 
 **Model Drift** (performance degradation):
+
 ```python
 # monitor_drift.py
 def detect_model_drift(baseline_metrics, current_metrics):
@@ -982,6 +1032,7 @@ def detect_model_drift(baseline_metrics, current_metrics):
 ```
 
 **Data Drift** (query patterns change):
+
 ```python
 # monitor_data_drift.py
 def detect_data_drift(historical_queries, recent_queries):
@@ -1030,6 +1081,7 @@ def detect_data_drift(historical_queries, recent_queries):
 **Trigger**: Bug report, feature request, KB update
 
 **Process**:
+
 ```
 1. Classify change:
    - Hotfix (urgent bug) → Branch from main, fix, merge to main+develop
@@ -1066,12 +1118,14 @@ def detect_data_drift(historical_queries, recent_queries):
 ```
 
 **Branching**: Simplified GitFlow
+
 - `main`: Production (protected)
 - `develop`: Integration
 - `feature/*`: Development
 - `hotfix/*`: Urgent fixes
 
 **Conventional Commits**:
+
 ```
 feat(scope): Nueva capability en agent.yaml
 fix(scope): Bug fix en logic
@@ -1087,6 +1141,7 @@ kb(scope): KB additions/updates
 ### Principios Core (Extendidos)
 
 **P1. YAML is Source Code**
+
 ```
 agent.yaml = código fuente declarativo
 LLM = intérprete que ejecuta YAML
@@ -1094,6 +1149,7 @@ Implicación: Misma disciplina que software engineering
 ```
 
 **P2. Structure is Meaning**
+
 ```
 Jerarquía YAML no es cosmética:
   Nesting level → scope y contexto
@@ -1102,6 +1158,7 @@ Jerarquía YAML no es cosmética:
 ```
 
 **P3. Protocol/Content Separation**
+
 ```
 Protocol Layer (keys): English (invariante, parseable)
 Content Layer (values): Operating language (es-CL, pt-BR, etc.)
@@ -1110,6 +1167,7 @@ Beneficio: Tooling language-agnostic
 ```
 
 **P4. Explicit Knowledge Cartography** (§1 P1 extendido)
+
 ```
 Routing Query→Document MUST be:
   - Explicit (no implicit semantic search)
@@ -1120,6 +1178,7 @@ Implementación: CM-KB-GUIDANCE pattern mandatorio
 ```
 
 **P5. Semantic Abstraction** (§1 P2 extendido)
+
 ```
 Usuario NO debe ver:
   - State IDs (S-DISPATCHER, S-REFINER)
@@ -1134,6 +1193,7 @@ Usuario DEBE ver:
 ```
 
 **P6. Categorical Coherence** (§1 P3 extendido)
+
 ```
 Agent = Category Cat_Agent donde:
   - Objects = States (S-DISPATCHER, S-REFINER, etc.)
@@ -1243,6 +1303,7 @@ self_evaluation_and_correction_mechanisms:
 ### Lexicon Canónico Completo
 
 **KB Interaction Rules** (Módulo 2):
+
 ```yaml
 knowledge_base_interaction_and_governance_rules:
   usage_policy_and_source_management:
@@ -1262,6 +1323,7 @@ knowledge_base_interaction_and_governance_rules:
 ```
 
 **Public Behavior** (Módulo 4):
+
 ```yaml
 public_behavior_workflows_and_states:
   defined_workflows:
@@ -1284,6 +1346,7 @@ public_behavior_workflows_and_states:
 ```
 
 **Private Reasoning** (Módulo 5):
+
 ```yaml
 private_internal_reasoning_processes:
   <CM-ID>:                       # Ejemplo: CM-KB-GUIDANCE
@@ -1296,6 +1359,7 @@ private_internal_reasoning_processes:
 ```
 
 **Self-Evaluation** (Módulo 9):
+
 ```yaml
 self_evaluation_and_correction_mechanisms:
   evaluation_process:
@@ -1329,6 +1393,7 @@ Para backward compatibility con versiones anteriores:
 | `meta` | `self_evaluation_and_correction_mechanisms` | Describir autoevaluación y corrección |
 
 **Uso en Migración**:
+
 ```yaml
 # Soportar legacy keys temporalmente durante migración
 # Linter debe warnings pero no errores fatales durante período transición
@@ -1347,6 +1412,7 @@ Para backward compatibility con versiones anteriores:
 #### Fundamento Teórico
 
 **Definición Categórica**:
+
 ```
 Functor F: Cat_Query → Cat_KB
 
@@ -1357,6 +1423,7 @@ donde:
 ```
 
 **Leyes Functoriales**:
+
 ```
 1. Identity: F(id_query) = id_document
    Ejemplo: Query nula → Document default (contexto)
@@ -1423,6 +1490,7 @@ private_internal_reasoning_processes:
 #### Fundamento Teórico
 
 **Analogía: State Monad en Haskell**
+
 ```haskell
 -- Monad definition
 data State s a = State { runState :: s -> (a, s) }
@@ -1433,6 +1501,7 @@ data State s a = State { runState :: s -> (a, s) }
 ```
 
 **Mapeo a Agent ADP**:
+
 ```
 State Monad               →  Agent ADP
 -----------------------------------------------
@@ -1444,6 +1513,7 @@ State s                   →  Agent internal state (context, history)
 #### Implementación
 
 **Public Interface** (Observable orchestration):
+
 ```yaml
 public_behavior_workflows_and_states:
   defined_states:
@@ -1458,6 +1528,7 @@ public_behavior_workflows_and_states:
 ```
 
 **Private Implementation** (Opaque computation):
+
 ```yaml
 private_internal_reasoning_processes:
   CM-ANALYSIS-STRATEGIC:
@@ -1482,6 +1553,7 @@ private_internal_reasoning_processes:
 ```
 
 **Encapsulation Law**:
+
 ```
 ∀usuario u, ∀state s:
   Observe(u, s.process) → describe WHAT
@@ -1526,6 +1598,7 @@ def check_monadic_encapsulation(agent_yaml):
 #### Motivación
 
 **Constraint Común**:
+
 ```
 agent.yaml completo = 15,000+ characters
 Platform instruction limit = 8,000 characters
@@ -1662,6 +1735,7 @@ Si agent.yaml < platform instruction limit:
 ```
 
 **Decision Tree**:
+
 ```
 ¿agent.yaml size < instruction limit?
   SÍ → Direct Execution (copy/paste)
@@ -1709,6 +1783,7 @@ safety_constraints_and_behavioral_guardrails:
 #### Enforcement Mechanisms
 
 **Gate P1-GUARD** (Phase 1 ALM):
+
 ```python
 # check_guard_set.py
 def check_minimum_guard_set(agent_yaml):
@@ -1728,6 +1803,7 @@ def check_minimum_guard_set(agent_yaml):
 ```
 
 **Gate 4.4** (Phase 4 ALM):
+
 ```yaml
 # CI/CD validation
 - name: Check Minimum Guard Set
@@ -1852,12 +1928,14 @@ correction_metrics:
 ## §6. ANTI-PATRONES
 
 **AP1: Logic Exposure**
+
 ```
 ✗ process >5 líneas en public states
 ✓ Mover a private_internal_reasoning_processes
 ```
 
 **AP2: Implicit KB Retrieval**
+
 ```
 ✗ Auto-semantic search
 ✓ CM-KB-GUIDANCE explícito
@@ -1868,18 +1946,22 @@ correction_metrics:
 ## §7. INTEGRACIÓN ORKO
 
 **Layer 2 (Tejidos)**: TF5 (Orchestration Fabric - Agentes)
+
 - ALM/ADP operacionalizan TF5 completamente
 - Patrones formales (functorial, monadic)
 
 **Layer 3 (Metodología)**: Playbook "Agent Development"
+
 - 5 fases ALM como sub-methodology
 - Integración con TF4 (Doc 09)
 
 **Layer 4 (Plataforma)**: CI/CD Tooling
+
 - ADP validators/linters
 - Automated Gate 4.4
 
 **Contratos SIGMA** (extendido):
+
 ```yaml
 type: agent_contract
 autonomy_level: RAG | ReAct | PLAN_AND_EXECUTE

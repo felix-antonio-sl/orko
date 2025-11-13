@@ -38,6 +38,36 @@ Descomposición_Outcome:
       < 1.0: Output no cumple propósito (degradación)
       = 1.0: Output cumple propósito exactamente
       > 1.0: Output excede propósito (valor premium)
+
+## Ajuste: Proyección AOC sobre f_evaluate
+
+Se introduce una ponderación explícita de **AOC** (Meyer):
+
+```yaml
+f_evaluate_prime(output, propósito) =
+  f_evaluate(output, propósito) ×
+  ( w_coh·normalize(Coherencia) +
+    w_res·normalize(Resonancia) +
+    w_flu·normalize(Flujo) )
+
+Donde:
+  w_coh + w_res + w_flu = 1
+  
+Funciones_AOC:
+  Coherencia = Σ(Valor_entregado)/Σ(Energía)
+    Energía = Esfuerzo + Fricción + Interferencia
+    
+  Resonancia = Profundidad_Especialización × Amplitud_Conexión
+  
+  Flujo = Tasa_Creación/(1+Fricción_Transferencia)
+
+Pesos_Sugeridos:
+  w_coh = 0.4  # Sesgo hacia coherencia (Meyer)
+  w_res = 0.3
+  w_flu = 0.3
+```
+
+Las funciones `Coherencia, Resonancia, Flujo` se definen en AOC y se instrumentan en D1–D4 (ver PD‑AOC en Arquitectura).
     
   Ejemplo:
     Flujo: OrderFulfillment

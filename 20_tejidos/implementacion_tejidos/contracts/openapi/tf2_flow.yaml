@@ -379,6 +379,59 @@ components:
               type: integer
             rework:
               type: boolean
+        
+        override:
+          type: object
+          nullable: true
+          description: "Human override auditable (HAIC enforcement)"
+          properties:
+            reason:
+              type: string
+              description: "Why override was needed"
+            policy_class:
+              type: string
+              enum: [Safety, Ethics, Cost, Quality]
+              description: "Policy category overridden"
+            hitl_sla_seconds:
+              type: integer
+              minimum: 0
+              description: "SLA for human response time"
+            overridden_by:
+              type: string
+              format: uuid
+              description: "Capacity ID who overrode"
+            overridden_at:
+              type: string
+              format: date-time
+          required: [reason, policy_class]
+        
+        workaround:
+          type: object
+          nullable: true
+          description: "Workaround tracking (WSLC debt detection)"
+          properties:
+            flag:
+              type: boolean
+              default: false
+            kind:
+              type: string
+              enum: [improvisation, bricolage, policy_gap]
+              description: "Type of workaround applied"
+            description:
+              type: string
+              nullable: true
+            frequency:
+              type: integer
+              nullable: true
+              description: "How many times this workaround in last N days"
+          required: [flag]
+        
+        handoff_friction_score:
+          type: integer
+          minimum: 0
+          maximum: 100
+          nullable: true
+          description: "Cost of handoff between steps/roles (Meyer friction)"
     
     FlowListResponse:
       type: object

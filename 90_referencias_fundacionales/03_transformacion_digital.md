@@ -23,15 +23,18 @@
 ## §2. MODELO ORGANIZACIONAL
 
 ### Software as Asset (SaaA)
+
 **Principio**: Software = activo que genera valor, NO costo a minimizar
 
 **Decay Management**:
+
 ```
 Software sin inversión continua → decay inevitable
 Respuesta: Funding continuo basado en valor histórico
 ```
 
 ### Equipos Estables y Amoeba Lifecycle
+
 ```
 MVT (2-3) → Growth → Steady (7±2) → Split (>12) → 2 New Teams
                                   ↓
@@ -39,13 +42,16 @@ MVT (2-3) → Growth → Steady (7±2) → Split (>12) → 2 New Teams
 ```
 
 **Benefits**:
+
 - Data para forecasting (velocity estable)
 - Incentivo a optimizar (cosecha beneficios)
 - Camaraderie y knowledge retention
 - Ownership y pride
 
 ### Continuous Governance
+
 **Modelo VC/Real Options**:
+
 - Portfolio equipos-como-startups
 - Funding en tranches condicionales
 - Gobernanza retrospectiva: ¿Qué HA SIDO entregado?
@@ -58,6 +64,7 @@ MVT (2-3) → Growth → Steady (7±2) → Split (>12) → 2 New Teams
 ## §3. SISTEMA DE DIRECCIÓN (OKRs)
 
 ### Purpose Hierarchy
+
 ```
 Organization Purpose (BHAG/MTP)
     ↓
@@ -69,7 +76,9 @@ Sprint Work
 ```
 
 ### OKR Mechanics
+
 **Structure**:
+
 - **Objective**: Outcome valioso (no output)
 - **Key Results**: 3-4 tests medibles
 - **Cadence**: Quarterly (12 semanas)
@@ -77,6 +86,7 @@ Sprint Work
 **Nature**: Test-driven management (acceptance criteria del quarter)
 
 **Ground Rules**:
+
 - Team-set (bottom-up)
 - Limited number (3-4 max)
 - Prioritized (orden absoluto)
@@ -86,6 +96,7 @@ Sprint Work
 ### OKR-Driven Execution
 
 **Planning Integration**:
+
 ```
 Long-term: Strategy/Roadmap
 Mid-term (OKRs): Planning glue ⭐
@@ -93,6 +104,7 @@ Short-term: Sprint planning
 ```
 
 **Backlog Relationship** (Option B preferred):
+
 - OKRs first → throw away backlog
 - Cada sprint: "¿Cómo avanzar OKRs?" (blank sheet)
 - Backlog = ideas, not commitments
@@ -102,14 +114,17 @@ Short-term: Sprint planning
 ## §4. CAPTURA DE VALOR (User Stories)
 
 ### Story Essence
+
 **Format**: `As a <role> I want <capability> So that <benefit>`
 
 **Core Attributes**:
+
 - Lightweight (bajo costo upfront)
 - Easy to comprehend
 - Easy to share (rompe barrera técnico/negocio)
 
 **Nature**:
+
 - Placeholder for conversation (NOT requirement completo)
 - Token for work (prioritize, split, refine)
 - Transitory by design
@@ -147,11 +162,13 @@ Short-term: Sprint planning
 **P4: Visualize** - Boards, burn-down, CFD
 
 ### Board Mechanics
+
 ```
 Pending → Current (WIP) → Completed
 ```
 
 **Card Colors**:
+
 - Blue: Development stories (business value)
 - White: Tasks (technical work)
 - Red: Bugs
@@ -159,14 +176,17 @@ Pending → Current (WIP) → Completed
 - Green: Process improvement
 
 ### Xanpan Deviations from Scrum
+
 1. **Carry-over allowed** (mejora flow)
 2. **No commitment** (probabilistic delivery)
 3. **Unplanned work** (yellow cards aceptados)
 
 ### Planning Meeting
+
 **Players**: PO (prepared), Creators, Facilitator
 
 **Process**:
+
 1. PO presenta prioritized blues
 2. Team breaks down to white tasks
 3. Planning poker estimates
@@ -180,6 +200,7 @@ Pending → Current (WIP) → Completed
 ## §6. INTEGRACIÓN VERTICAL
 
 ### From Strategy to Code
+
 ```
 Organization Purpose & Strategy
     ↓ Strategic Intent
@@ -213,6 +234,7 @@ Value Delivered → Feedback Loop
 ### Definiciones
 
 **Digital Transformation**:
+
 ```
 DT = enterprise-level transformation donde
      IT-related changes → strategically significant changes
@@ -232,12 +254,14 @@ DT = enterprise-level transformation donde
 ### Recursos para el Cambio (5 categorías)
 
 **Momentum (tangible)**:
+
 ```
 Estado actual WS + proyectos ongoing
 Alineación con schedule y vision
 ```
 
 **Capabilities (tangible)**:
+
 ```
 SW development/implementation
 Financial capabilities
@@ -245,6 +269,7 @@ Trustworthy leadership/org change
 ```
 
 **Forces (WS-wide)**:
+
 ```
 Cohesive, Innovative (aligned)
 Disruptive (entropy-like), Inertial
@@ -252,6 +277,7 @@ Forces-at-distance (economics, regulation, tech change)
 ```
 
 **Drivers & Impediments (WS elements)**:
+
 ```
 Factores por elemento (customers, products, processes,
 participants, information, technologies, environment,
@@ -259,6 +285,7 @@ infrastructure, strategies)
 ```
 
 **Catalysts (micro-dynamics)**:
+
 ```
 Needing: Necesidad percibida para goals
 Understanding: Comprensión de benefits
@@ -266,12 +293,14 @@ Liking: Preferencia afectiva
 ```
 
 ### Resource Favorability
+
 ```
 Favorability = likelihood recursos contribuyan positiva/negativamente
 Escala: extremely unfavorable ← → extremely favorable
 ```
 
 ### DTPM Model Statement
+
 ```
 Favorability(5 categorías) → jointly contribute to:
   - Degree of Completion
