@@ -35,6 +35,7 @@ venv/
 # Build outputs
 dist/
 build/
+out/
 *.log
 
 # Personal notes (opcional)
