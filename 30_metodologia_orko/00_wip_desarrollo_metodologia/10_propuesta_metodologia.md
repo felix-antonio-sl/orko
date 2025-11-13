@@ -132,7 +132,7 @@
     ├── README.md                                     # Navegación validación
     └── 01_validacion_trazabilidad_i1_i8.md           # Compliance I1-I8 formal
 
-implementacion_metodologia/                            # Executable Assets
+../../40_implementacion_metodologia/                   # Executable Assets
 │
 ├── README.md                                         # Status implementación
 │
@@ -363,7 +363,7 @@ Sprint_4_Schemas:
 
 Sprint_5_Templates:
   - 11_artefactos_templates
-  - implementacion_metodologia/templates/ (25 templates ejecutables)
+  - ../../40_implementacion_metodologia/templates/ (25 templates ejecutables)
 
 Sprint_6_Finales:
   - 09_trayectorias

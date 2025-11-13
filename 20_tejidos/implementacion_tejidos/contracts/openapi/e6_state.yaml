@@ -7,7 +7,7 @@ info:
     REST API for E6 Architectural State Management - Evolution, planning, and change management.
     **Primitivo:** Meta-architectural (crosses all primitives)  
     **Status:** Transversal concern  
-    **Trazabilidad:** 20_tejidos/07_architectural_state_management.md
+    **Trazabilidad:** ../../../07_architectural_state_management.md
     
     **Purpose:**
     - Evolutionary architecture: Current → Target planning

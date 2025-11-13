@@ -869,10 +869,10 @@ PD37_Genotype_Phenotype_Separation:
       - Ajustar timelines
       
   Implementación:
-    /orko/teoria/ → INMUTABLE (genoma)
-    /orko/arquitectura/ → INMUTABLE (contratos, principios base)
-    /orko/metodologia/ → CONFIGURABLE (expresión contextual)
-    /orko/templates/ → CONFIGURABLE (parametrizables)
+    ../00_fundamentos_teoricos/ → INMUTABLE (genoma)
+    ./ → INMUTABLE (contratos, principios base)
+    ../30_metodologia_orko/ → CONFIGURABLE (expresión contextual)
+    ../30_metodologia_orko/11_artefactos_templates/ → CONFIGURABLE (parametrizables)
     
   Anti-Pattern:
     "Modificar axiomas para acomodar contexto específico"

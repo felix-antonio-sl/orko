@@ -6,7 +6,7 @@ info:
   description: |
     REST API for TF3 Information Fabric - Complete information lifecycle management.
     **Primitivo:** P3_Información | **Axioma:** A3_Existencia_Información  
-    **Trazabilidad:** 20_tejidos/03_TF3_information.md
+    **Trazabilidad:** ../../../03_TF3_information.md
     
     **Sub-domains:**
     - Foundation: Ingestion, storage, processing, governance

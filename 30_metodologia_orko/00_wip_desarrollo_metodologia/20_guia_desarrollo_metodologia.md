@@ -227,7 +227,7 @@ Prohibido_Usar:
 
 **Justificación:** [2-3 líneas explicando POR QUÉ estos fundamentos aplican a este archivo específico]
 
-**Definiciones:** `/00_fundamentos_teoricos/` | `/10_arquitectura_orko/` | `/20_tejidos/`
+**Definiciones:** `../../00_fundamentos_teoricos/` | `../../10_arquitectura_orko/` | `../../20_tejidos/`
 
 ---
 

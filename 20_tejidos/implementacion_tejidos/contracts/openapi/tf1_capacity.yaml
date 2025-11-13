@@ -7,7 +7,7 @@ info:
     REST API for TF1 Capacity Fabric - Design, development, deployment, and management of organizational capacities.
     
     **Primitivo:** P1_Capacidad | **Axioma:** A2_Existencia_Capacidad  
-    **Trazabilidad:** 20_tejidos/01_TF1_capacity.md
+    **Trazabilidad:** ../../../01_TF1_capacity.md
     
     **Focus:** LLM agent design and management
     

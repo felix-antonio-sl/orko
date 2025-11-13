@@ -73,7 +73,7 @@ Nota_Arquitectural:
    • E6_Estado_Arquitectónico: Snapshot(E1+E2+E4+E5) para coherencia temporal
    • E7_Ejecución_Flujo: Instance(E2) para tracking operacional y DORA metrics
    
-   Ver arquitectura_orko/03_relaciones.md §2 para especificación completa
+  Ver ../10_arquitectura_orko/03_relaciones.md §2 para especificación completa
    de entidades compuestas y su derivación formal desde primitivos."
 ```
 
@@ -459,7 +459,7 @@ Nota_Arquitectural:
 
    Estas relaciones operan sobre entidades compuestas (E6-E7) y son
    formalmente derivables desde primitivos.
-   Ver arquitectura_orko/03_relaciones.md §3 para especificación completa."
+  Ver ../10_arquitectura_orko/03_relaciones.md §3 para especificación completa."
 
 Propiedad_Completitud:
   ✓ Todas combinaciones primitivos cubiertas (E1-E5)

@@ -27,7 +27,7 @@ Naturaleza:
    ejecutables: contratos, principios, relaciones, vistas, patterns."
 
 Posición_Triádica:
-  fundamentos teoricos/ → arquitectura del sistema/ → metodologia/
+  ../00_fundamentos_teoricos/ → 10_arquitectura_orko/ → ../30_metodologia_orko/
   Ontológico           → Lógico                    → Práctico
   ¿Qué ES el sistema?  → ¿Cómo DISEÑARLO?          → ¿Cómo USARLO?
 
@@ -44,7 +44,7 @@ Extensión_Modelo_Teórico:
    Fundamentos: E1-E5, R1-R13 (mínimo irreducible, teoría pura)
    Arquitectura: E1-E7, R1-R15 (extensión formal operable)
    
-   Ver fundamentos/08_modelo_relacional.md para base teórica."
+   Ver ../00_fundamentos_teoricos/08_modelo_relacional.md para base teórica."
 
 Alcance:
   - Contratos C1-C5: Especificación formal primitivos P1-P5
@@ -197,7 +197,7 @@ Desde_I8_Adaptación_Contextual (PD36-PD40):
 **Extensión del modelo teórico con 15 relaciones** (actualizado Wave 2-3)
 
 ```yaml
-Base_Teórica: fundamentos/08_modelo_relacional.md
+Base_Teórica: ../00_fundamentos_teoricos/08_modelo_relacional.md
   - E1-E5: Entidades primitivas (teoría pura)
   - R1-R13: Relaciones fundamentales (mínimo necesario)
 
@@ -309,7 +309,7 @@ A2_Capacidad:
         → PD18-21 (Principios HAIC)
           → R13_Delegación_HAIC (Relación)
             → Pattern_D1.2_Delegation_Ladder
-              → metodologia/02_playbooks.md §4.2 HAIC Modes
+              → ../30_metodologia_orko/08_playbooks_operational/README.md §4.2 HAIC Modes
 
 A1_Transformación:
   → P2_Flujo
@@ -318,7 +318,7 @@ A1_Transformación:
         → PD7_Relaciones_Explícitas
           → R1_Capacidad_Ejecuta_Flujo
             → Pattern_D1.1_Team_Topology
-              → metodologia/02_playbooks.md §2.2 Manual R2
+              → ../30_metodologia_orko/06_playbooks_recovery/P02_handoff_reduction.md §2.2 Manual R2
 
 A5_Propósito:
   → P5_Propósito
@@ -327,7 +327,7 @@ A5_Propósito:
         → PD14-17_Test_Cliente
           → R9_Propósito_Direcciona_Flujo + R10_Asigna_Capacidad
             → Pattern_D1.3_Purpose_Cascade
-              → metodologia/02_playbooks.md §2.3 Manual R3
+              → ../30_metodologia_orko/06_playbooks_recovery/P03_okr_alignment.md §2.3 Manual R3
 
 Propiedad_Trazabilidad:
   ∀ elemento arquitectura: ∃ path desde fundamentos teóricos
