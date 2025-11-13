@@ -32,9 +32,9 @@ Naturaleza:
   - Trazable (toda derivación desde axiomas)
 
 Relación_Arquitectura:
-  fundamentos teoricos/     → TEORÍA (qué es el sistema)
-  arquitectura del sistema/ → IMPLEMENTACIÓN (cómo construirlo)
-  metodologia/              → EJECUCIÓN (cómo usarlo)
+  ./                        → TEORÍA (qué es el sistema)
+  ../10_arquitectura_orko/  → IMPLEMENTACIÓN (cómo construirlo)
+  ../30_metodologia_orko/   → EJECUCIÓN (cómo usarlo)
 ```
 
 ## §1. ESTRUCTURA MODULAR
@@ -147,7 +147,7 @@ Organización_8_Módulos:
     
     Nota: Arquitectura extiende con entidades COMPUESTAS (E6-E7) 
           y relaciones DERIVADAS (R14-R15).
-          Ver arquitectura_orko/03_relaciones.md para extensiones.
+          Ver ../10_arquitectura_orko/03_relaciones.md para extensiones.
 
 Total_Tamaño: ~165 KB
 ```
@@ -229,18 +229,18 @@ Cadena_Derivación:
   Layer_2_Modelo_Relacional:
     E1-E5: Entidades primitivas (desde P1-P5)
     R1-R13: Relaciones fundamentales
-    Ubicación: fundamentos/08_modelo_relacional.md
+    Ubicación: 08_modelo_relacional.md
     Características: TEORÍA PURA (mínimo irreducible)
     
   Layer_3_Contratos_Base:
     C1-C5: Esquemas operables primitivos
-    Ubicación: arquitectura_orko/01_contratos.md
+    Ubicación: ../10_arquitectura_orko/01_contratos.md
     Derivación: P1→C1, P2→C2, P3→C3, P4→C4, P5→C5
     
   Layer_4_Extensiones_Arquitectónicas:
     E6-E7: Entidades COMPUESTAS (no primitivos)
     R14-R15: Relaciones DERIVADAS
-    Ubicación: arquitectura_orko/01_contratos.md + 03_relaciones.md
+    Ubicación: ../10_arquitectura_orko/01_contratos.md + ../10_arquitectura_orko/03_relaciones.md
     Derivación:
       E6: Snapshot(E1+E2+E4+E5) - coherencia temporal
       E7: Instance(E2) - tracking operacional
@@ -249,7 +249,7 @@ Cadena_Derivación:
     
   Layer_5_Principios:
     PD1-PD75: Reglas diseño arquitectónico (75 principios operativos)
-    Ubicación: arquitectura_orko/02_diseño.md
+    Ubicación: ../10_arquitectura_orko/02_diseño.md
     Derivación: I1-I8 → PD1-PD75
     Cobertura:
       - PD1-PD45: Desde invariantes core I1-I8
@@ -257,12 +257,12 @@ Cadena_Derivación:
     
   Layer_6_Patterns:
     Patterns D1-D4 + Cross-cutting
-    Ubicación: arquitectura_orko/04_vistas.md + 05_patrones.md
+    Ubicación: ../10_arquitectura_orko/04_vistas.md + ../10_arquitectura_orko/05_patrones.md
     Derivación: PD1-PD75 → Patterns recurrentes (20+ validados)
     
   Layer_7_Metodología:
     18 fases metodológicas (§0-§18)
-    Ubicación: metodologia/
+    Ubicación: ../30_metodologia_orko/
     Derivación: SDA + WSLC + D1-D4 → Secuencia ejecución
 
 Frontera_Crítica_Teoría_Arquitectura:
@@ -348,7 +348,7 @@ Conceptos_Clave_Por_Módulo:
     - Multiplicidades: 1:1, 1:N, N:M
     - Integridad: Foreign keys, constraints, DAG validation
     
-    Extensiones_Arquitectónicas (ver arquitectura_orko/):
+    Extensiones_Arquitectónicas (ver ../10_arquitectura_orko/):
       · E6: Estado Arquitectónico - Snapshot(E1+E2+E4+E5)
       · E7: Ejecución Flujo - Instance(E2)
       · R14: Estado Transitions - DAG evolutivo

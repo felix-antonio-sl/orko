@@ -6,7 +6,7 @@ info:
   description: |
     REST API for TF2 Flow Fabric - Orchestration, automation, execution of flows.
     **Primitivos:** P2_Flujo + P1_Capacidad | **Axioma:** A1_Transformación  
-    **Trazabilidad:** 20_tejidos/02_TF2_flow.md
+    **Trazabilidad:** ../../../02_TF2_flow.md
     **Includes:** E7 FlowExecution (detailed runtime tracking)
   contact:
     name: ORKO Architecture Team

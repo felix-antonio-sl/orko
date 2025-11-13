@@ -14,7 +14,7 @@
 
 **Justificación:** Este documento operacionaliza I3 (Trazabilidad) al proyectar dominios ortogonales D1-D4 (Layer 1 Arquitectura) sobre fases metodológicas F1-F18 (Layer 3 Metodología). Mapeo auditable preserva I2 (Ortogonalidad) demostrando que dominios cruzan fases independientemente. Es índice estructural, NO duplicación contenido.
 
-**Definiciones:** `/00_fundamentos_teoricos/` | `/10_arquitectura_orko/`
+**Definiciones:** `../00_fundamentos_teoricos/` | `../10_arquitectura_orko/`
 
 ---
 
@@ -350,8 +350,8 @@ Validación_Completitud:
 → **Siguiente:** [01_fases_initiation/README.md](01_fases_initiation/README.md)  
 ↑ **Índice:** [README.md](README.md)  
 ⊕ **Relacionados:**  
-  - `/10_arquitectura_orko/01_contratos.md` (D1-D4 definiciones)
-  - `/10_arquitectura_orko/02_diseño.md` (Patterns arquitectura)
+  - `../10_arquitectura_orko/01_contratos.md` (D1-D4 definiciones)
+  - `../10_arquitectura_orko/02_diseño.md` (Patterns arquitectura)
   - `dependency_graph.yaml` (mapeo F↔F complementario)
 
 ---

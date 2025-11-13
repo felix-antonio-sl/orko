@@ -737,13 +737,13 @@ Semana_5_Trayectorias_Schemas_Governance (10 días):
 Semana_6_Artefactos_Templates_Final (10 días):
   Team_H:
     - 11_artefactos_templates/ (4×200L descripciones)
-    - implementacion_metodologia/templates/ (25 ejecutables)
+    - ../../40_implementacion_metodologia/templates/ (25 ejecutables)
     - calculadoras/ (6 Excel/YAML)
   
   Team_I:
     - 14_casos_uso/ (2×300L = 600L)
     - 15_instrumentacion/ (3×150L = 450L)
-    - 16_evolucion_metodologia/ (3×150L = 450L)
+    - ../16_evolucion_metodologia/ (3×150L = 450L)
     - 17_validacion_final/ (1×500L = 500L)
   
   Validación: Templates ejecutables, calculadoras funcionales

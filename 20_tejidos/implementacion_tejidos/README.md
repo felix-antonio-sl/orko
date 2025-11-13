@@ -288,12 +288,12 @@ LLM_Ecosystem_Focus:
 
 ### Specification Documents (Source of Truth)
 
-- `/20_tejidos/00_introduccion_tejidos.md` - General architecture
-- `/20_tejidos/01_TF1_capacity.md` - Capacity fabric spec
-- `/20_tejidos/02_TF2_flow.md` - Flow fabric spec + E7
-- `/20_tejidos/03_TF3_information.md` - Information fabric spec
-- `/20_tejidos/04_concerns_transversales.md` - Security, Purpose
-- `/20_tejidos/07_architectural_state_management.md` - E6 state
+- `../00_introduccion_tejidos.md` - General architecture
+- `../01_TF1_capacity.md` - Capacity fabric spec
+- `../02_TF2_flow.md` - Flow fabric spec + E7
+- `../03_TF3_information.md` - Information fabric spec
+- `../04_concerns_transversales.md` - Security, Purpose
+- `../07_architectural_state_management.md` - E6 state
 
 ### Standards
 

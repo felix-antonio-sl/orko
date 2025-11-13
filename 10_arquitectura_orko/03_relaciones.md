@@ -17,13 +17,13 @@
 ```YAML
 Naturaleza_Modelo:
   "Modelo relacional arquitectónico EXTIENDE el modelo teórico puro
-   (fundamentos/08_modelo_relacional.md) con entidades COMPUESTAS
+   (../00_fundamentos_teoricos/08_modelo_relacional.md) con entidades COMPUESTAS
    y relaciones DERIVADAS para arquitectura operable.
    
    Es LÓGICO (independiente implementación física DB/código)."
 
 Derivación_Desde_Fundamentos:
-  Base_Teórica (fundamentos/08_modelo_relacional.md):
+ Base_Teórica (../00_fundamentos_teoricos/08_modelo_relacional.md):
     - E1-E5: Entidades primitivas (desde P1-P5) → IRREDUCIBLES
     - R1-R13: Relaciones fundamentales → MÍNIMO NECESARIO
   

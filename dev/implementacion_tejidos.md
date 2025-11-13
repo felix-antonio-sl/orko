@@ -23,7 +23,7 @@ implementacion_tejidos
 
 # File Contents
 
-## 20_tejidos/implementacion_tejidos/README.md
+## ../20_tejidos/implementacion_tejidos/README.md
 
 ```markdown
 # ORKO IMPLEMENTATION
@@ -316,12 +316,12 @@ LLM_Ecosystem_Focus:
 
 ### Specification Documents (Source of Truth)
 
-- `/20_tejidos/00_introduccion_tejidos.md` - General architecture
-- `/20_tejidos/01_TF1_capacity.md` - Capacity fabric spec
-- `/20_tejidos/02_TF2_flow.md` - Flow fabric spec + E7
-- `/20_tejidos/03_TF3_information.md` - Information fabric spec
-- `/20_tejidos/04_concerns_transversales.md` - Security, Purpose
-- `/20_tejidos/07_architectural_state_management.md` - E6 state
+- `../20_tejidos/00_introduccion_tejidos.md` - General architecture
+- `../20_tejidos/01_TF1_capacity.md` - Capacity fabric spec
+- `../20_tejidos/02_TF2_flow.md` - Flow fabric spec + E7
+- `../20_tejidos/03_TF3_information.md` - Information fabric spec
+- `../20_tejidos/04_concerns_transversales.md` - Security, Purpose
+- `../20_tejidos/07_architectural_state_management.md` - E6 state
 
 ### Standards
 
@@ -411,7 +411,7 @@ LLM_Ecosystem_Focus:
 
 ```
 
-## 20_tejidos/implementacion_tejidos/contracts/openapi/e6_state.yaml
+## ../20_tejidos/implementacion_tejidos/contracts/openapi/e6_state.yaml
 
 ```yaml
 openapi: 3.1.0
@@ -423,7 +423,7 @@ info:
     REST API for E6 Architectural State Management - Evolution, planning, and change management.
     **Primitivo:** Meta-architectural (crosses all primitives)  
     **Status:** Transversal concern  
-    **Trazabilidad:** 20_tejidos/07_architectural_state_management.md
+    **Trazabilidad:** ../20_tejidos/07_architectural_state_management.md
     
     **Purpose:**
     - Evolutionary architecture: Current → Target planning
@@ -1224,7 +1224,7 @@ paths:
 
 ```
 
-## 20_tejidos/implementacion_tejidos/contracts/openapi/tf1_capacity.yaml
+## ../20_tejidos/implementacion_tejidos/contracts/openapi/tf1_capacity.yaml
 
 ```yaml
 openapi: 3.1.0
@@ -1236,7 +1236,7 @@ info:
     REST API for TF1 Capacity Fabric - Design, development, deployment, and management of organizational capacities.
     
     **Primitivo:** P1_Capacidad | **Axioma:** A2_Existencia_Capacidad  
-    **Trazabilidad:** 20_tejidos/01_TF1_capacity.md
+    **Trazabilidad:** ../20_tejidos/01_TF1_capacity.md
     
     **Focus:** LLM agent design and management
     
@@ -1732,7 +1732,7 @@ paths:
 
 ```
 
-## 20_tejidos/implementacion_tejidos/contracts/openapi/tf2_flow.yaml
+## ../20_tejidos/implementacion_tejidos/contracts/openapi/tf2_flow.yaml
 
 ```yaml
 openapi: 3.1.0
@@ -1743,7 +1743,7 @@ info:
   description: |
     REST API for TF2 Flow Fabric - Orchestration, automation, execution of flows.
     **Primitivos:** P2_Flujo + P1_Capacidad | **Axioma:** A1_Transformación  
-    **Trazabilidad:** 20_tejidos/02_TF2_flow.md
+    **Trazabilidad:** ../20_tejidos/02_TF2_flow.md
     **Includes:** E7 FlowExecution (detailed runtime tracking)
   contact:
     name: ORKO Architecture Team
@@ -2417,7 +2417,7 @@ paths:
 
 ```
 
-## 20_tejidos/implementacion_tejidos/contracts/openapi/tf3_information.yaml
+## ../20_tejidos/implementacion_tejidos/contracts/openapi/tf3_information.yaml
 
 ```yaml
 openapi: 3.1.0
@@ -2428,7 +2428,7 @@ info:
   description: |
     REST API for TF3 Information Fabric - Complete information lifecycle management.
     **Primitivo:** P3_Información | **Axioma:** A3_Existencia_Información  
-    **Trazabilidad:** 20_tejidos/03_TF3_information.md
+    **Trazabilidad:** ../20_tejidos/03_TF3_information.md
     
     **Sub-domains:**
     - Foundation: Ingestion, storage, processing, governance
@@ -3298,12 +3298,12 @@ paths:
 
 ```
 
-## 20_tejidos/implementacion_tejidos/contracts/schemas/base.yaml
+## ../20_tejidos/implementacion_tejidos/contracts/schemas/base.yaml
 
 ```yaml
 # ORKO BASE SCHEMA DEFINITIONS
 # JSON Schema Draft 2020-12
-# Trazabilidad: 20_tejidos/00_introduccion_tejidos.md
+# Trazabilidad: ../20_tejidos/00_introduccion_tejidos.md
 
 $schema: "https://json-schema.org/draft/2020-12/schema"
 $id: "https://orko.arch/schemas/base/v2.0"

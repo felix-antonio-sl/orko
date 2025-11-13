@@ -1301,18 +1301,18 @@ Remediation:
 
 ### PLAYBOOK R1: LOW H_ORG RECOVERY
 
-**Nota**: Este playbook es versión conceptual. Para implementación ejecutable completa ver metodologia §2 (Manuales R1-R6).
+**Nota**: Este playbook es versión conceptual. Para implementación ejecutable completa ver ../30_metodologia_orko/06_playbooks_recovery/ §2 (Manuales R1-R6).
 
 ```yaml
 Trigger: H_org < 70 (Critical threshold)
 
 Manuales_Espec\u00edficos_Metodolog\u00eda:
-  - metodologia §2.1: Manual R1 (Recuperación Salud General, 4 fases, 12-16 sem)
-  - metodologia §2.2: Manual R2 (Reducción Traspasos, VSM, 6-8 sem)
-  - metodologia §2.3: Manual R3 (Alineación OKRs, Cascada, 4-6 sem)
-  - metodologia §2.4: Manual R4 (Reinicio Gobernanza, Policy-as-Code, 3-4 sem)
-  - metodologia §2.5: Manual R5 (Impulso Observabilidad, Data quality, 4-6 sem)
-  - metodologia §2.6: Manual R6 (Marco Decisión, Q1-Q6, 4-5 sem)
+  - ../30_metodologia_orko/06_playbooks_recovery/P01_low_h_org_recovery.md §2.1: Manual R1 (Recuperación Salud General, 4 fases, 12-16 sem)
+  - ../30_metodologia_orko/06_playbooks_recovery/P02_handoff_reduction.md §2.2: Manual R2 (Reducción Traspasos, VSM, 6-8 sem)
+  - ../30_metodologia_orko/06_playbooks_recovery/P03_okr_alignment.md §2.3: Manual R3 (Alineación OKRs, Cascada, 4-6 sem)
+  - ../30_metodologia_orko/06_playbooks_recovery/P04_security_remediation.md §2.4: Manual R4 (Reinicio Gobernanza, Policy-as-Code, 3-4 sem)
+  - ../30_metodologia_orko/07_playbooks_transformation/P05_bounded_autonomy_m6.md §2.5: Manual R5 (Impulso Observabilidad, Data quality, 4-6 sem)
+  - ../30_metodologia_orko/07_playbooks_transformation/P06_pilot_transformation.md §2.6: Manual R6 (Marco Decisión, Q1-Q6, 4-5 sem)
   
   Cada manual incluye: fases ejecutables, métricas éxito, templates, roles, timelines
 
@@ -1484,7 +1484,7 @@ R6_OPTIMIZATION_CONTINUOUS:
 Total_Timeline_R4-R6: 24-36 meses (pilot → optimization)
 
 Related_Documents:
-  - metodologia_orko.md: Detalles completos playbooks transformación
+- ../30_metodologia_orko/README.md: Detalles completos playbooks transformación
   - Fase 0 Assessment: Ver L1_Assessment_ORKO (metodología)
 ```
 

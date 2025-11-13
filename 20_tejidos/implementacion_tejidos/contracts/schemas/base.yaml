@@ -1,6 +1,6 @@
 # ORKO BASE SCHEMA DEFINITIONS
 # JSON Schema Draft 2020-12
-# Trazabilidad: 20_tejidos/00_introduccion_tejidos.md
+# Trazabilidad: ../../../00_introduccion_tejidos.md
 
 $schema: "https://json-schema.org/draft/2020-12/schema"
 $id: "https://orko.arch/schemas/base/v2.0"
