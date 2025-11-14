@@ -125,6 +125,28 @@ components:
                     format: uuid
                   timeout_seconds:
                     type: integer
+                  escalation_rule:
+                    type: object
+                    description: "Defines escalation path when HITL unavailable or timeout"
+                    properties:
+                      timeout_seconds:
+                        type: integer
+                        description: "Max wait time before escalation"
+                      fallback_capacity_id:
+                        type: string
+                        format: uuid
+                        description: "Fallback human capacity if primary unavailable"
+                        nullable: true
+                      escalation_chain:
+                        type: array
+                        description: "Ordered list of fallback capacities"
+                        items:
+                          type: string
+                          format: uuid
+                      default_action:
+                        type: string
+                        enum: [pause, abort, continue_autonomous, escalate_to_supervisor]
+                        description: "Action to take if entire chain unavailable"
             override_mechanism:
               type: object
               properties:
@@ -166,6 +188,30 @@ components:
                   type: array
                   items:
                     type: string
+                data_access_scope:
+                  type: object
+                  description: "Security boundary: which TF3 information assets this flow can access"
+                  properties:
+                    allowed_information_assets:
+                      type: array
+                      description: "Whitelist of specific TF3 asset IDs this flow can access"
+                      items:
+                        type: string
+                        format: uuid
+                    forbidden_subdomains:
+                      type: array
+                      description: "TF3 subdomains this flow CANNOT access (blacklist)"
+                      items:
+                        type: string
+                        enum: [Foundation, Analytics, Semantic]
+                    max_read_volume_mb:
+                      type: number
+                      description: "Maximum data this flow can read per execution (prevent exfiltration)"
+                      nullable: true
+                    pii_access_allowed:
+                      type: boolean
+                      description: "Whether this flow is authorized to access PII-containing assets"
+                      default: false
         
         compensation:
           type: object

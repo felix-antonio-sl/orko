@@ -80,7 +80,11 @@ FlowAsset:
         condition: String  # Cuándo escalar
         human_capacity_id: UUID(Capacity.Humano)
         timeout_seconds: Integer
-        escalation_rule: String
+        escalation_rule:
+          timeout_seconds: Integer  # Max wait antes escalar
+          fallback_capacity_id: UUID(Capacity.Humano) | null
+          escalation_chain: List<UUID(Capacity.Humano)>  # Chain of fallbacks
+          default_action: {pause|abort|continue_autonomous|escalate_to_supervisor}
         
     override_mechanism:
       human_can_pause: Boolean
@@ -101,7 +105,11 @@ FlowAsset:
     scope:
       allowed_tools: List<String>  # APIs que puede llamar
       forbidden_actions: List<String>
-      data_access_scope: List<String>  # Límite acceso TF3
+      data_access_scope:  # Security boundary TF2→TF3
+        allowed_information_assets: List<UUID(InformationAsset)>  # Whitelist
+        forbidden_subdomains: List<{Foundation|Analytics|Semantic}>  # Blacklist
+        max_read_volume_mb: Float | null  # Prevent exfiltration
+        pii_access_allowed: Boolean  # Explicit PII authorization
       
   # Compensation (resilience)
   compensation:
