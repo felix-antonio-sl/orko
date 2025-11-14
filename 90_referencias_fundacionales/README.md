@@ -160,9 +160,9 @@ Uso: Auditoría, validación de diseño, enseñanza
 
 **Documentos base**: 08, 09, 10
 
-- TF1-TF7 operacionalizados ← Doc 08
-- TF4 (Knowledge Fabric) ← Doc 09 (STS/SFD/KHM completo)
-- TF5 (Orchestration Fabric - Agentes) ← Doc 10 (ALM/ADP completo)
+- TF1-TF3 ORKO operacionalizados ← Doc 08
+- Knowledge Fabric (SIGMA) → inspira TF3_Information.Semantic ← Doc 09 (STS/SFD/KHM completo)
+- Orchestration/Agents Fabric (SIGMA) → inspira TF1_Capacity.Algorítmico + TF2_Flow ← Doc 10 (ALM/ADP completo)
 - Contratos semánticos ← Doc 08
 - Arquitectura de referencia ejecutable ← Doc 08
 

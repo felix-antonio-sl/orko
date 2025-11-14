@@ -1,5 +1,7 @@
 # PARTE V: DOMINIOS
 
+> **Etiquetado Genoma/Fenotipo**: Este documento contiene [GENOMA] (derivación D1-D4, definiciones, ortogonalidad) y [FENOTIPO] (métricas A_Score/P_Score/D_Score/H_org concretas, thresholds 70/80, heurísticas 70/30-70/20/10, técnicas portafolio). Ver §0.1 en 00_introduccion.md.
+
 - [PARTE V: DOMINIOS](#parte-v-dominios)
   - [Dominios ortogonales](#dominios-ortogonales)
     - [§3. DERIVACIÓN DE LOS 4 DOMINIOS](#3-derivación-de-los-4-dominios)
@@ -230,44 +232,49 @@ Interacciones_Con_Otros_Dominios:
 
 Métricas_Health:
 
-  A_Score: Métrica salud arquitectura (0-100)
-  
-  Componentes:
-    A1_Claridad_Autoridad: 
-      = % decisiones con accountable único claro
-      Target: > 90%
+  [GENOMA] Concepto_Salud_Arquitectura:
+    Definición: "∃ función health_D1: Estructura → [0,1] que mide calidad arquitectura"
+    Propiedades_Requeridas:
+      - Monotonía: Mejor estructura → mayor health
+      - Accionabilidad: health baja → diagnóstico + intervención
+      - Constraint: health_D1 < H_min → bloquear transformaciones estructurales
+    Fundamentación:
+      - Estructura enferma no soporta cambio estructural adicional
+      - Correlación: health_D1 ↔ velocity, quality, employee_satisfaction
       
-    A2_Span_Control:
-      = % managers con 5-9 reports
-      Target: > 80%
-      
-    A3_Handoff_Ratio:
-      = Promedio handoffs / steps en flujos críticos
-      Target: < 20%
-      
-    A4_Alignment_Propósitos:
-      = % propósitos individuales alineados con org
-      Target: > 85%
-      
-    A5_Violaciones_Governance:
-      = # violaciones policies / mes
-      Target: < 5 (org 100 personas)
-      
-  Fórmula:
-    A_Score = weighted_avg(A1×30%, A2×20%, A3×25%, A4×20%, A5×5%)
+  [FENOTIPO] A_Score_Implementación:
+    "Métrica recomendada salud arquitectura (0-100)"
     
-  Interpretación:
-    A_Score > 80: Excelente (estructura clara, funciona bien)
-    A_Score 70-80: Bueno (funcional, mejoras incrementales)
-    A_Score 60-70: Aceptable (friction notable, requiere atención)
-    A_Score < 60: Crítico (disfuncional, requiere intervención urgente)
-    
-  Regla_Invariante:
-    IF A_Score < 70 THEN bloquear transformaciones estructurales
-    
-    Justificación:
-      Estructura enferma no soporta cambio estructural adicional
-      Primero sanar, luego transformar
+    Componentes_Sugeridos:
+      A1_Claridad_Autoridad: % decisiones con accountable único claro
+        Target_Recomendado: > 90%
+        
+      A2_Span_Control: % managers con 5-9 reports
+        Target_Recomendado: > 80%
+        
+      A3_Handoff_Ratio: Promedio handoffs / steps en flujos críticos
+        Target_Recomendado: < 20%
+        
+      A4_Alignment_Propósitos: % propósitos individuales alineados con org
+        Target_Recomendado: > 85%
+        
+      A5_Violaciones_Governance: # violaciones policies / mes
+        Target_Recomendado: < 5 (org 100 personas)
+        
+    Fórmula_Sugerida:
+      A_Score = weighted_avg(A1×30%, A2×20%, A3×25%, A4×20%, A5×5%)
+      
+    Interpretación_Típica:
+      A_Score > 80: Excelente (estructura clara, funciona bien)
+      A_Score 70-80: Bueno (funcional, mejoras incrementales)
+      A_Score 60-70: Aceptable (friction notable, requiere atención)
+      A_Score < 60: Crítico (disfuncional, requiere intervención urgente)
+      
+    Threshold_Default:
+      H_min = 70 (alineado con 07_ecuacion_maestra)
+      IF A_Score < 70 THEN bloquear transformaciones estructurales
+      
+    NOTA: Pesos, targets y thresholds son CONFIGURABLES según contexto org
 
 Emergence_Level:
 
@@ -528,7 +535,11 @@ Interacciones_Con_Otros_Dominios:
 
 Métricas_Health:
 
-  P_Score: Métrica salud percepción (0-100)
+  [GENOMA] Concepto_Salud_Percepción:
+    Definición: "∃ función health_D2: Coverage_Observables → [0,1]"
+    Propiedades: Monotonía, Accionabilidad, Freshness crítico
+    
+  [FENOTIPO] P_Score: Métrica recomendada salud percepción (0-100)
   
   Componentes:
     P1_Coverage:
@@ -877,7 +888,11 @@ Interacciones_Con_Otros_Dominios:
 
 Métricas_Health:
 
-  D_Score: Métrica salud decisión (0-100)
+  [GENOMA] Concepto_Salud_Decisión:
+    Definición: "∃ función health_D3: (Velocity × Quality × Alignment) → [0,1]"
+    Propiedades: Trade-off velocity/quality, Portfolio balance obligatorio
+    
+  [FENOTIPO] D_Score: Métrica recomendada salud decisión (0-100)
   
   Componentes:
     D1_Decision_Velocity:
@@ -1439,56 +1454,74 @@ Composición_Temporal:
 
 Health_Score_Organizacional:
 
-  Definición:
-    "Métrica compuesta salud organizacional desde 5 dimensiones.
-     Refleja I5 (Primacía Humana) como dimensión crítica."
+  [GENOMA] Concepto_Health_Integrado:
     
-  Fórmula_Completa:
-    H_org = weighted_avg(
-      H1_Humano       × 30%,  # Bienestar, engagement, desarrollo, autonomía
-      H2_Arquitectura × 25%,  # Estructura, boundaries, alignment (A_Score)
-      H3_Flujo        × 20%,  # Eficiencia value streams, waste minimization
-      H4_Percepción   × 15%,  # Observable coverage, freshness (P_Score)
-      H5_Decisión     × 10%   # OKR velocity, portfolio balance (D_Score)
-    )
+    Definición:
+      "∃ función health_org: (health_D1 × health_D2 × health_D3 × health_D4 × health_humano) → [0,1]
+       que integra salud multi-dimensional organizacional."
+       
+    Propiedades_Requeridas:
+      P1_Composicionalidad: H_org agrega health por dominio
+      P2_Humano_Crítico: Refleja I5 (Primacía Humana) con peso significativo
+      P3_Constraint_Transformación: H_org < H_min → bloquear transformaciones
+      P4_Invariantes_Acoplamiento:
+        - Health_Humano muy bajo → ceiling H_org (org burned out)
+        - Health_Arquitectura bajo → ceiling H_org (estructura disfuncional)
+        
+    Fundamentación:
+      - Ver 07_ecuacion_maestra: V_org maximización require H_org ≥ H_min
+      - Correlación empírica: H_org ↔ retention, velocity, quality, NPS
+      
+  [FENOTIPO] H_org_Implementación_Recomendada:
     
-  Pesos_Justificados:
-    - H1_Humano 30%: People-first (I5 Primacía Humana)
-    - H2_Arquitectura 25%: Estructura habilita todo
-    - H3_Flujo 20%: Delivery efficiency crítico
-    - H4_Percepción 15%: Observability habilita decisiones
-    - H5_Decisión 10%: Dirección importante, ejecución domina
-    
-  Adopción_Gradual:
-    Orgs pueden empezar con versión simplificada 4D:
+    Fórmula_Sugerida_5D:
+      H_org = weighted_avg(
+        H1_Humano       × 30%,  # Bienestar, engagement, desarrollo, autonomía
+        H2_Arquitectura × 25%,  # Estructura, boundaries, alignment (A_Score)
+        H3_Flujo        × 20%,  # Eficiencia value streams, waste minimization
+        H4_Percepción   × 15%,  # Observable coverage, freshness (P_Score)
+        H5_Decisión     × 10%   # OKR velocity, portfolio balance (D_Score)
+      )
+      
+    Pesos_Justificación:
+      - H1_Humano 30%: People-first (I5 Primacía Humana)
+      - H2_Arquitectura 25%: Estructura habilita todo
+      - H3_Flujo 20%: Delivery efficiency crítico
+      - H4_Percepción 15%: Observability habilita decisiones
+      - H5_Decisión 10%: Dirección importante, ejecución domina
+      
+    NOTA: Pesos son CONFIGURABLES según valores org y contexto industria
+      
+    Variante_Simplificada_4D (orgs iniciando):
       H_org_simple = weighted_avg(
         H2_Arquitectura × 30%,
         H3_Flujo        × 35%,
         H4_Percepción   × 20%,
         H5_Decisión     × 15%
       )
-    Evolución: Añadir H1_Humano cuando surveys implementados (3-6 meses)
+      Evolución: Añadir H1_Humano cuando surveys implementados (3-6 meses)
+      
+    Interpretación_Típica:
+      H_org > 80: Elite (top 10% industry)
+      H_org 70-80: High performing
+      H_org 60-70: Functional (mejoras necesarias)
+      H_org 50-60: Struggling (intervención urgente)
+      H_org < 50: Crisis (disfuncional)
+      
+    Invariantes_Implementación (enforcement constraints genoma):
     
-  Interpretación:
-    H_org > 80: Elite (top 10% industry)
-    H_org 70-80: High performing
-    H_org 60-70: Functional (mejoras necesarias)
-    H_org 50-60: Struggling (intervención urgente)
-    H_org < 50: Crisis (disfuncional)
-    
-  Invariantes_Críticos:
-  
-    INV_Humano_Ceiling:
-      IF H1_Humano < 50 THEN H_org = min(H_org, 60)
-      Rationale: "Burnout organization cannot score >60 total"
-    
-    INV_Arquitectura_Base:
-      IF H2_Arquitectura < 60 THEN H_org = min(H_org, 70)
-      Rationale: "Disfuncional structure limits ceiling"
-    
-    INV_Transformación:
-      IF H_org < 70 THEN block(transformaciones_mayores)
-      Rationale: "Organización enferma no soporta cambio estructural"
+      INV_Humano_Ceiling:
+        IF H1_Humano < 50 THEN H_org = min(H_org, 60)
+        Rationale: "Burnout organization cannot score >60 total"
+      
+      INV_Arquitectura_Base:
+        IF H2_Arquitectura < 60 THEN H_org = min(H_org, 70)
+        Rationale: "Disfuncional structure limits ceiling"
+      
+      INV_Transformación:
+        H_min_default = 70
+        IF H_org < 70 THEN block(transformaciones_mayores)
+        Rationale: "Organización enferma no soporta cambio estructural"
       
   Interpretación_Niveles:
     H_org ≥ 85: Elite (top 10% industry)

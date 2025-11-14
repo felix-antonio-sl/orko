@@ -9,18 +9,31 @@
   - [§6. DIAGRAMA ER CONCEPTUAL](#6-diagrama-er-conceptual)
   - [§7. PROPIEDADES DERIVABLES](#7-propiedades-derivables)
 
+> **Etiquetado Genoma/Fenotipo**: Este documento contiene [GENOMA] (formas relacionales teóricas E1-E5, R1-R13) y [FENOTIPO] (implementaciones SQL/JSON, constraints específicos). Ver §0.1 en 00_introduccion.md.
+
 ## §1. FUNDAMENTOS MODELO
+
+**[GENOMA]**
 
 ```YAML
 Naturaleza_Modelo:
-  "Modelo relacional define estructura datos y relaciones entre primitivos.
-   Es LÓGICO (independiente implementación física DB/código)."
+  "Modelo relacional teórico define estructura abstracta y relaciones entre primitivos.
+   Es LÓGICO (genoma), independiente de implementación física (fenotipo)."
+  
+Nivel_Abstracción:
+  GENOMA: Formas relacionales (E1-E5, R1-R13), multiplicidades, constraints lógicos
+  FENOTIPO: Schemas SQL/JSON, CHECK() clauses, indexing strategies
 
-Propósito:
-  1. Especificar relaciones permitidas entre entidades
-  2. Definir multiplicidades (1:1, 1:N, N:M)
-  3. Establecer constraints integridad referencial
-  4. Base para implementación (SQL schema, graph DB, código)
+Propósito_Genoma:
+  1. Especificar relaciones permitidas entre entidades primitivas
+  2. Definir multiplicidades teóricas (1:1, 1:N, N:M)
+  3. Establecer constraints lógicos integridad referencial
+  4. Validar consistencia primitivos P1-P5
+  
+Propósito_Fenotipo:
+  1. Proveer ejemplos implementación (SQL, JSON, GraphQL)
+  2. Especificar validaciones concretas (CHECK, triggers)
+  3. Optimizaciones físicas (indexes, partitioning)
 
 Notación:
   Entidad [min..max] ←relación→ [min..max] Entidad
@@ -34,8 +47,10 @@ Notación:
 
 ## §2. ENTIDADES CORE
 
+**[GENOMA]** - Definiciones Teóricas
+
 ```YAML
-Listado_Entidades:
+Listado_Entidades_Primitivas:
 
   E1_Capacidad:
     Schema: Contrato C1 (§2 Parte I)
@@ -64,20 +79,25 @@ Listado_Entidades:
 
 Total_Entidades_Primitivas: 5 (minimal y suficiente por I1)
 
-Nota_Arquitectural:
-  "Este modelo relacional define ÚNICAMENTE primitivos teóricos (E1-E5).
+Scope_Genoma:
+  "Este modelo define ÚNICAMENTE entidades PRIMITIVAS (E1-E5).
+   Son el núcleo irreducible del modelo relacional ORKO."
    
-   La arquitectura ORKO extiende este modelo base con entidades COMPUESTAS
-   derivadas formalmente de primitivos para soportar capacidades operacionales:
+Scope_Fenotipo_Arquitectura:
+  "La arquitectura ORKO (Layer 1) extiende genoma con entidades COMPUESTAS:
    
-   • E6_Estado_Arquitectónico: Snapshot(E1+E2+E4+E5) para coherencia temporal
-   • E7_Ejecución_Flujo: Instance(E2) para tracking operacional y DORA metrics
+   • E6_Estado_Arquitectónico: Snapshot(E1+E2+E4+E5) - coherencia temporal
+   • E7_Ejecución_Flujo: Instance(E2) - tracking DORA metrics
    
-  Ver ../10_arquitectura_orko/03_relaciones.md §2 para especificación completa
-   de entidades compuestas y su derivación formal desde primitivos."
+   Estas derivan formalmente de primitivos E1-E5 (no nuevos primitivos).
+   
+   Dirección: GENOMA (E1-E5 aquí) → ARQUITECTURA (E6-E7 allá)
+   Post-lectura: ../10_arquitectura_orko/03_relaciones.md §2"
 ```
 
 ## §3. RELACIONES FUNDAMENTALES
+
+**[GENOMA]** - Formas Relacionales Teóricas
 
 R1_Capacidad_Ejecuta_Flujo:
 
@@ -92,16 +112,16 @@ R1_Capacidad_Ejecuta_Flujo:
     - Una capacidad ejecuta 0+ flujos (puede estar idle)
     - Un flujo requiere 1+ capacidades (al menos 1 step)
     
-  Implementación:
-    Via Flujo.steps[].capacity_required.capacity_id → Capacidad.id
+  Forma_Relacional:
+    Capacidad × Flujo (relación N:M vía atributo steps[])
     
   Derivación_Teórica:
     A1 (Transformación) + A2 (Capacidad efectúa transformación)
     → Flujo = secuencia transformaciones requiere capacidades
     
-  Constraints:
-    - ∀ step ∈ Flujo.steps: step.capacity_id ∈ Capacidad (FK)
-    - ∀ step: Capacidad.capacity_type ≥ step.capacity_type_min
+  Constraints_Lógicos:
+    - ∀ step ∈ Flujo.steps: ∃ c ∈ Capacidad (referencia válida)
+    - ∀ step: capacity.type ≥ step.type_min_required (compatibilidad tipos)
     
   Propiedad_Direccional:
     Flujo → Capacidad (dependency)
@@ -119,16 +139,16 @@ R2_Flujo_Produce_Información:
     - Un flujo produce 1+ informaciones (al menos output)
     - Una información es producida por 1 flujo (single producer)
     
-  Implementación:
-    Información.lineage.produced_by_flow_id → Flujo.id
+  Forma_Relacional:
+    Flujo → Información (relación 1:N, FK en Información)
     
   Derivación_Teórica:
     A1 (Transformación S₁→S₂) + A3 (Información coordina)
     → Transformación observable vía información producida
     
-  Constraints:
-    - ∀ I ∈ Información: I.lineage.produced_by_flow_id → Flujo | null
-    - IF Información.information_type ≠ external THEN produced_by_flow NOT NULL
+  Constraints_Lógicos:
+    - ∀ I ∈ Información: I.producer_flow → Flujo ∪ {null}
+    - IF I.type ≠ external THEN I.producer_flow ≠ null (información interna requiere productor)
     
   Excepción:
     Información externa (imported) puede tener produced_by_flow = null
@@ -145,8 +165,8 @@ R3_Capacidad_Produce_Información:
     - Una capacidad produce 0+ informaciones
     - Una información producida por 1 capacidad específica
     
-  Implementación:
-    Información.lineage.produced_by_capacity_id → Capacidad.id
+  Forma_Relacional:
+    Capacidad → Información (relación 1:N, FK en Información)
     
   Derivación_Teórica:
     A2 (Capacidad efectúa) + A3 (Información estructura significado)
@@ -169,16 +189,15 @@ R4_Capacidad_Consume_Información:
     - Capacidad C1+ consume 1+ información (para decidir)
     - Información consumida por 0+ capacidades
     
-  Implementación:
-    Via Flujo.steps[].input_information → Información.id
-    (consumo implícito cuando capacidad ejecuta step)
+  Forma_Relacional:
+    Capacidad × Información (relación N:M vía steps[] inputs)
     
   Derivación_Teórica:
     Capacidad C1+ requiere input para decisión (A3)
     
-  Constraint:
-    ∀ C ∈ Capacidad WHERE capacity_type = C0:
-      consumed_information.count = 0
+  Constraint_Lógico:
+    ∀ C ∈ Capacidad WHERE C.type = C0:
+      |consumed_info(C)| = 0 (capacidad mecánica no consume info)
 
 R5_Información_Deriva_Información:
   
@@ -192,17 +211,17 @@ R5_Información_Deriva_Información:
     - Información puede tener 0+ padres
     - Información puede ser padre de 0+ hijos
     
-  Implementación:
-    Información.lineage.parent_info_ids → List<Información.id>
+  Forma_Relacional:
+    Información × Información (relación N:M recursiva, DAG)
     
   Derivación_Teórica:
     A3 (Información coordina) + Propiedad agregación
     → Información compuesta deriva de fuentes
     
-  Constraints:
-    - DAG (no cycles): topological_sort(parent_ids) succeeds
-    - IF information_type = Agregada THEN parent_info_ids.length > 1
-    - IF information_type = Transitoria THEN parent_info_ids.length = 0
+  Constraints_Lógicos:
+    - DAG: ¬∃ cycles (acyclic graph property)
+    - IF I.type = Agregada THEN |parents(I)| ≥ 2 (agregación requiere múltiples fuentes)
+    - IF I.type = Transitoria THEN |parents(I)| = 0 (eventos no derivan)
     
   Propiedad_Recursiva:
     lineage_depth(I) = 1 + max(lineage_depth(parent) for parent in parents)
@@ -219,9 +238,8 @@ R6_Límite_Restringe_Capacidad:
     - Límite aplica a 0+ capacidades (puede ser global)
     - Capacidad restringida por 0+ límites
     
-  Implementación:
-    Límite.constraint.target_entity_ids → List<Capacidad.id>
-    WHERE Límite.constraint.target_entity_type = Capacidad
+  Forma_Relacional:
+    Límite × Capacidad (relación N:M)
     
   Derivación_Teórica:
     A4 (Restricción acota posibilidades)
@@ -243,9 +261,8 @@ R7_Límite_Restringe_Flujo:
     - Límite aplica a 0+ flujos
     - Flujo restringido por 0+ límites
     
-  Implementación:
-    Límite.constraint.target_entity_ids → List<Flujo.id>
-    WHERE Límite.constraint.target_entity_type = Flujo
+  Forma_Relacional:
+    Límite × Flujo (relación N:M)
     
   Derivación_Teórica:
     A4 (Restricción) + A1 (Transformación)
@@ -407,26 +424,30 @@ R13_Delegación_HAIC:
     AND target.substrate ∈ {Humano, Mixto}
     
   Derivación_Teórica:
-    I5 (HAIC/Primacía humana): "Capacidad algorítmica opera bajo supervisión
-     y responsabilidad humana explícita. Delegación progresiva M1→M6."
+    I5_HAIC (Primacía humana): "Capacidad algorítmica opera bajo supervisión
+     y responsabilidad humana explícita con autonomía acotada progresiva."
+     Ver 03_invariantes.md §6 para teorema completo
     
-  Constraints:
-    - IF substrate = Algorítmico THEN accountable_capacity_id NOT NULL (mandatory)
+  Constraints_Genoma:
+    - IF substrate = Algorítmico AND capacity_type ≥ C1 
+      THEN accountable_capacity_id NOT NULL (mandatory)
     - accountable_capacity.substrate ∈ {Humano, Mixto}
     - accountable_capacity.substrate ≠ Algorítmico (no delegation loop)
     - Si accountable es Mixto, ∃ humano en composition (transitivo)
     
-  Modos_Delegación (I5):
-    M1_Monitor: Humano observa, algoritmo informa
-    M2_Informar: Humano ratifica decisiones algoritmo
-    M3_Sugerir: Algoritmo propone, humano decide
-    M4_Decidir_Bajo_Excepción: Algoritmo decide, humano interviene excepciones
-    M5_Coproducir: Algoritmo + humano colaboran simétricamente
-    M6_Delegar_Monitorizado: Algoritmo decide, humano audita periódicamente
+  Delegation_Mode_Abstract:
+    Campo: delegation_mode: DelegationMode?
+    Dominio: Tipo abstracto representando nivel autonomía
+    Valores_Concretos: Ver I5_[FENOTIPO] (03_invariantes.md §6) para:
+      - Espectro M1-M6 (Monitorear → Informar → ... → Ejecutar)
+      - Progresión recomendada entre niveles
+      - Thresholds success_rate para cambios autonomía
+    NOTA: Genoma solo define ∃ delegation_mode, no valores específicos
     
   Propiedad_Trazabilidad:
-    ∀ output algorítmico: audit_trail registra humano accountable
-    + modo delegación aplicado + timestamp
+    ∀ output algorítmico: audit_trail registra
+      (humano_accountable, delegation_mode, timestamp)
+    Fundamentación: I3 (Trazabilidad) + I5 (HAIC)
     
   Anti-Pattern:
     Capacidad algorítmica sin accountable_capacity_id → INVALID STATE
@@ -469,83 +490,112 @@ Propiedad_Completitud:
 
 ## §5. CONSTRAINTS INTEGRIDAD
 
-Constraints_Globales:
+**[GENOMA]** - Constraints Lógicos Teóricos
 
 ```YAML
+Constraints_Globales_Genoma:
+
   C1_Referential_Integrity:
-    "Toda FK apunta a entidad existente."
-    
-    ∀ relación R con FK:
-      ∀ entity.fk_field:
-        entity.fk_field ∈ target_entity.id OR fk_field = null (if optional)
+    Enunciado: "Toda referencia apunta a entidad existente"
+    Forma_Lógica:
+      ∀ relación R con referencia externa:
+        ∀ entity.ref_field:
+          entity.ref_field ∈ target_entity.id ∨ ref_field = null (si opcional)
         
   C2_Acyclicity:
-    "Relaciones recursivas forman DAG (no cycles)."
-    
-    Aplicable a:
-      - R5: Información.parent_info_ids (DAG lineage)
+    Enunciado: "Relaciones recursivas forman DAG (no cycles)"
+    Aplicable_a:
+      - R5: Información.parent_info_ids (lineage)
       - R11: Propósito.parent_purpose_id (tree)
       - R12: Capacidad.component_ids (composición)
-      
-    Test: topological_sort succeeds
+    Validación: topological_sort(graph) ≠ ∅
     
   C3_Type_Consistency:
-    "Relaciones respetan tipos compatibles."
-    
-    Ejemplos:
-      - R1: Capacidad.capacity_type ≥ Flujo.step.capacity_type_min
-      - R10: Propósito.owner_capacity.substrate ∈ {Humano, Mixto}
-      - R12: Mixto.composition tiene ≥1 Humano
+    Enunciado: "Relaciones respetan tipos compatibles"
+    Ejemplos_Lógicos:
+      - R1: Capacidad.type ≥ Flujo.step.min_required_type
+      - R10: Propósito.owner.substrate ∈ {Humano, Mixto}
+      - R12: Mixto.components contiene ≥1 Humano
       
   C4_Mandatory_Relations:
-    "Relaciones obligatorias siempre presentes."
+    Enunciado: "Relaciones obligatorias siempre presentes"
+    Especificación:
+      - R9: ∀ Flujo f: f.purpose_id ≠ null (fundamentado en A5)
+      - R10: ∀ Propósito p: p.owner_capacity_id ≠ null
+      - R13: ∀ Capacidad c: (c.substrate = Algorítmico ∧ c.type ≥ C1) → c.accountable_capacity_id ≠ null
 
   C9_Minimum_Steps:
-    "Todo `Flujo` tiene **al menos un** `step` (capacidad requerida)."
-    Formal:
+    Enunciado: "Todo Flujo contiene al menos una Capacidad ejecutora"
+    Forma_Lógica:
       ∀ Flujo f: |f.steps| ≥ 1
-    Implementación:
-      CHECK (json_array_length(steps) ≥ 1)
-      AND FK: ∀ step.capacity_id ∈ Capacidad.id
-    Relación:
-      R1 (Capacidad ↔ Flujo)
+    Fundamentación: Flujo sin steps no transforma (contradice definición P2)
 
-    
-    - R9: ∀ Flujo: purpose_id NOT NULL
-    Nota (semántica vs política): I2 establece independencia conceptual Flujo⊥Propósito;
-    el modelo **exige** propósito explícito por A5/P5 → `purpose_id NOT NULL`.
-    - R10: ∀ Propósito: owner_capacity_id NOT NULL
-    - R13: ∀ Capacidad(substrate=Algorítmico): accountable_capacity_id NOT NULL
-    - R2: ∀ Información (no externa): produced_by_flow_id NOT NULL
-
-Constraints_Por_Invariante:
+Constraints_Derivados_Invariantes_Genoma:
 
   I1_Minimalidad → C5_Justification:
-    Toda entidad tiene campo justification documentado
-    (meta-constraint, verificado vía PD1)
+    Enunciado: "Toda entidad tiene campo justification documentado"
+    Validación: Meta-constraint (verificado vía PD1 arquitectura)
     
   I3_Trazabilidad → C6_Audit_Trail:
-    Toda entidad tiene (created_by, created_at, version)
-    I5_HAIC → C7_Human_Accountability:
-    ∀ Capacidad(substrate=Algorítmico):
-      accountable_capacity_id → Capacidad(substrate ∈ {Humano, Mixto})
-      + delegation_mode ∈ {M1, M2, M3, M4, M5, M6}
-      + audit_trail registra humano responsable + timestamp
-    (Enforcement vía R13_Delegación_HAIC)
-    (schema enforced)
+    Enunciado: "Toda entidad tiene (created_by, created_at, version)"
+    Fundamentación: Trazabilidad requiere registro cambios
     
   I5_HAIC → C7_Human_Accountability:
-    ∀ Capacidad(substrate=Algorítmico):
-      accountable_capacity_id → Capacidad(substrate ∈ {Humano, Mixto})
-      + delegation_mode ∈ {M1, M2, M3, M4, M5, M6}
-      + audit_trail registra humano responsible + timestamp
-    ∀ Propósito: owner_capacity.substrate ∈ {Humano, Mixto}
-    ∀ Límite(crítico): owner_capacity.substrate = Humano
-    (Enforcement vía R13_Delegación_HAIC)
+    Enunciado: "Toda Capacidad algorítmica decisional tiene accountable humano"
+    Forma_Lógica:
+      ∀ cap ∈ Capacidad:
+        (cap.substrate = Algorítmico ∧ cap.type ≥ C1) →
+          cap.accountable_capacity_id → Capacidad(substrate ∈ {Humano, Mixto})
+      ∀ prop ∈ Propósito:
+        prop.owner_capacity.substrate ∈ {Humano, Mixto}
+      ∀ lim ∈ Límite:
+        (lim.criticality = HIGH) → lim.owner_capacity.substrate = Humano
+    Enforcement: R13_Delegación_HAIC
     
   I7_Emergencia → C8_Level_Appropriateness:
-    No validable en schema (validado en metodología)
-    Org nivel N no usa prácticas nivel N+2
+    Enunciado: "Org nivel N no usa prácticas nivel N+2"
+    Validación: No enforced en schema (metodología valida)
+```
+
+---
+
+**[FENOTIPO]** - Implementaciones SQL/JSON
+
+```sql
+-- Ejemplo implementación C9_Minimum_Steps en PostgreSQL:
+CREATE TABLE flow (
+  id UUID PRIMARY KEY,
+  steps JSONB NOT NULL,
+  CONSTRAINT flow_min_steps CHECK (jsonb_array_length(steps) >= 1),
+  CONSTRAINT flow_steps_have_capacity CHECK (
+    (SELECT COUNT(*) FROM jsonb_array_elements(steps) step
+     WHERE step->>'capacity_id' IS NULL) = 0
+  )
+);
+
+-- Ejemplo implementación C2_Acyclicity en trigger:
+CREATE FUNCTION validate_dag_constraint() RETURNS TRIGGER AS $$
+BEGIN
+  IF EXISTS (SELECT 1 FROM detect_cycle(NEW.parent_id, NEW.id)) THEN
+    RAISE EXCEPTION 'Cycle detected in relationship';
+  END IF;
+  RETURN NEW;
+END;
+$$ LANGUAGE plpgsql;
+
+-- Ejemplo implementación C7_Human_Accountability:
+CREATE TABLE capacity (
+  id UUID PRIMARY KEY,
+  substrate VARCHAR(20) NOT NULL CHECK (substrate IN ('Humano', 'Algorítmico', 'Mecánico', 'Mixto')),
+  capacity_type VARCHAR(10) NOT NULL CHECK (capacity_type IN ('C0', 'C1', 'C2', 'C3')),
+  accountable_capacity_id UUID REFERENCES capacity(id),
+  delegation_mode VARCHAR(2) CHECK (delegation_mode IN ('M1', 'M2', 'M3', 'M4', 'M5', 'M6')),
+  CONSTRAINT algo_needs_accountable CHECK (
+    substrate != 'Algorítmico' OR 
+    (capacity_type = 'C0' AND accountable_capacity_id IS NULL) OR
+    (capacity_type >= 'C1' AND accountable_capacity_id IS NOT NULL)
+  )
+);
 ```
 
 ## §6. DIAGRAMA ER CONCEPTUAL
@@ -607,6 +657,8 @@ Lectura_Diagrama:
 - → = Unidireccional
 
 ## §7. PROPIEDADES DERIVABLES
+
+**[FENOTIPO]** - Queries y Métricas Operacionales
 
 Queries_Típicas:
 

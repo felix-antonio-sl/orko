@@ -2,6 +2,14 @@
 
 **Layer 2: Operacionalización Tecnológica**  
 
+> **📘 FRAMEWORK GENOMA/FENOTIPO**:  
+> Layer 2 opera bajo el mismo framework estructural de Layers 0+1:
+> - **[GENOMA]**: Abstracciones universales e invariantes (schemas, primitivos, patterns conceptuales)
+> - **[FENOTIPO]**: Implementaciones concretas y configurables (tech stacks, tools, thresholds)
+> 
+> **Principio**: Separar lo esencial (genoma) de lo contextual (fenotipo) para maximizar reusabilidad, 
+> extensibilidad y claridad arquitectónica. Ver Layers 0+1 para profundización del framework.
+
 ---
 
 ## §1. QUÉ SON LOS TEJIDOS
@@ -120,6 +128,41 @@ Derivación_Directa:
     Razón: Purpose NO es tech per se, es dirección estratégica
 ```
 
+### §2.2.1 Reconciliación SIGMA → ORKO
+
+```yaml
+Mapeo_Tejidos:
+  "Referencia SIGMA (Doc 08_sigma_operacionalizacion.md) menciona 4 tejidos ejecución.
+   ORKO Layer 2 consolida a 3 tejidos + 2 transversales para maximizar ortogonalidad."
+  
+  SIGMA_Conocimiento (Curation→Indexación→RAG→Citas):
+    Destino_ORKO: TF3_Information.Semantic
+    Justificación: "Conocimiento curado ES tipo especial de información"
+    Decisión: Integrado como subdomain TF3 (NO tejido separado)
+    Beneficio: Evita duplicar governance data vs knowledge
+    
+  SIGMA_Datos (Lakehouse, Data Products, Linaje):
+    Destino_ORKO: TF3_Information ✓
+    Justificación: "Mapeo 1:1 directo"
+    
+  SIGMA_Procesos (BPMN/EDA, Sagas, HITL, RPA):
+    Destino_ORKO: TF2_Flow ✓
+    Justificación: "Mapeo 1:1 directo"
+    Incluye: E7_FlowExecution integrado
+    
+  SIGMA_Agentes (LLMs, herramientas, espectro autonomía):
+    Destino_ORKO: TF1_Capacity.Algorítmico ✓
+    Justificación: "Agentes SON tipo de capacidad (substrate=Algorítmico, C1-C2)"
+    Decisión: Integrado en TF1 (NO tejido separado)
+    Beneficio: Agentes comparten lifecycle management con otras capacidades
+    
+Resultado_Final:
+  SIGMA_4_Tejidos → ORKO_3_Tejidos + 2_Transversales
+  Ganancia: Minimalidad preservada, ortogonalidad maximizada
+  
+Trazabilidad: Ver 90_referencias_fundacionales/08_sigma_operacionalizacion.md §3
+```
+
 ### §2.3 Validación Minimalidad
 
 ```yaml
@@ -150,6 +193,27 @@ Test_Suficiencia:
   Conclusión: Cobertura completa ✓
 
 Resultado: 3 tejidos fundamentales + 2 transversales = Minimal architecture
+
+Framework_Genoma_Fenotipo_Aplicado:
+  "Cada tejido contiene AMBOS tipos contenido (ver header cada TFX.md):"
+  
+  [GENOMA] - Abstracciones universales e invariantes:
+    - Schemas (CapacityAsset, FlowAsset, InformationAsset)
+    - Invariantes (substrate=Algorítmico → delegated_from NOT NULL)
+    - Patterns conceptuales (HITL, bounded autonomy, compensation, trajectory)
+    - Primitive types (DelegationMode, CognitiveLevel, Substrate)
+    
+  [FENOTIPO] - Implementaciones concretas y configurables:
+    - Tech stacks específicos (MLflow, Airflow, Temporal, LangChain, dbt)
+    - Tools recomendados (Kubeflow, SageMaker, LangGraph, vLLM)
+    - Guardrails configurables (PII detection thresholds, cost limits)
+    - Thresholds operacionales ($50 budget, 5 min timeout, max 10 iterations)
+    - Compliance frameworks (GDPR, SOC2, HIPAA - configuración contextual)
+    
+  Beneficio:
+    ✓ Claridad: Qué es esencial (genoma) vs qué es contextual (fenotipo)
+    ✓ Extensibilidad: Agregar tools sin tocar abstracciones
+    ✓ Coherencia: Mismo framework Layers 0+1+2
 ```
 
 ---

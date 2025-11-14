@@ -64,9 +64,7 @@ components:
               format: uuid
               nullable: true
             delegation_mode:
-              type: string
-              enum: [M1, M2, M3, M4, M5, M6]
-              description: "Bounded autonomy mode (M1: Humano Puro → M6: Agente Autónomo)"
+              $ref: '../schemas/base.yaml#/components/schemas/DelegationMode'
             override_enabled:
               type: boolean
         

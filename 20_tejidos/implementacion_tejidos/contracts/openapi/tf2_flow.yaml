@@ -110,9 +110,7 @@ components:
           required: [delegation_mode]
           properties:
             delegation_mode:
-              type: string
-              enum: [M1, M2, M3, M4, M5, M6]
-              description: "Bounded autonomy mode (M1: Humano Puro → M6: Agente Autónomo)"
+              $ref: '../schemas/base.yaml#/components/schemas/DelegationMode'
             hitl_checkpoints:
               type: array
               items:

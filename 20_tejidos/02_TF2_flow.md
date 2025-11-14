@@ -3,6 +3,12 @@
 **Primitivos:** P2_Flujo + P1_Capacidad(ejecutores) | **Axioma:** A1_Transformación  
 **Dominios:** D4_Operación | **Tech:** BPA, OCE, CI/CD
 
+> **📘 GENOMA/FENOTIPO EN TF2**:  
+> - **[GENOMA]**: Schema FlowAsset + E7_FlowExecution, invariantes (compatibility steps, compensation rules), patterns abstractos (HITL, bounded autonomy, circuit breakers, compensation)  
+> - **[FENOTIPO]**: Orquestadores específicos (Airflow, Temporal, LangGraph), patrones concretos (RPA, ML routing, multi-agent), thresholds operacionales (timeouts, budgets, iteration limits)  
+> 
+> **Espectro C0→C2**: Desde RPA mecánico hasta multi-agent cognitivo, sin silos artificiales.
+
 ---
 
 ## §1. DEFINICIÓN
@@ -66,7 +72,7 @@ FlowAsset:
         
   # Bounded Autonomy (I5_HAIC)
   autonomy:
-    delegation_mode: {M1|M2|M3|M4|M5|M6}
+    delegation_mode: DelegationMode  # Ver 00_fundamentos_teoricos/03_invariantes.md §6 I5_[FENOTIPO]
     
     hitl_checkpoints: List<Checkpoint>
       Checkpoint:
@@ -225,7 +231,7 @@ Pattern: RPA_UI_Automation
     4. Extract_Result (screen scraping)
   
   Capacity_Type: C0 (sin decisión)
-  Tools: UiPath, Automation Anywhere
+  Tools: [FENOTIPO] UiPath, Automation Anywhere
   Delegation: M3-M4 (human invokes, bot executes)
   Guardrails: Timeout, whitelisted URLs, error screenshots
   Métricas: stp_rate, execution_time, error_rate
@@ -238,7 +244,7 @@ Pattern: Scheduled_Job
     4. Load (destination DB)
   
   Capacity_Type: C0
-  Tools: Airflow, Cron, dbt
+  Tools: [FENOTIPO] Airflow, Cron, dbt
   Delegation: M6 (fully automated)
   Compensation: Rollback if load fails
 ```
@@ -254,7 +260,7 @@ Pattern: ML_Based_Routing
     4. Route_to_Queue (based on prediction)
   
   Capacity_Type: C1 (decide routing)
-  Tools: Scikit-learn, TensorFlow Serving
+  Tools: [FENOTIPO] Scikit-learn, TensorFlow Serving
   Delegation: M4 (auto-route, human escalation if confidence < 0.80)
   Guardrails: Min_confidence_threshold, max_processing_time
   Drift_Detection: Monitor prediction_accuracy vs baseline
@@ -266,7 +272,7 @@ Pattern: Business_Rules_Engine
     3. Log_Decision
   
   Capacity_Type: C1
-  Tools: Drools, Decision Tables
+  Tools: [FENOTIPO] Drools, Decision Tables
   Delegation: M4-M5 (auto for routine, human for exceptions)
 ```
 
@@ -282,7 +288,7 @@ Pattern: Single_Agent_Task
     5. Respond
   
   Capacity_Type: C2 (reflexiona sobre ejecución)
-  Tools: LangChain, LlamaIndex, function calling
+  Tools: [FENOTIPO] LangChain, LlamaIndex, function calling
   Delegation: M3-M5 (human oversight, agent autonomous dentro scope)
   Guardrails:
     - Max_iterations: 10
@@ -307,7 +313,7 @@ Pattern: Multi_Agent_Orchestration
     5. HITL_Approval (human final review)
   
   Capacity_Type: C2 (múltiples agentes reflexivos)
-  Tools: CrewAI, AutoGen, LangGraph
+  Tools: [FENOTIPO] CrewAI, AutoGen, LangGraph
   Delegation: M5 (human + agents co-produce)
   Guardrails:
     - Budget_per_agent: {Researcher: $5, Writer: $10, Critic: $3}

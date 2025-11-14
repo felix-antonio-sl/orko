@@ -1,5 +1,14 @@
 # PARTE II: PRINCIPIOS DE DISEÑO
 
+> **Etiquetado Genoma/Fenotipo**: Este documento contiene principios con diferente nivel de universalidad:
+> - **[GENOMA]** PD1-PD30: Principios universales derivados de I1-I7 (obligatorios, no configurables)
+> - **[FENOTIPO]** PD31-PD35: Arquetipos AOC (contextuales, best practices validadas desde Meyer)
+> - **[GENOMA]** PD36-PD40: Parametrización contextual desde I8 (obligatorios, valores configurables)
+> - **[FENOTIPO]** PD41-PD46: Métricas AOC/Kelly (fórmulas recomendadas, thresholds configurables)
+> - **[FENOTIPO]** PD47-PD76: Guidelines operacionales G## (implementación específica)
+>
+> Ver ../00_fundamentos_teoricos/00_introduccion.md §0.1 para definición completa framework.
+
 - [PARTE II: PRINCIPIOS DE DISEÑO](#parte-ii-principios-de-diseño)
   - [§1. FUNDAMENTOS](#1-fundamentos)
   - [§2. DESDE I1: MINIMALIDAD](#2-desde-i1-minimalidad)
@@ -9,45 +18,46 @@
   - [§6. DESDE I5: HAIC (Human-AI Collaboration)](#6-desde-i5-haic-human-ai-collaboration)
   - [§7. DESDE I6: TRAJECTORY-AWARENESS](#7-desde-i6-trajectory-awareness)
   - [§8. DESDE I7: EMERGENCIA COMPLEJIDAD](#8-desde-i7-emergencia-complejidad)
-  - [§9. MÉTRICAS OPERABLES (AOC + Kelly): PD-AOC + PD-TD](#9-métricas-operables-aoc--kelly-pd-aoc--pd-td)
+  - [§9. MÉTRICAS OPERABLES (AOC + Kelly): PD41-PD46](#9-métricas-operables-aoc--kelly-pd41-pd46)
   - [§10. DESDE I8 (Parametrización Contextual): PD36-PD40](#10-desde-i8-parametrización-contextual-pd36-pd40)
-  - [WAVE 0: PRINCIPIOS DEFINICIONALES (PD46-50)](#wave-0-principios-definicionales-pd46-50)
-    - [PD46: Composition Acyclicity Transitive (desde G26)](#pd46-composition-acyclicity-transitive-desde-g26)
-    - [PD47: Handoff Formal Definition (desde G27)](#pd47-handoff-formal-definition-desde-g27)
-    - [PD48: Alignment Weighted Recursive (desde G28)](#pd48-alignment-weighted-recursive-desde-g28)
-    - [PD49: Violation Severity Weighted (desde G29)](#pd49-violation-severity-weighted-desde-g29)
-    - [PD50: Observable Standard Units (desde G30)](#pd50-observable-standard-units-desde-g30)
-  - [WAVE 1: PRINCIPIOS LIFECYCLE (PD51-53)](#wave-1-principios-lifecycle-pd51-53)
-    - [PD51: Lifecycle Explicit Transitions (desde G11)](#pd51-lifecycle-explicit-transitions-desde-g11)
-    - [PD52: Achievement Criteria Explicit (desde G12)](#pd52-achievement-criteria-explicit-desde-g12)
-    - [PD53: Deprecation Phased Timeline (desde G24)](#pd53-deprecation-phased-timeline-desde-g24)
-  - [WAVE 2: PRINCIPIOS ESTADOS Y TRANSICIONES (PD54-57)](#wave-2-principios-estados-y-transiciones-pd54-57)
-    - [PD54: State Snapshot Consistency (desde G1)](#pd54-state-snapshot-consistency-desde-g1)
-    - [PD55: Transition Executability (desde G23)](#pd55-transition-executability-desde-g23)
-    - [PD56: Reachability Validation (desde G2)](#pd56-reachability-validation-desde-g2)
-    - [PD57: Convergence Monitoring (desde G13)](#pd57-convergence-monitoring-desde-g13)
-  - [WAVE 3: PRINCIPIOS EXECUTION \& DORA (PD58-62)](#wave-3-principios-execution--dora-pd58-62)
-    - [PD58: Execution Instance Tracking (desde G3)](#pd58-execution-instance-tracking-desde-g3)
-    - [PD59: DORA Metrics Mandatory (desde G4)](#pd59-dora-metrics-mandatory-desde-g4)
-    - [PD60: Incident Flow Linkage (desde G5)](#pd60-incident-flow-linkage-desde-g5)
-    - [PD61: Health Score Composite (desde G6)](#pd61-health-score-composite-desde-g6)
-    - [PD62: Decision Audit Trail (desde G7)](#pd62-decision-audit-trail-desde-g7)
-  - [WAVE 4: PRINCIPIOS GOVERNANCE \& PORTFOLIO (PD63-67)](#wave-4-principios-governance--portfolio-pd63-67)
-    - [PD63: Portfolio Value Maximization (desde G14)](#pd63-portfolio-value-maximization-desde-g14)
-    - [PD64: Cross-Domain Health Balance (desde G15)](#pd64-cross-domain-health-balance-desde-g15)
-    - [PD65: Governance Automation Progressive (desde G10)](#pd65-governance-automation-progressive-desde-g10)
-    - [PD66: Pattern Catalog Mandatory (desde G8)](#pd66-pattern-catalog-mandatory-desde-g8)
-    - [PD67: Anti-Pattern Detection Automated (desde G9)](#pd67-anti-pattern-detection-automated-desde-g9)
-  - [WAVE 5: PRINCIPIOS VISTA OPTIMIZATIONS (PD68-71)](#wave-5-principios-vista-optimizations-pd68-71)
-    - [PD68: Dashboard Real-Time Constraints (desde G16)](#pd68-dashboard-real-time-constraints-desde-g16)
-    - [PD69: Artifact Templates Complete (desde G17)](#pd69-artifact-templates-complete-desde-g17)
-    - [PD70: Metric Threshold Adaptive (desde G18)](#pd70-metric-threshold-adaptive-desde-g18)
-    - [PD71: Integration Points Explicit (desde G19)](#pd71-integration-points-explicit-desde-g19)
-  - [WAVE 6: PRINCIPIOS FINAL REFINEMENTS (PD72-75)](#wave-6-principios-final-refinements-pd72-75)
-    - [PD72: Query Performance Budgets (desde G20)](#pd72-query-performance-budgets-desde-g20)
-    - [PD73: Validation Rules Complete (desde G21)](#pd73-validation-rules-complete-desde-g21)
-    - [PD74: Migration Path Documented (desde G22)](#pd74-migration-path-documented-desde-g22)
-    - [PD75: Pattern Success Metrics (desde G25)](#pd75-pattern-success-metrics-desde-g25)
+  - [§11. DESDE GUIDELINES G## (Operacionalización): PD47-PD76](#11-desde-guidelines-g-operacionalización-pd47-pd76)
+    - [Principios Definicionales (PD47-51, desde G26-G30)](#principios-definicionales-pd47-51-desde-g26-g30)
+      - [PD47: Composition Acyclicity Transitive (desde G26)](#pd47-composition-acyclicity-transitive-desde-g26)
+      - [PD48: Handoff Formal Definition (desde G27)](#pd48-handoff-formal-definition-desde-g27)
+      - [PD49: Alignment Weighted Recursive (desde G28)](#pd49-alignment-weighted-recursive-desde-g28)
+      - [PD50: Violation Severity Weighted (desde G29)](#pd50-violation-severity-weighted-desde-g29)
+      - [PD51: Observable Standard Units (desde G30)](#pd51-observable-standard-units-desde-g30)
+    - [Principios Lifecycle (PD52-54, desde G11-G24)](#principios-lifecycle-pd52-54-desde-g11-g24)
+      - [PD52: Lifecycle Explicit Transitions (desde G11)](#pd52-lifecycle-explicit-transitions-desde-g11)
+      - [PD53: Achievement Criteria Explicit (desde G12)](#pd53-achievement-criteria-explicit-desde-g12)
+      - [PD54: Deprecation Phased Timeline (desde G24)](#pd54-deprecation-phased-timeline-desde-g24)
+    - [Principios Estados y Transiciones (PD55-58, desde G1-G23)](#principios-estados-y-transiciones-pd55-58-desde-g1-g23)
+      - [PD55: State Snapshot Consistency (desde G1)](#pd55-state-snapshot-consistency-desde-g1)
+      - [PD56: Transition Executability (desde G23)](#pd56-transition-executability-desde-g23)
+      - [PD57: Reachability Validation (desde G2)](#pd57-reachability-validation-desde-g2)
+      - [PD58: Convergence Monitoring (desde G13)](#pd58-convergence-monitoring-desde-g13)
+    - [Principios Execution \& DORA (PD59-63, desde G3-G7)](#principios-execution--dora-pd59-63-desde-g3-g7)
+      - [PD59: Execution Instance Tracking (desde G3)](#pd59-execution-instance-tracking-desde-g3)
+      - [PD60: DORA Metrics Mandatory (desde G4)](#pd60-dora-metrics-mandatory-desde-g4)
+      - [PD61: Incident Flow Linkage (desde G5)](#pd61-incident-flow-linkage-desde-g5)
+      - [PD62: Health Score Composite (desde G6)](#pd62-health-score-composite-desde-g6)
+      - [PD63: Decision Audit Trail (desde G7)](#pd63-decision-audit-trail-desde-g7)
+    - [Principios Governance \& Portfolio (PD64-68, desde G8-G15)](#principios-governance--portfolio-pd64-68-desde-g8-g15)
+      - [PD64: Portfolio Value Maximization (desde G14)](#pd64-portfolio-value-maximization-desde-g14)
+      - [PD65: Cross-Domain Health Balance (desde G15)](#pd65-cross-domain-health-balance-desde-g15)
+      - [PD66: Governance Automation Progressive (desde G10)](#pd66-governance-automation-progressive-desde-g10)
+      - [PD67: Pattern Catalog Mandatory (desde G8)](#pd67-pattern-catalog-mandatory-desde-g8)
+      - [PD68: Anti-Pattern Detection Automated (desde G9)](#pd68-anti-pattern-detection-automated-desde-g9)
+    - [Principios Vistas \& Optimización (PD69-72, desde G16-G19)](#principios-vistas--optimización-pd69-72-desde-g16-g19)
+      - [PD69: Dashboard Real-Time Constraints (desde G16)](#pd69-dashboard-real-time-constraints-desde-g16)
+      - [PD70: Artifact Templates Complete (desde G17)](#pd70-artifact-templates-complete-desde-g17)
+      - [PD71: Metric Threshold Adaptive (desde G18)](#pd71-metric-threshold-adaptive-desde-g18)
+      - [PD72: Integration Points Explicit (desde G19)](#pd72-integration-points-explicit-desde-g19)
+    - [Principios Refinamientos Finales (PD73-76, desde G20-G25)](#principios-refinamientos-finales-pd73-76-desde-g20-g25)
+      - [PD73: Query Performance Budgets (desde G20)](#pd73-query-performance-budgets-desde-g20)
+      - [PD74: Validation Rules Complete (desde G21)](#pd74-validation-rules-complete-desde-g21)
+      - [PD75: Migration Path Documented (desde G22)](#pd75-migration-path-documented-desde-g22)
+      - [PD76: Pattern Success Metrics (desde G25)](#pd76-pattern-success-metrics-desde-g25)
 
 ## §1. FUNDAMENTOS
 
@@ -69,7 +79,11 @@ Propiedad_Trazabilidad:
 Propósito:
   Derivar reglas diseño arquitectónico desde invariantes sistema (Parte III)
 
-Total_Principios: 75 (PD1-PD75) (distribuidos en 8 invariantes I1-I8)
+Total_Principios: 76 (PD1-PD76)
+  Distribución:
+    - PD1-PD40: Desde Invariantes I1-I8 (40 principios universales)
+    - PD41-PD46: Desde AOC+Kelly (6 métricas operacionales configurables)
+    - PD47-PD76: Desde Guidelines G## (30 principios implementación específica)
 ```
 
 ## §2. DESDE I1: MINIMALIDAD
@@ -807,75 +821,159 @@ PD35_Incompatibilidad_δ_ε:
     IF capacity combina(discover, validate) THEN warning("Role conflict")
 ```
 
-## §9. MÉTRICAS OPERABLES (AOC + Kelly): PD-AOC + PD-TD
+## §9. MÉTRICAS OPERABLES (AOC + Kelly): PD41-PD46
 
 ```yaml
-PD-AOC_Coherencia_Resonancia_Flujo:
-  "Operacionalizar métricas AOC como gates verificables"
+Origen_Dual:
+  "Principios PD41-46 derivan de marcos complementarios:
+   - Meyer AOC (Quantum Organizational Architecture)
+   - Kelly Digital Transformation Discipline"
+   
+Naturaleza:
+  "Métricas operacionales con gates verificables.
+   Thresholds configurables según contexto organizacional."
+
+PD41_AOC_Coherencia_Gate:
+  "Coherencia organizacional debe superar umbral mínimo"
   
-  Origen: Meyer AOC (Quantum Organizational Architecture)
+  Origen: Meyer AOC (90_referencias_fundacionales/02_arquitectura_organizacional.md)
   
-  Q_AOC_01_Coherencia:
-    Fórmula: Coherencia = Σ(Valor_entregado)/Σ(Energía)
-    Energía: Esfuerzo + Fricción + Interferencia
-    Gate: Coherencia ≥ θ_coh
-    Uso: Alimenta Health Score Integrado y f_evaluate'
+  Fórmula:
+    Coherencia = Σ(Valor_entregado) / Σ(Energía_invertida)
+    Energía = Esfuerzo + Fricción + Interferencia
     
-  Q_AOC_02_Resonancia:
-    Fórmula: Resonancia = Profundidad_Especialización × Amplitud_Conexión
-    Gate: Resonancia ≥ θ_res
-    Uso: Detectar T-shaped individuals, cross-functional teams
+  Criterio_Verificable:
+    Coherencia ≥ θ_coh
+    θ_coh_default = 0.7 (configurable según contexto)
     
-  Q_AOC_03_Flujo:
-    Fórmula: Flujo = Tasa_Creación/(1+Fricción_Transferencia)
-    Gate: Flujo ≥ θ_flu
-    Uso: Optimización handoffs, flow efficiency
-    
-  Thresholds_Sugeridos:
-    θ_coh = 0.7  # Coherencia mínima aceptable
-    θ_res = 0.65
-    θ_flu = 0.6
+  Aplicación:
+    - Input H_org (Health Score integrado)
+    - Gate decisiones arquitectónicas estructurales
+    - Monitoring continuo interferencia cross-domain
     
   Observabilidad:
-    Estas queries deben tener paneles en D1, D3 y D4
+    Dashboard D1_Arquitectura + D3_Decisión
+
+PD42_AOC_Resonancia_Gate:
+  "Resonancia equipo (T-shaped profiles) debe ser suficiente"
+  
+  Origen: Meyer AOC
+  
+  Fórmula:
+    Resonancia = Profundidad_Especialización × Amplitud_Conexión
     
-PD-TD_Small_Batches_Flow_Quality_Speed:
-  "Operacionalizar principios Kelly Transformation Discipline"
+  Criterio_Verificable:
+    Resonancia ≥ θ_res
+    θ_res_default = 0.65 (configurable)
+    
+  Aplicación:
+    - Detectar gaps skill en equipos
+    - Validar cross-functional teams
+    - Trigger training/hiring decisions
+    
+  Observabilidad:
+    Dashboard D1_Arquitectura (team composition)
+
+PD43_AOC_Flujo_Gate:
+  "Flujo transferencia conocimiento/valor debe ser eficiente"
+  
+  Origen: Meyer AOC
+  
+  Fórmula:
+    Flujo = Tasa_Creación_Valor / (1 + Fricción_Transferencia)
+    
+  Criterio_Verificable:
+    Flujo ≥ θ_flu
+    θ_flu_default = 0.6 (configurable)
+    
+  Aplicación:
+    - Optimización handoffs cross-team
+    - Reducción dependencies bloqueantes
+    - Flow efficiency metrics
+    
+  Observabilidad:
+    Dashboard D4_Operación (flow metrics)
+
+PD44_TD_Small_Batches_Gate:
+  "Mayoría trabajo debe ejecutarse en small batches"
   
   Origen: Kelly Digital Transformation
   
-  Q_TD_01_Small_Batches:
-    Fórmula: % lotes ≤ tamaño objetivo
-    Gate: ≥ θ_sb (típico 0.80)
-    Anti-Pattern: "Grandes lotes por defecto"
+  Fórmula:
+    Small_Batch_Ratio = % work_items con size ≤ threshold
     
-  Q_TD_02_Flow:
-    Fórmula: Lead time medio ≤ umbral
-    Gate: ≤ θ_lt (contextual por industria)
-    Métrica: p50, p95 lead time
+  Criterio_Verificable:
+    Small_Batch_Ratio ≥ θ_sb
+    θ_sb_default = 0.80 (80% work en small batches)
     
-  Q_TD_03_Quality_Equals_Speed:
-    Fórmula: Defect_rate × Cycle_time (proxy inverso)
-    Gate: ≤ θ_qs
-    Interpretación: Baja calidad ralentiza (rework loops)
+  Aplicación:
+    - Reducir batch size (story splitting)
+    - Faster feedback loops
+    - Lower risk per deployment
     
-  Thresholds_Sugeridos:
-    θ_sb = 0.80  # 80% work en small batches
-    θ_lt = contextual (tech: 7d, gov: 30d)
-    θ_qs = contextual
+  Anti-Pattern:
+    "Grandes lotes por defecto" (batch optimization local, global subóptimo)
     
-Health_Score_Inputs_Extendidos:
-  "Agregar {Coherencia, Resonancia, Flujo} como inputs del Health Score"
+  Observabilidad:
+    Dashboard D4_Operación (work item sizing)
+
+PD45_TD_Flow_Gate:
+  "Lead time debe mantenerse bajo umbral contextual"
   
-  Extensión:
-    H_org = f(H1_Architecture, H2_Perception, H3_Decision, H4_Operation, H5_Governance)
+  Origen: Kelly Digital Transformation
+  
+  Fórmula:
+    Lead_Time = time(committed) - time(delivered)
     
-  Donde componentes ahora incluyen:
-    H1_Architecture ← incluye AOC_Coherencia
-    H4_Operation ← incluye AOC_Flujo, TD_Small_Batches, TD_Quality_Speed
+  Criterio_Verificable:
+    p50(Lead_Time) ≤ θ_lt
+    p95(Lead_Time) ≤ 2 × θ_lt
+    θ_lt_default = contextual (tech: 7d, gov: 30d, configurable)
     
-  Normalización: Todas métricas AOC/TD normalizadas a [0..1] antes agregación
-  Pesos: Configurables por contexto organizacional
+  Aplicación:
+    - Monitoring flow efficiency
+    - Detectar bottlenecks
+    - Trigger process improvements
+    
+  Observabilidad:
+    Dashboard D4_Operación (cycle time metrics)
+
+PD46_TD_Quality_Speed_Gate:
+  "Calidad y velocidad deben crecer juntas (no trade-off)"
+  
+  Origen: Kelly Digital Transformation
+  
+  Fórmula:
+    Quality_Speed_Index = Defect_Rate × Cycle_Time (proxy inverso)
+    Lower = Better (baja calidad ralentiza por rework)
+    
+  Criterio_Verificable:
+    Quality_Speed_Index ≤ θ_qs
+    θ_qs_default = contextual (configurable)
+    
+  Aplicación:
+    - Validar quality ≠ slow (anti-correlation)
+    - Detectar technical debt accumulation
+    - Trigger refactoring/automation
+    
+  Anti-Pattern:
+    "Move fast and break things" (no sostenible, rework loops)
+    
+  Observabilidad:
+    Dashboard D4_Operación (quality × speed tracking)
+
+Health_Score_Integration:
+  "PD41-46 se integran como inputs H_org"
+  
+  Mapping:
+    H1_Architecture ← PD41_Coherencia, PD42_Resonancia
+    H4_Operation ← PD43_Flujo, PD44_Small_Batches, PD45_Flow, PD46_Quality_Speed
+    
+  Normalización:
+    Todas métricas → [0..1] antes agregación weighted
+    
+  Configurabilidad:
+    Thresholds θ_* ajustables vía Context Schema (PD36)
 ```
 
 ## §10. DESDE I8 (Parametrización Contextual): PD36-PD40
@@ -1080,9 +1178,33 @@ PD40_Module_Composability:
     CHECK: Integration tests múltiples módulos PASS
 ```
 
-## WAVE 0: PRINCIPIOS DEFINICIONALES (PD46-50)
+## §11. DESDE GUIDELINES G## (Operacionalización): PD47-PD76
 
-### PD46: Composition Acyclicity Transitive (desde G26)
+```yaml
+Origen_Guidelines:
+  "Guidelines G## son extensiones operacionales de invariantes I1-I8,
+   traduciendo teoría en criterios implementables específicos."
+   
+Derivación:
+  I## (Invariantes Layer 0) → G## (Guidelines operacionales) → PD## (Principios diseño)
+  
+Mapeo_Completo:
+  Ver ../00_introduccion.md §5 para lista completa G## y su fundamentación
+  
+Total_Principios: 30 (PD47-PD76)
+  Distribución temática:
+    - Definicionales: PD47-51 (composición, handoffs, alignment)
+    - Lifecycle: PD52-54 (estados, transiciones, deprecación)
+    - Estados: PD55-58 (snapshots, reachability, convergencia)
+    - Execution/DORA: PD59-63 (tracking, métricas, incidents)
+    - Governance: PD64-68 (portfolio, automation, patterns)
+    - Vistas: PD69-72 (dashboards, templates, integración)
+    - Refinamientos: PD73-76 (performance, validación, migración)
+```
+
+### Principios Definicionales (PD47-51, desde G26-G30)
+
+#### PD47: Composition Acyclicity Transitive (desde G26)
 
 ```yaml
 Origen: I2 (Ortogonalidad) + A2 (Capacidad)
@@ -1116,7 +1238,7 @@ Anti-Pattern:
   → Miss transitive cycles (A→B→C→A)
 ```
 
-### PD47: Handoff Formal Definition (desde G27)
+#### PD48: Handoff Formal Definition (desde G27)
 
 ```yaml
 Origen: A1 (Transformación) + A2 (Capacidad) + Conway's Law
@@ -1153,7 +1275,7 @@ Implementación:
   Query Q14_Handoff_Count(flow_id) → {handoff_count, ratio}
 ```
 
-### PD48: Alignment Weighted Recursive (desde G28)
+#### PD49: Alignment Weighted Recursive (desde G28)
 
 ```yaml
 Origen: A5 (Intencionalidad) + I4 (Classification Contextual)
@@ -1192,7 +1314,7 @@ Anti-Pattern:
   → Todos KRs treated equally (unrealistic)
 ```
 
-### PD49: Violation Severity Weighted (desde G29)
+#### PD50: Violation Severity Weighted (desde G29)
 
 ```yaml
 Origen: A4 (Restricción) + I1 (Minimalidad información)
@@ -1231,7 +1353,7 @@ Anti-Pattern:
   → Priorización incorrecta remediación
 ```
 
-### PD50: Observable Standard Units (desde G30)
+#### PD51: Observable Standard Units (desde G30)
 
 ```yaml
 Origen: I3 (Trazabilidad) + A3 (Información coordinación)
@@ -1267,9 +1389,9 @@ Anti-Pattern:
   → Incomparable across teams/time
 ```
 
-## WAVE 1: PRINCIPIOS LIFECYCLE (PD51-53)
+### Principios Lifecycle (PD52-54, desde G11-G24)
 
-### PD51: Lifecycle Explicit Transitions (desde G11)
+#### PD52: Lifecycle Explicit Transitions (desde G11)
 
 ```yaml
 Origen: I7.5 (Lifecycle States) + A2 (Capacidad)
@@ -1286,7 +1408,7 @@ Anti-Pattern:
   Status sin lifecycle formal → Capacidades "zombie" (idle años, nobody owns)
 ```
 
-### PD52: Achievement Criteria Explicit (desde G12)
+#### PD53: Achievement Criteria Explicit (desde G12)
 
 ```yaml
 Origen: A5 (Intencionalidad) + I3 (Trazabilidad accountability)
@@ -1302,7 +1424,7 @@ Anti-Pattern:
   Target sin context → "Velocity: 10" (¿threshold? ¿target? ¿range?)
 ```
 
-### PD53: Deprecation Phased Timeline (desde G24)
+#### PD54: Deprecation Phased Timeline (desde G24)
 
 ```yaml
 Origen: G11 (Lifecycle) + A2 (Capacidad dependencies)
@@ -1317,9 +1439,9 @@ Anti-Pattern:
   Immediate sunset sin notice → Breaks production, team frustration
 ```
 
-## WAVE 2: PRINCIPIOS ESTADOS Y TRANSICIONES (PD54-57)
+### Principios Estados y Transiciones (PD55-58, desde G1-G23)
 
-### PD54: State Snapshot Consistency (desde G1)
+#### PD55: State Snapshot Consistency (desde G1)
 
 ```yaml
 Origen: A1 (Transformación) + meta.md (Coherencia Temporal)
@@ -1336,7 +1458,7 @@ Anti-Pattern:
   Estado inconsistente (ej: flujo sin purpose_id) → Planning inválido
 ```
 
-### PD55: Transition Executability (desde G23)
+#### PD56: Transition Executability (desde G23)
 
 ```yaml
 Origen: R15 (Transition-Flow) + A1 (Transformación)
@@ -1353,7 +1475,7 @@ Anti-Pattern:
   Target state sin execution plan → "Aspirational architecture" no operable
 ```
 
-### PD56: Reachability Validation (desde G2)
+#### PD57: Reachability Validation (desde G2)
 
 ```yaml
 Origen: R14 (State Transitions DAG) + I3 (Trazabilidad)
@@ -1370,7 +1492,7 @@ Anti-Pattern:
   Target inalcanzable (ej: requiere capacidad no contratada) → Waste planning effort
 ```
 
-### PD57: Convergence Monitoring (desde G13)
+#### PD58: Convergence Monitoring (desde G13)
 
 ```yaml
 Origen: M13 (Δ_arch) + meta.md (Adaptabilidad Estructurada)
@@ -1388,9 +1510,9 @@ Anti-Pattern:
   No tracking convergence → "Transformation theater" (activity sin progress medible)
 ```
 
-## WAVE 3: PRINCIPIOS EXECUTION & DORA (PD58-62)
+### Principios Execution & DORA (PD59-63, desde G3-G7)
 
-### PD58: Execution Instance Tracking (desde G3)
+#### PD59: Execution Instance Tracking (desde G3)
 
 ```yaml
 Origen: A1 (Transformación) + E7 (Flow Execution)
@@ -1407,7 +1529,7 @@ Anti-Pattern:
   Flujos sin tracking → No datos para optimización, DORA metrics imposibles
 ```
 
-### PD59: DORA Metrics Mandatory (desde G4)
+#### PD60: DORA Metrics Mandatory (desde G4)
 
 ```yaml
 Origen: M1-M4 (DORA) + DevOps Research
@@ -1424,7 +1546,7 @@ Anti-Pattern:
   Velocity sin quality → High deploy freq pero CFR >20% (thrashing)
 ```
 
-### PD60: Incident Flow Linkage (desde G5)
+#### PD61: Incident Flow Linkage (desde G5)
 
 ```yaml
 Origen: M4 (MTTR) + Incident management
@@ -1441,7 +1563,7 @@ Anti-Pattern:
   Incidents sin root cause → Reactive firefighting, no learning
 ```
 
-### PD61: Health Score Composite (desde G6)
+#### PD62: Health Score Composite (desde G6)
 
 ```yaml
 Origen: H_org (Ecuación Maestra) + Dominios D1-D4
@@ -1464,7 +1586,7 @@ Criterio_Verificable:
   IF H_org < 70 THEN transformations bloqueadas (PD30)
 ```
 
-### PD62: Decision Audit Trail (desde G7)
+#### PD63: Decision Audit Trail (desde G7)
 
 ```yaml
 Origen: I3 (Trazabilidad) + D3 (Decisión)
@@ -1481,9 +1603,9 @@ Anti-Pattern:
   Decisiones sin rationale → Politics, no accountability
 ```
 
-## WAVE 4: PRINCIPIOS GOVERNANCE & PORTFOLIO (PD63-67)
+### Principios Governance & Portfolio (PD64-68, desde G8-G15)
 
-### PD63: Portfolio Value Maximization (desde G14)
+#### PD64: Portfolio Value Maximization (desde G14)
 
 ```yaml
 Origen: Ecuación Maestra V_org + Q26 Portfolio Optimization
@@ -1501,7 +1623,7 @@ Anti-Pattern:
   "Pet projects" sin ROI → Resource waste, low V_org
 ```
 
-### PD64: Cross-Domain Health Balance (desde G15)
+#### PD65: Cross-Domain Health Balance (desde G15)
 
 ```yaml
 Origen: H_org = H1-H5 weighted + Theory of Constraints
@@ -1522,7 +1644,7 @@ Anti-Pattern:
   Optimize already-strong domain → No H_org improvement (wasted effort)
 ```
 
-### PD65: Governance Automation Progressive (desde G10)
+#### PD66: Governance Automation Progressive (desde G10)
 
 ```yaml
 Origen: M17 Governance Automation Rate + I5 HAIC
@@ -1547,7 +1669,7 @@ Anti-Pattern:
   0% automation → Manual toil, slow response
 ```
 
-### PD66: Pattern Catalog Mandatory (desde G8)
+#### PD67: Pattern Catalog Mandatory (desde G8)
 
 ```yaml
 Origen: 05_patrones.md + Empirical validation
@@ -1568,7 +1690,7 @@ Anti-Pattern:
   Reinvent wheel cada proyecto → No learning org
 ```
 
-### PD67: Anti-Pattern Detection Automated (desde G9)
+#### PD68: Anti-Pattern Detection Automated (desde G9)
 
 ```yaml
 Origen: Patterns catalog + Metrics thresholds
@@ -1591,9 +1713,9 @@ Anti-Pattern:
   Ignore anti-pattern signals → Drift into failure mode
 ```
 
-## WAVE 5: PRINCIPIOS VISTA OPTIMIZATIONS (PD68-71)
+### Principios Vistas & Optimización (PD69-72, desde G16-G19)
 
-### PD68: Dashboard Real-Time Constraints (desde G16)
+#### PD69: Dashboard Real-Time Constraints (desde G16)
 
 ```yaml
 Origen: D2 (Percepción) + Observable freshness requirements
@@ -1613,7 +1735,7 @@ Anti-Pattern:
   Stale dashboard (24h+ lag) → Decision-making on outdated data
 ```
 
-### PD69: Artifact Templates Complete (desde G17)
+#### PD70: Artifact Templates Complete (desde G17)
 
 ```yaml
 Origen: D1-D4 vistas + 04_vistas.md artifacts
@@ -1635,7 +1757,7 @@ Anti-Pattern:
   "Figure it out yourself" → Implementation inconsistency across teams
 ```
 
-### PD70: Metric Threshold Adaptive (desde G18)
+#### PD71: Metric Threshold Adaptive (desde G18)
 
 ```yaml
 Origen: M1-M17 metrics + Statistical process control
@@ -1657,7 +1779,7 @@ Anti-Pattern:
   Fixed thresholds ignore context → False alarms OR missed signals
 ```
 
-### PD71: Integration Points Explicit (desde G19)
+#### PD72: Integration Points Explicit (desde G19)
 
 ```yaml
 Origen: System integration + External tool compatibility
@@ -1684,9 +1806,9 @@ Anti-Pattern:
   Closed system sin integraciones → Manual data entry, silos
 ```
 
-## WAVE 6: PRINCIPIOS FINAL REFINEMENTS (PD72-75)
+### Principios Refinamientos Finales (PD73-76, desde G20-G25)
 
-### PD72: Query Performance Budgets (desde G20)
+#### PD73: Query Performance Budgets (desde G20)
 
 ```yaml
 Origen: Q1-Q28 queries + Performance engineering
@@ -1714,7 +1836,7 @@ Anti-Pattern:
   N+1 queries → Dashboard load time >10s (unusable)
 ```
 
-### PD73: Validation Rules Complete (desde G21)
+#### PD74: Validation Rules Complete (desde G21)
 
 ```yaml
 Origen: INV_C1-C8, INV_E6-E7 + Data integrity
@@ -1739,7 +1861,7 @@ Anti-Pattern:
   Validation solo en UI → Backend acepta invalid data (bypasses)
 ```
 
-### PD74: Migration Path Documented (desde G22)
+#### PD75: Migration Path Documented (desde G22)
 
 ```yaml
 Origen: Adoption strategy + Change management
@@ -1764,7 +1886,7 @@ Anti-Pattern:
   "Big bang" migration → Organizational disruption, failure risk
 ```
 
-### PD75: Pattern Success Metrics (desde G25)
+#### PD76: Pattern Success Metrics (desde G25)
 
 ```yaml
 Origen: PD66 Pattern Catalog + Empirical validation

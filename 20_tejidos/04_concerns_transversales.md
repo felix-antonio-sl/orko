@@ -3,6 +3,15 @@
 **Primitivos:** P4_Límite, P5_Propósito  
 **Status:** Propiedades cross-cutting, NO tejidos separados
 
+> **📘 GENOMA/FENOTIPO EN CONCERNS TRANSVERSALES**:  
+> P4 (Security/Limits) y P5 (Purpose) son **transversales por naturaleza** (Layer 0 diseño).  
+> NO son tejidos separados - aplican como propiedades de TF1, TF2, TF3.
+> 
+> - **[GENOMA]**: Invariantes security universales (accountability, HITL obligatorio alto riesgo, encryption at rest/transit)  
+> - **[FENOTIPO]**: Configuraciones específicas (guardrails thresholds, budget limits, compliance frameworks GDPR/SOC2)
+> 
+> **Decisión arquitectural**: Evita duplicación governance; security/purpose contextualizados por tejido.
+
 ---
 
 ## §1. SECURITY & LIMITS (P4)

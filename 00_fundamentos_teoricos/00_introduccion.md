@@ -4,6 +4,7 @@
 
 - [FUNDAMENTOS TEÓRICOS](#fundamentos-teóricos)
   - [§0. PROPÓSITO Y ALCANCE](#0-propósito-y-alcance)
+    - [§0.1. ARQUITECTURA DEL CONOCIMIENTO: GENOMA vs FENOTIPO](#01-arquitectura-del-conocimiento-genoma-vs-fenotipo)
   - [§1. ESTRUCTURA MODULAR](#1-estructura-modular)
   - [§2. ORDEN LECTURA RECOMENDADO](#2-orden-lectura-recomendado)
   - [§3. TRAZABILIDAD VERTICAL](#3-trazabilidad-vertical)
@@ -36,6 +37,183 @@ Relación_Arquitectura:
   ../10_arquitectura_orko/  → IMPLEMENTACIÓN (cómo construirlo)
   ../30_metodologia_orko/   → EJECUCIÓN (cómo usarlo)
 ```
+
+### §0.1. ARQUITECTURA DEL CONOCIMIENTO: GENOMA vs FENOTIPO
+
+**Distinción Crítica para Reducir Fricción Cognitiva**
+
+Este directorio contiene DOS niveles de conocimiento que deben distinguirse claramente:
+
+```yaml
+GENOMA_ORKO (Núcleo Ontológico Irreducible):
+  
+  Definición:
+    "Conjunto minimal de elementos teóricos que definen ORKO.
+     Obligatorio, universal, NO parametrizable, NO contextual."
+     
+  Contenido_Genoma:
+    - A1-A5: Axiomas fundamentales (verdades irreducibles)
+    - P1-P5: Primitivos (estructuras mínimas operacionales)
+    - I1-I8: Invariantes (propiedades preservar en todo estado válido)
+    - D1-D4: Dominios (dimensiones ortogonales complejidad org)
+    - R1-R13: Relaciones fundamentales (modelo relacional teórico)
+    - T1-T6: Teoremas (validación formal sistema)
+    - V_org: Ecuación maestra (formalización valor)
+    - SDA: Ciclo canónico operacional (Sense-Decide-Act, 3 fases)
+    - WSLC: Ciclo canónico evolutivo (Initiation→Development→Implementation→Operation→Retirement, 5 fases)
+    
+  Características_Genoma:
+    ✓ Minimalidad: Solo elementos necesarios y suficientes (I1)
+    ✓ Ortogonalidad: Componentes mutuamente independientes (I2)
+    ✓ Universalidad: Aplica a toda organización, todo contexto
+    ✓ Atemporalidad: No cambia con tendencias o tecnologías
+    ✓ Auto-contenido: No depende de capas superiores
+    
+  Analogía_Biológica:
+    DNA = Genoma ORKO
+    - Mismo en todas células del organismo
+    - Define qué es posible (espacio de estados válidos)
+    - NO cambia durante vida del organismo
+
+FENOTIPO_ORKO (Expresiones Contextuales Recomendadas):
+  
+  Definición:
+    "Instancias, configuraciones, métricas y patrones que expresan
+     el genoma en contextos específicos. Sugerido, parametrizable, adaptable."
+     
+  Contenido_Fenotipo:
+    Métricas_Operativas:
+      - H_org (Health organizacional)
+      - A_Score, P_Score, D_Score (scores por dominio)
+      - Confidence thresholds, precision/recall targets
+      
+    Thresholds_Heurísticos:
+      - H_org ≥ 70 (umbral transformación)
+      - Producción/Habilitación 70/30
+      - Now/Next/Later 70/20/10
+      
+    Pesos_Configurables:
+      - Coherencia: 0.4, Resonancia: 0.3, Flujo: 0.3 (AOC)
+      - Weights en ecuaciones agregadas
+      
+    Expansiones_Detalladas:
+      - SADE: Expansión 16 observables (EX1-8, IN1-8)
+      - Subfases detalladas Sense/Decide/Execute
+      - Modos delegación M1-M6 (HAIC)
+      
+    Implementaciones_Concretas:
+      - Schemas SQL/JSON (modelo relacional)
+      - Constraints específicos CHECK()
+      - Governance patterns detallados
+      
+  Características_Fenotipo:
+    ✓ Contextualidad: Ajustable según sector, madurez, cultura org
+    ✓ Parametrización: Pesos, thresholds configurables
+    ✓ Evolucionabilidad: Puede mejorar con evidencia empírica
+    ✓ Opcionalidad: Implementación puede elegir variantes
+    
+  Analogía_Biológica:
+    Proteínas = Fenotipo ORKO
+    - Expresión contextual del DNA según ambiente
+    - Define cómo se manifiesta el organismo
+    - Varía entre individuos y contextos
+
+Relación_Genoma_Fenotipo:
+  
+  Genoma_Define: QUÉ es válido (espacio de posibilidades)
+  Fenotipo_Define: CÓMO se aplica efectivamente (instancia específica)
+  
+  Ejemplo_Concreto:
+    [GENOMA]  P5_Propósito = (outcome, metrics, parent_id)
+    [FENOTIPO] outcome_weights = {transactional: 0.7, societal: 0.3}
+    
+    [GENOMA]  I5_HAIC: "∀ AA_decisional: ∃! accountable_human"
+    [FENOTIPO] delegation_modes = {M1, M2, M3, M4, M5, M6}
+    
+    [GENOMA]  SDA: Sense → Decide → Act (3 fases irreducibles)
+    [FENOTIPO] SADE: 16 observables, subfases detalladas
+    
+  Validación_Fenotipo:
+    ∀ fenotipo f: f DEBE respetar constraints genoma
+    Ejemplo: H_org threshold puede variar, pero H_org definition (genoma) no
+
+Lectura_Recomendada:
+  
+  Lectura_Rápida_Ejecutiva (2-3 horas):
+    1. Leer SOLO secciones marcadas [GENOMA]
+    2. Skip todo [FENOTIPO]
+    3. Resultado: Comprensión núcleo ontológico ORKO
+    
+  Lectura_Completa_Implementador (1-2 días):
+    1. Leer [GENOMA] primero (fundamento)
+    2. Luego [FENOTIPO] (aplicación)
+    3. Resultado: Listo para implementar/adaptar ORKO
+    
+  Lectura_Validación_Auditor:
+    1. [GENOMA]: Verificar compliance obligatorio
+    2. [FENOTIPO]: Revisar si instancia es razonable
+    3. Resultado: Certificar implementación ORKO válida
+
+Etiquetado_Documentos:
+  
+  00_introduccion.md (este archivo):
+    - Estructura: 100% meta-información
+    
+  01_axiomas.md:
+    - 100% [GENOMA]
+    - A1-A5 son fundamento irreducible
+    
+  02_primitivos.md:
+    - [GENOMA]: Definiciones P1-P5, derivaciones formales
+    - [FENOTIPO]: Ejemplos aplicación, taxonomías detalladas
+    
+  03_invariantes.md:
+    - [GENOMA]: Enunciados I1-I8, formulaciones formales
+    - [FENOTIPO]: Validaciones concretas, governance patterns
+    
+  04_ciclo_fundamental.md:
+    - [GENOMA]: SDA canónico (3 fases), WSLC, recursión
+    - [FENOTIPO]: Expansión SADE (16 observables), subfases
+    
+  05_dominios.md:
+    - [GENOMA]: D1-D4 definiciones, ortogonalidad
+    - [FENOTIPO]: Scores (A/P/D), thresholds, heurísticas
+    
+  06_teoremas_fundamentales.md:
+    - 100% [GENOMA]
+    - T1-T6 validación formal sistema
+    
+  07_ecuacion_maestra.md:
+    - [GENOMA]: V_org ecuación, derivación desde P5
+    - [FENOTIPO]: Pesos AOC, parametrizaciones contextuales
+    
+  08_modelo_relacional.md:
+    - [GENOMA]: E1-E5, R1-R13 (formas relacionales teóricas)
+    - [FENOTIPO]: Schemas SQL/JSON, constraints implementación
+
+Beneficio_Distinción:
+  
+  Problema_Resuelto:
+    "Lector percibe framework complejo y cargado,
+     contradice invariantes I1 (Minimalidad) e I2 (Ortogonalidad)"
+     
+  Solución:
+    - Genoma es MINIMAL (5 axiomas, 5 primitivos, 8 invariantes, 4 dominios)
+    - Complejidad aparente es FENOTIPO (opcional, contextual)
+    - I1/I2 aplican a genoma, NO a fenotipo
+    
+  Validación_I1_Minimalidad:
+    Genoma_Size = |{A1-A5, P1-P5, I1-I8, D1-D4, R1-R13, T1-T6}|
+                = 5 + 5 + 8 + 4 + 13 + 6
+                = 41 elementos teóricos
+    ✓ Minimal (T3 demuestra no existe conjunto < 5 primitivos completo)
+    
+  Claridad_Cognitiva:
+    Antes: "ORKO tiene 100+ conceptos, es complejo"
+    Después: "Genoma ORKO = 41 elementos, fenotipo = expresiones contextuales"
+```
+
+**IMPORTANTE**: En todo el directorio `00_fundamentos_teoricos/`, las secciones están etiquetadas con `[GENOMA]` o `[FENOTIPO]` para guiar la lectura.
 
 ## §1. ESTRUCTURA MODULAR
 
@@ -312,10 +490,10 @@ Conceptos_Clave_Por_Módulo:
     - I8_Adaptación_Contextual: Parametrización metodológica
     
   Ciclos (04):
-    - SDA: Sense → Decide → Act (patrón operacional)
-    - WSLC: I → D → Impl → O → R (patrón evolutivo)
-    - 16_Observables: EX1-8 (externos) + IN1-8 (internos)
-    - Recursión: L0-L3 niveles
+    - SDA: Sense → Decide → Act (patrón operacional) [GENOMA]
+    - WSLC: I → D → Impl → O → R (patrón evolutivo) [GENOMA]
+    - 16_Observables_SADE: EX1-8 (externos) + IN1-8 (internos) [FENOTIPO]
+    - Recursión_Multi-Nivel: L0-L3 (Tarea→Feature→Platform→Transformation) [FENOTIPO]
     
   Dominios (05):
     - D1_Arquitectura: Estructura estática

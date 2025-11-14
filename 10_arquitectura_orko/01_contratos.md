@@ -2,6 +2,13 @@
 
 Especificación OPERABLE de Primitivos P1–P5
 
+> **Etiquetado Genoma/Fenotipo**: Contratos especifican schemas abstractos (genoma) operacionalizables en múltiples tecnologías (fenotipo):
+> - **[GENOMA]** Schemas YAML: Campos base, tipos, multiplicidades, invariantes lógicos
+> - **[FENOTIPO]** Implementaciones: SQL/JSON específicos, índices, optimizaciones (ver Layer 2 Tejidos)
+> - **[FENOTIPO]** Campos opcionales: Lifecycle details, archetype, metrics derivadas
+>
+> Ver ../00_fundamentos_teoricos/00_introduccion.md §0.1 para definición completa framework.
+
 - [PARTE I: CONTRATOS CANÓNICOS](#parte-i-contratos-canónicos)
   - [§1. FUNDAMENTOS CONTRACTUALES](#1-fundamentos-contractuales)
   - [§2. CONTRATO C1: CAPACIDAD](#2-contrato-c1-capacidad)
@@ -63,8 +70,10 @@ Schema:
   ownership:
     accountable_id: UUID  # Humano/Mixto únicamente
     delegated_from: UUID | null  # si Algorítmico
-    delegation_mode: {M1_Monitorear | M2_Informar | M3_Habilitar | 
-                      M4_Controlar | M5_Coproducir | M6_Ejecutar} | null
+    delegation_mode: DelegationMode | null
+      # Tipo abstracto representando nivel autonomía algorítmica
+      # Valores: Ver I5_[FENOTIPO] en ../00_fundamentos_teoricos/03_invariantes.md §6
+      # Espectro: M1_Monitorear → M6_Ejecutar (6 niveles autonomía progresiva)
 
   # Lifecycle (G11)
   lifecycle:

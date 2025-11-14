@@ -49,7 +49,7 @@ Extensión_Modelo_Teórico:
 Alcance:
   - Contratos C1-C5: Especificación formal primitivos P1-P5
   - Entidades E6-E7: Compuestos arquitectónicos (Estado, Ejecución)
-  - Principios PD1-PD75: Reglas diseño desde invariantes I1-I8
+  - Principios PD1-PD76: Reglas diseño desde invariantes I1-I8 + Guidelines G##
   - Relaciones R1-R15: Modelo datos y constraints (13 primitivos + 2 extendidos)
   - Vistas D1-D4: Artefactos por dominio ortogonal
   - Patterns: Soluciones recurrentes validadas
@@ -62,24 +62,24 @@ Organización_5_Módulos:
 
   arquitectura del sistema/
   ├── 00_introduccion.md       ← Estás aquí (guía completa)
-  ├── 01_contratos.md         → PARTE I: Contratos Canónicos C1-C5
-  ├── 02_diseño.md            → PARTE II: Principios Diseño PD1-PD40
-  ├── 03_relaciones.md        → PARTE III: Modelo Relacional R1-R13
-  ├── 04_vistas.md y 05_patrones.md   → PARTE IV: Vistas D1-D4 + Patterns
+  ├── 01_contratos.md         → PARTE I: Contratos Canónicos C1-C5 + E6-E7
+  ├── 02_diseño.md            → PARTE II: Principios Diseño PD1-PD76 (76 principios)
+  ├── 03_relaciones.md        → PARTE III: Modelo Relacional E1-E7, R1-R15
+  ├── 04_vistas.md            → PARTE IV: Vistas D1-D4 + Artefactos
   └── 05_patrones.md          → PARTE V: Patterns & Anti-Patterns
 
 Orden_Lectura_Recomendado:
-  1. 01_contratos.md: Especificación formal primitivos
-  2. 02_diseño.md: 40 principios operativos desde I1-I8
-  3. 03_relaciones.md: Modelo datos, 13 relaciones
-  4. 04_vistas.md y 05_patrones.md: Artefactos D1-D4
-  5. 05_patrones.md: Catálogo soluciones recurrentes
+  1. 01_contratos.md: Especificación formal primitivos P1-P5 + entidades E6-E7
+  2. 02_diseño.md: 76 principios operativos (40 genoma I1-I8, 36 fenotipo AOC/G##)
+  3. 03_relaciones.md: Modelo datos, E1-E7 + R1-R15 (13 fundamentales + 2 derivadas)
+  4. 04_vistas.md: Artefactos por dominio D1-D4
+  5. 05_patrones.md: Catálogo patterns & anti-patterns validados
 
 Lectura_Rápida_Ejecutiva (1-2 horas):
   - §2 de este archivo: Resumen 5 partes
   - 01_contratos §1-§2: C1 Capacidad completo
-  - 02_diseño §2-§6: Principios I1-I5 (core HAIC)
-  - 03_relaciones §3-§4: R1-R13 + tabla resumen
+  - 02_diseño §2-§6: Principios I1-I5 (core HAIC, PD1-21)
+  - 03_relaciones §3-§4: E1-E7 + R1-R15 + tabla resumen
 ```
 
 ## §2. CONTENIDO MODULAR RESUMIDO
@@ -117,93 +117,75 @@ C5_PROPÓSITO (desde P5/A5):
 
 ### PARTE II: Principios de Diseño (02_diseño.md)
 
-**75 principios operativos derivados de 8 invariantes** (COMPLETO Wave 0-6)
+**76 principios operativos: 40 genoma (I1-I8) + 36 fenotipo (AOC/Kelly/G##)**
 
 ```yaml
-Desde_I1_Minimalidad (PD1-PD5):
-  PD1: Justificación entidad | PD2: Composición antes creación
-  PD3: Eliminación redundancia | PD4: Parsimonia propiedades | PD5: Agregación lazy
+Estructura_76_Principios:
+  [GENOMA] PD1-PD30: Desde Invariantes I1-I7 (universales, obligatorios)
+  [FENOTIPO] PD31-PD35: Arquetipos AOC Meyer (contextuales, best practices)
+  [GENOMA] PD36-PD40: Desde I8 Parametrización (obligatorios, valores config)
+  [FENOTIPO] PD41-PD46: Métricas AOC/Kelly (fórmulas, thresholds configurables)
+  [FENOTIPO] PD47-PD76: Guidelines G## operacionales (implementación específica)
 
-Desde_I2_Ortogonalidad (PD6-PD9):
-  PD6: Separación concerns | PD7: Relaciones explícitas
-  PD8: Cambio local | PD9: Interfaces mínimas
+Principios_Genoma_I1-I7 (PD1-PD30):
+  I1_Minimalidad (PD1-5): Justificación, composición, eliminación redundancia
+  I2_Ortogonalidad (PD6-9): Separación concerns, relaciones explícitas
+  I3_Trazabilidad (PD10-13): Metadata, lineage, audit trail, ADRs
+  I4_Clasificación (PD14-17): Test cliente externo, amplificación, contexto
+  I5_HAIC (PD18-21): Accountability humana, delegación M1-M6, override, explainability
+  I6_Trajectory (PD22-25): Trajectory log, progresión gradual, drift, learning
+  I7_Emergencia (PD26-30): Nivel apropiado, no saltar, señales, H_org≥70
 
-Desde_I3_Trazabilidad (PD10-PD13):
-  PD10: Metadata obligatoria | PD11: Lineage completo
-  PD12: Audit trail inmutable | PD13: Decision records (ADR)
-
-Desde_I4_Clasificación_Contextual (PD14-PD17):
-  PD14: Test cliente externo | PD15: Test amplificación
-  PD16: Documentar contexto | PD17: Reclasificación explícita
-
-Desde_I5_HAIC (PD18-PD21):
-  PD18: Accountability humana transversal (TODOS dominios)
-  PD19: Delegación explícita cross-domain (M1-M6)
-  PD20: Override capability universal
-  PD21: Explainability transversal
-
-Desde_I6_Trajectory-Awareness (PD22-PD25):
-  PD22: Trajectory log | PD23: Progresión gradual M1→M6
-  PD24: Drift detection | PD25: Continuous learning
-
-Desde_I7_Emergencia_Complejidad (PD26-PD30):
-  PD26: Nivel apropiado | PD27: No saltar niveles
-  PD28: Señales transición | PD29: Inclusión niveles
-  PD30: Health prerequisito (H_org ≥ 70)
-
-Desde_I8_AdaptWave_0_Definicionales (PD46-50):
-  PD46: Composition Acyclicity Transitive | PD47: Handoff Formal Definition
-  PD48: Alignment Weighted Recursive | PD49: Violation Severity Weighted
-  PD50: Observable Standard Units
-
-Wave_1_Lifecycle (PD51-53):
-  PD51: Lifecycle Explicit Transitions | PD52: Achievement Criteria Explicit
-  PD53: Deprecation Phased Timeline
-
-Wave_2_Estados_Transiciones (PD54-57):
-  PD54: State Snapshot Consistency | PD55: Transition Executability
-  PD56: Reachability Validation | PD57: Convergence Monitoring
-
-Wave_3_Execution_DORA (PD58-62):
-  PD58: Execution Instance Tracking | PD59: DORA Metrics Mandatory
-  PD60: Incident Flow Linkage | PD61: Health Score Composite
-  PD62: Decision Audit Trail
-
-Wave_4_Governance_Portfolio (PD63-67):
-  PD63: Portfolio Value Maximization | PD64: Cross-Domain Health Balance
-  PD65: Governance Automation Progressive | PD66: Pattern Catalog Mandatory
-  PD67: Anti-Pattern Detection Automated
-
-Wave_5_Vista_Optimizations (PD68-71):
-  PD68: Dashboard Real-Time Constraints | PD69: Artifact Templates Complete
-  PD70: Metric Threshold Adaptive | PD71: Integration Points Explicit
-
-Wave_6_Final_Refinements (PD72-75):
-  PD72: Query Performance Budgets | PD73: Validation Rules Complete
-  PD74: Migration Path Documented | PD75: Pattern Success Metrics
-
-Arquetipos_AOC (PD31-PD35):
-  PD31: Cohesión máxima
+Principios_Fenotipo_AOC (PD31-PD35):
+  PD31: Cohesión máxima arquetipo
   PD32-35: Incompatibilidades (α↔β, γ↔δ, γ↔ε, δ↔ε)
+  Origen: Meyer AOC (90_referencias_fundacionales/02_arquitectura_organizacional.md)
 
-Desde_I8_Adaptación_Contextual (PD36-PD40):
-  PD36: Context explicit declaration | PD37: Genotype-phenotype separation
-  PD38: Parametric methodology | PD39: Adaptation traceability
+Principios_Genoma_I8 (PD36-PD40):
+  PD36: Context explicit declaration
+  PD37: Genotype-phenotype separation
+  PD38: Parametric methodology
+  PD39: Adaptation traceability
   PD40: Module composability
+
+Principios_Fenotipo_Métricas (PD41-PD46):
+  AOC: PD41 Coherencia, PD42 Resonancia, PD43 Flujo (gates verificables)
+  Kelly: PD44 Small Batches, PD45 Flow Lead Time, PD46 Quality-Speed
+  Thresholds: θ_* configurables por Context Schema (PD36)
+
+Principios_Fenotipo_Guidelines (PD47-PD76):
+  Definicionales (PD47-51): Composition, handoffs, alignment, violations, units
+  Lifecycle (PD52-54): Transitions, achievement, deprecation
+  Estados (PD55-58): Snapshots, executability, reachability, convergence
+  Execution/DORA (PD59-63): Tracking, DORA metrics, incidents, health, audit
+  Governance (PD64-68): Portfolio, balance, automation, patterns, anti-patterns
+  Vistas (PD69-72): Dashboards, templates, thresholds, integration
+  Refinamientos (PD73-76): Performance, validation, migration, pattern metrics
+  
+  Derivación: I1-I8 → G## (30 Guidelines) → PD47-76 (30 principios)
+  Ver §5 para mapeo completo G##
 ```
 
 ### PARTE III: Modelo Relacional (03_relaciones.md)
 
-**Extensión del modelo teórico con 15 relaciones** (actualizado Wave 2-3)
+**Modelo lógico: E1-E7 entidades + R1-R15 relaciones**
 
 ```yaml
 Base_Teórica: ../00_fundamentos_teoricos/08_modelo_relacional.md
-  - E1-E5: Entidades primitivas (teoría pura)
-  - R1-R13: Relaciones fundamentales (mínimo necesario)
+  [GENOMA] E1-E5: Entidades primitivas (desde P1-P5, teoría pura)
+  [GENOMA] R1-R13: Relaciones fundamentales (mínimo irreducible)
 
 Extensiones_Arquitectónicas:
-  - E6-E7: Entidades COMPUESTAS derivadas de primitivos
-  - R14-R15: Relaciones DERIVADAS sobre entidades compuestas
+  [GENOMA] E6-E7: Entidades COMPUESTAS derivadas formalmente de E1-E5
+    E6 (Estado Arquitectónico): snapshot(E1-E5) en tiempo t
+    E7 (Ejecución Flujo): runtime(E2_Flujo) con metrics DORA
+    
+  [GENOMA] R14-R15: Relaciones DERIVADAS sobre E6-E7
+    R14 (State-Transitions): DAG estados arquitectónicos
+    R15 (Transition-Flow): ejecutabilidad transiciones
+    
+  [FENOTIPO] Q1-Q28: Queries operacionales (verificación, dashboards)
+  [FENOTIPO] M1-M17: Métricas derivables (DORA, health scores, governance)
 
 Entidades: E1-E7
   Primitivos (E1-E5): Capacidad, Flujo, Información, Límite, Propósito
@@ -380,71 +362,80 @@ Derivación_Prácticas:
 ```yaml
 Checklist_Completitud:
   ✓ 7 Contratos C1-C5+E6+E7 (primitivos + Estado + Ejecución) [COMPLETO]
-  ✓ 75 Principios PD1-PD75 [+5 W0, +3 W1, +4 W2, +5 W3, +5 W4, +4 W5, +4 W6]
-  ✓ 15 Relaciones R1-R15 (incluye R14-R15 States/Transitions)
-  ✓ 4 Vistas D1-D4 (artefactos específicos, templates PD69)
-  ✓ 20+ Patterns (validados empíricamente, success metrics PD75)
-  ✓ 28 Queries Q1-Q28 (performance budgets PD72)
-  ✓ 17 Métricas M1-M17 (adaptive thresholds PD70)
+  ✓ 76 Principios PD1-PD76 (40 genoma + 36 fenotipo) [COMPLETO]
+    - PD1-30: Invariantes I1-I7
+    - PD31-35: Arquetipos AOC
+    - PD36-40: Parametrización I8
+    - PD41-46: Métricas AOC/Kelly
+    - PD47-76: Guidelines G## (30 guidelines operacionales)
+  ✓ 15 Relaciones R1-R15 (13 fundamentales + 2 derivadas States/Transitions)
+  ✓ 4 Vistas D1-D4 (artefactos específicos, templates PD70)
+  ✓ 20+ Patterns (validados empíricamente, success metrics PD76)
+  ✓ 28 Queries Q1-Q28 (performance budgets PD73)
+  ✓ 17 Métricas M1-M17 (adaptive thresholds PD71)
 
 Métricas_Coherencia:
   Coverage_Primitivos:   5/5 (100%)
-  Coverage_Invariantes:  8/8 (100%) → 75 principios
+  Coverage_Invariantes:  8/8 (100%) → 76 principios
   Coverage_Dominios:     4/4 (100%) → vistas completas
   Trazabilidad:          Completa (teoría ↔ arqui ↔ metodología ↔ práctica)
   Ortogonalidad:         Verificada (contratos independientes)
-  Performance:           Budgeted (PD72: queries <2s p95)
-  Validation:            3-level enforcement (PD73)
-  Integration:           Open APIs (PD71)
+  Performance:           Budgeted (PD73: queries <2s p95)
+  Validation:            3-level enforcement (PD74)
+  Integration:           Open APIs (PD72)
   
 Estado_Coherencia_Semántica: EXCELENTE (100%)
   - Definiciones isomórficas con fundamentos
   - Derivaciones lógicamente correctas
   - Enforcement invariantes completo
-  - Nomenclatura unificada (I1-I8, PD1-PD75, R1-R15, Q1-Q28, M1-M17)
-  - Adoption path documented (PD74)
+  - Nomenclatura unificada (I1-I8, PD1-PD76, R1-R15, Q1-Q28, M1-M17)
+  - Adoption path documented (PD76)
   
-Wave_0_Implementada:
-  ✓ G26: Composition Acyclicity (INV_R12.1 + PD46 + Q16)
-  ✓ G27: Handoff Definition (C2 + PD47 + Q14)
-  ✓ G28: Alignment Formula (C5 + PD48 + Q15)
-  ✓ G29: Violation Severity (C4 + PD49)
-  ✓ G30: Observable Units (C3 + PD50)
+Guidelines_Implementadas:
+  "30 Guidelines G## operacionalizan invariantes I1-I8 en 76 principios PD##.
+   Post-renumeración: PD41-46 (métricas AOC/Kelly), PD47-76 (Guidelines)."
   
-Wave_1_Implementada:
-  ✓ G11: Capacity Lifecycle (I7.5 + C1 + INV_C8 + PD51 + Q17)
-  ✓ G12: Purpose Achievement (C5 + PD52)
-  ✓ G24: Deprecation Timeline (C1 + PD53 + Q18)
+  Definicionales (PD47-51):
+  ✓ G26: Composition Acyclicity (INV_R12.1 + PD47 + Q16)
+  ✓ G27: Handoff Definition (C2 + PD48 + Q14)
+  ✓ G28: Alignment Formula (C5 + PD49 + Q15)
+  ✓ G29: Violation Severity (C4 + PD50)
+  ✓ G30: Observable Units (C3 + PD51)
   
-Wave_2_Implementada:
-  ✓ G1: Architectural States (E6 + R14 + PD54 + Q19)
-  ✓ G2: Reachability Validation (R14 + PD56 + Q21)
-  ✓ G13: State Convergence (M13 Δ_arch + PD57 + Q20)
-  ✓ G23: Transition-Flow (R15 + PD55)
+  Lifecycle (PD52-54):
+  ✓ G11: Capacity Lifecycle (I7.5 + C1 + INV_C8 + PD52 + Q17)
+  ✓ G12: Purpose Achievement (C5 + PD53)
+  ✓ G24: Deprecation Timeline (C1 + PD54 + Q18)
   
-Wave_3_Implementada:
-  ✓ G3: Flow Execution Tracking (E7 + PD58)
-  ✓ G4: DORA Metrics Formalization (M1-M4 + Q22-25 + PD59)
-  ✓ G5: Incident Flow Linkage (E7.failure + PD60)
-  ✓ G6: Health Score Formula (H_org = H1-H5 weighted + PD61)
-  ✓ G7: Decision Audit Trail (PD62)
+  Estados/Transiciones (PD55-58):
+  ✓ G1: Architectural States (E6 + R14 + PD55 + Q19)
+  ✓ G23: Transition-Flow (R15 + PD56)
+  ✓ G2: Reachability Validation (R14 + PD57 + Q21)
+  ✓ G13: State Convergence (M13 Δ_arch + PD58 + Q20)
   
-Wave_4_Implementada:
-  ✓ G8: Pattern Catalog Completeness (PD66)
-  ✓ G9: Anti-Pattern Detection (PD67 + metric thresholds)
-  ✓ G10: Governance Automation (M17 + Q28 + PD65)
-  ✓ G14: Portfolio Optimization (Q26 + M16 + PD63)
-  ✓ G15: Cross-Domain Metrics (Q27 + PD64)
+  Execution/DORA (PD59-63):
+  ✓ G3: Flow Execution Tracking (E7 + PD59)
+  ✓ G4: DORA Metrics Formalization (M1-M4 + Q22-25 + PD60)
+  ✓ G5: Incident Flow Linkage (E7.failure + PD61)
+  ✓ G6: Health Score Formula (H_org = H1-H5 weighted + PD62)
+  ✓ G7: Decision Audit Trail (PD63)
   
-Wave_5_Implementada:
-  ✓ G16: Dashboard Refresh Frequency (PD68 real-time constraints)
-  ✓ G17: Artifact Template Completeness (PD69 templates)
-  ✓ G18: Metric Threshold Calibration (PD70 adaptive thresholds)
-  ✓ G19: Integration Points Specification (PD71 APIs/events)
+  Governance/Portfolio (PD64-68):
+  ✓ G14: Portfolio Optimization (Q26 + M16 + PD64)
+  ✓ G15: Cross-Domain Metrics (Q27 + PD65)
+  ✓ G10: Governance Automation (M17 + Q28 + PD66)
+  ✓ G8: Pattern Catalog Completeness (PD67)
+  ✓ G9: Anti-Pattern Detection (PD68 + metric thresholds)
   
-Wave_6_Implementada:
-  ✓ G20: Query Performance Optimization (PD72 budgets <2s)
-  ✓ G21: Validation Rule Completeness (PD73 3-level enforcement)
-  ✓ G22: Migration Path Documentation (PD74 phased adoption)
-  ✓ G25: Pattern Success Metrics (PD75 empirical validation)
+  Vistas/Optimización (PD69-72):
+  ✓ G16: Dashboard Refresh Frequency (PD69 real-time constraints)
+  ✓ G17: Artifact Template Completeness (PD70 templates)
+  ✓ G18: Metric Threshold Calibration (PD71 adaptive thresholds)
+  ✓ G19: Integration Points Specification (PD72 APIs/events)
+  
+  Refinamientos (PD73-76):
+  ✓ G20: Query Performance Optimization (PD73 budgets <2s)
+  ✓ G21: Validation Rule Completeness (PD74 3-level enforcement)
+  ✓ G22: Migration Path Documentation (PD75 phased adoption)
+  ✓ G25: Pattern Success Metrics (PD76 empirical validation)
 ``

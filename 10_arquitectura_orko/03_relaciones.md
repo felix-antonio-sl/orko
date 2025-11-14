@@ -2,6 +2,13 @@
 
 **Especificación Lógica de Estructura Datos y Relaciones**
 
+> **Etiquetado Genoma/Fenotipo**: Este documento especifica el modelo lógico relacional:
+> - **[GENOMA]** E1-E7, R1-R15: Entidades y relaciones abstractas (multiplicidades, constraints lógicos)
+> - **[FENOTIPO]** Q1-Q28, M1-M17: Queries y métricas operacionales (implementación específica)
+> - **[FENOTIPO]** Implementación física: SQL schemas, índices, optimizations (ver Layer 2 Tejidos)
+>
+> Ver ../00_fundamentos_teoricos/00_introduccion.md §0.1 para definición completa framework.
+
 - [PARTE III: MODELO RELACIONAL](#parte-iii-modelo-relacional)
   - [§1. FUNDAMENTOS MODELO](#1-fundamentos-modelo)
   - [§2. ENTIDADES CORE](#2-entidades-core)
@@ -423,18 +430,22 @@ R13_Delegación_HAIC:
     - Si accountable es Mixto, ∃ humano en composition (transitivo)
     
   Modos_Delegación (I5):
-    M1_Monitor, M2_Informar, M3_Sugerir, M4_Decidir_Bajo_Excepción,
-    M5_Coproducir, M6_Delegar_Monitorizado
+    Tipo abstracto: DelegationMode
+    Valores: Ver I5_[FENOTIPO] en ../00_fundamentos_teoricos/03_invariantes.md §6
+    Espectro: M1_Monitorear → M6_Ejecutar (6 niveles autonomía progresiva)
     
   Propiedad_Trazabilidad:
     ∀ output algorítmico: audit_trail registra humano accountable
     + modo delegación aplicado + timestamp
   
   Extensión_ADP_ALM:
-    "Integración con protocolo ADP/ALM (Ref: ingenieria_agentes_conversacionales.md)"
+    "Extensión de R13 para agentes conversacionales en plataforma ORKO.
+     ADP (Agent Definition Protocol) y ALM (Agent Lifecycle Management)
+     se formalizan aquí como parte del protocolo interno ORKO.
+     Documentación ampliada opcional en 90_referencias_fundacionales/10_ingenieria_agentes_conversacionales.md"
     
     agent_contract_id: String
-      Descripción: ID del agente según ADP (Agent Definition Protocol)
+      Descripción: ID del agente según protocolo ORKO/ADP (Agent Definition Protocol)
       Formato: AGENT-TYPE-DOMAIN-VERSION
       Ejemplo: ASIS-IPR-GN-V3 (Asistente IPR GORE Ñuble v3)
       Requerido: Si substrate=Algorítmico AND capacity_type ≥ C1
@@ -446,7 +457,7 @@ R13_Delegación_HAIC:
       Propósito: Trazabilidad especificación → ejecución
       
     alm_phase: {Conception, KB_Curation, Programming, Testing, Maintenance}
-      Descripción: Fase ALM actual del agente (5-phase lifecycle)
+      Descripción: Fase ALM actual del agente (5-phase lifecycle definido en ORKO)
       Uso: Governance y audit trail de evolución
       
     guardrails_ref: URI
@@ -464,7 +475,6 @@ R13_Delegación_HAIC:
       
     kb_sync_protocol: String
       Descripción: Método sincronización KB (Manual | CI/CD | Drive_Sync)
-      Referencia: ALM Phase 2 Act 2.3 (KB Synchronization Protocol)
       Propósito: Coherencia Git SSOT ↔ Platform KB Store
       
   Validaciones:
@@ -476,9 +486,8 @@ R13_Delegación_HAIC:
     - alm_phase DEBE reflejar estado real lifecycle
     
   Trazabilidad_Completa:
-    Capacidad(Algorítmica) → agent_contract_id → agent.yaml (ADP) →
+    Capacidad(Algorítmica) → agent_contract_id → agent.yaml (protocolo ORKO/ADP) →
       defined_states + workflows → KB guidance maps → Information assets (TF3)
-```
 
 R14_State_Transitions (G1):
 
@@ -625,7 +634,7 @@ Constraints_Por_Invariante:
   I5_HAIC → C7_Human_Accountability:
     ∀ Capacidad(substrate=Algorítmico):
       ownership.accountable_id → Capacidad(substrate ∈ {Humano, Mixto})
-      + delegation_mode ∈ {M1, M2, M3, M4, M5, M6}
+      + delegation_mode: DelegationMode (valores en I5_[FENOTIPO])
       + audit_trail registra humano responsible + timestamp
     ∀ Propósito: owner_capacity.substrate ∈ {Humano, Mixto}
     ∀ Límite(crítico): owner_capacity.substrate = Humano

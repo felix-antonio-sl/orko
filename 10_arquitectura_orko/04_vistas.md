@@ -2,6 +2,13 @@
 
 **4 Dominios Ortogonales con Artefactos Específicos**
 
+> **Etiquetado Genoma/Fenotipo**: Este documento contiene elementos mixtos:
+> - **[GENOMA]** D1-D4: Dominios ortogonales (derivados de T4, universales)
+> - **[FENOTIPO]** Artefactos específicos: Org Chart, RACI, OKR Canvas, VSM, Dashboards (templates adaptables)
+> - **[FENOTIPO]** Métricas scores: Fórmulas y thresholds recomendados (configurables según contexto)
+>
+> Ver ../00_fundamentos_teoricos/00_introduccion.md §0.1 para definición completa framework.
+
 - [PARTE IV: VISTAS ARQUITECTÓNICAS](#parte-iv-vistas-arquitectónicas)
   - [§1. FUNDAMENTOS VISTAS](#1-fundamentos-vistas)
   - [§2. VISTA D1: ARQUITECTURA](#2-vista-d1-arquitectura)
@@ -13,10 +20,12 @@
     - [A. ARTEFACTO D2.1: DASHBOARD 16 OBSERVABLES](#a-artefacto-d21-dashboard-16-observables)
     - [B. ARTEFACTO D2.2: ANOMALY LOG](#b-artefacto-d22-anomaly-log)
     - [C. MÉTRICAS D2: PERCEPCIÓN SCORE](#c-métricas-d2-percepción-score)
+    - [D. ARTEFACTO D2.2: COMPLIANCE LOG](#d-artefacto-d22-compliance-log)
   - [§4. VISTA D3: DECISIÓN](#4-vista-d3-decisión)
     - [A. ARTEFACTO D3.1: OKR PLANNING CANVAS](#a-artefacto-d31-okr-planning-canvas)
     - [B. ARTEFACTO D3.2: PORTFOLIO BOARD](#b-artefacto-d32-portfolio-board)
     - [C. MÉTRICAS D3: DECISIÓN SCORE](#c-métricas-d3-decisión-score)
+    - [D. ARTEFACTO D3.3: DECISION AUDIT TRAIL](#d-artefacto-d33-decision-audit-trail)
   - [§5. VISTA D4: OPERACIÓN](#5-vista-d4-operación)
     - [A. ARTEFACTO D4.1: VALUE STREAM MAP](#a-artefacto-d41-value-stream-map)
     - [B. ARTEFACTO D4.2: DORA METRICS DASHBOARD](#b-artefacto-d42-dora-metrics-dashboard)

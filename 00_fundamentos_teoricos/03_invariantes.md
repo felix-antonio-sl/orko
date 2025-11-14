@@ -433,69 +433,190 @@ Validación_Operativa:
 
 ## §6. INVARIANTE I5: HAIC (Human-AI Collaboration)
 
+**[GENOMA]** - Teorema Ético-Estructural
+
 ```yaml
-I5_HAIC_Human_AI_Collaboration:
-  Enunciado:
-    "Sistema es colaboración humano-AI TRANSVERSAL donde humanos establecen propósito,
-     AI amplifica capacidades en TODOS dominios, y accountability permanece humana
-     con override siempre disponible"
+I5_HAIC_Núcleo_Irreducible:
+  
+  Enunciado_Minimal:
+    "∀ capacidad algorítmica decisional (C1+) en sistema ORKO:
+     ∃ exactamente UN accountable humano identificable
+     con autoridad override y acceso explicabilidad"
      
-  Formulación_Formal:
-    ∀ Capacidad(substrate=Algorítmico) ∈ {D1_Tecnológico, D2_Informacional, D3_Organizacional, D4_Escalar}:
-      ∃ Capacidad(substrate=Humano, role=Responsable):
-        - Delegación explícita modo M ∈ {M1, M2, M3, M4, M5, M6}
-        - Accountability humana preservada (no transferible)
-        - Override capability implementado y accesible
-        - Explainability requerida (razonamiento auditable)
-        - Trajectory awareness activa (I6 integrado)
-        - Bounded autonomy 6 dimensiones (financiero, operativo, reputacional, legal, temporal, scope)
+  Formulación_Formal_Genoma:
+    ∀ cap ∈ Capacidad:
+      (cap.substrate = Algorítmico ∧ cap.capacity_type ≥ C1) →
+        ∃! h ∈ Capacidad:
+          (h.substrate ∈ {Humano, Mixto_con_Humano} ∧
+           accountability_chain(cap) → h ∧
+           h.can_override(cap) ∧
+           cap.must_explain_to(h))
+           
+  Constraints_Fundamentales:
+    C1_Accountability_Humana:
+      Definición: "Responsabilidad última decisiones algorítmicas recae en humano"
+      Fundamentación: A5 (Propósito requiere agencia moral, solo humanos la tienen)
+      Prohibición: Accountability NO transferible a algoritmo (nunca)
+      
+    C2_Override_Capability:
+      Definición: "Humano accountable puede cambiar/pausar decisión algorítmica"
+      Implementación: ∃ mecanismo técnico accesible (circuit breaker, manual override)
+      Fundamentación: A4 (Límite) - humano impone límite final sobre algorítmico
+      
+    C3_Explainability:
+      Definición: "Capacidad algorítmica debe poder justificar decisiones"
+      Propósito: Prerequisito accountability (no puedo ser responsable si no entiendo)
+      Fundamentación: I3 (Trazabilidad) - decisión sin justificación = opaca
+      
+    C4_Bounded_Autonomy:
+      Definición: "Autonomía algorítmica limitada explícitamente en N dimensiones"
+      Dimensiones: {financiero, operativo, reputacional, legal, temporal, scope}
+      Fundamentación: A4 (Límite) - autonomía NO puede ser ilimitada
 
-Justificación_Ontológica:
+Fundamentación_Ontológica_Genoma:
 
-  Basada_En_Axiomas:
+  Desde_Axiomas:
     A5 (Propósito): Intencionalidad requiere agencia moral
-    → Solo humanos tienen agencia moral plena (estado actual)
-    → Algorítmicos son instrumentos, no agentes morales autónomos
+    → Solo humanos poseen agencia moral plena (estado actual conocimiento)
+    → Algorítmicos son instrumentos capacidad, NO agentes morales autónomos
     
-  Evidencia_Práctica:
-    - Regulaciones (EU AI Act, GDPR): Requieren human-in-control
-    - Ética: Accountability no delegable a no-personas
-    - Legal: Responsabilidad última recae en humanos/organizaciones
-
-Mecanismos_Operativos:
-
-  M1_Delegación_Explícita:
-    Toda capacidad algorítmica tiene:
-      delegated_from_capacity_id: UUID(Capacidad_Humana)
-      delegation_mode ∈ {M1, M2, M3, M4, M5, M6}
-      delegation_scope: Límites operación
-      
-    Espectro_Autonomía:
-      M1_Monitorear: Agente solo observa
-      M2_Informar: Agente sugiere, humano decide
-      M3_Habilitar: Humano invoca, agente ejecuta
-      M4_Controlar: Agente decide dentro reglas, humano excepciones
-      M5_Coproducir: Colaboración mixta
-      M6_Ejecutar: Agente autónomo, humano supervisa
-      
-  M2_Override_Capability:
-    ∀ decisión algorítmica:
-      Humano puede intervenir y cambiar
-      
-    Implementación:
-      - Circuit breakers (pausar sistema)
-      - Manual overrides (corregir decisión específica)
-      - Escalation paths (definir cuándo escalar a humano)
-      
-  M3_Explainability:
-    Capacidad algorítmica debe explicar decisiones
-    → Humano puede auditar razonamiento
-    → Prerequisito para accountability
+  Desde_Invariantes:
+    I3 (Trazabilidad): Decisión sin explicación = no auditable
+    → Explainability es prerequisito técnico accountability
     
-  M4_Trajectory_Awareness:
-    Sistema registra historial uso algorítmico
-    → Humano puede revisar patterns
-    → Permite detectar drift, bias, degradación
+  Validación_Empírica:
+    - Marco regulatorio: EU AI Act, GDPR exigen human-in-control
+    - Teoría ética: Responsabilidad moral requiere conciencia/volición
+    - Sistema legal: Accountability última recae en personas/organizaciones
+
+Propiedades_I5:
+  
+  P_I5_1_Transversalidad:
+    Enunciado: "HAIC aplica en TODOS dominios D1-D4, no solo D1"
+    Implicación: TF7 (Agentic Layer) es UNA implementación, no LA definición
+    
+  P_I5_2_No_Transferibilidad:
+    Enunciado: "Accountability humana NUNCA se transfiere a algoritmo"
+    Implicación: Delegación aumenta autonomía OPERATIVA, no responsabilidad MORAL
+    
+  P_I5_3_Progresión_Segura:
+    Enunciado: "Autonomía algorítmica debe crecer gradualmente con evidencia"
+    Implicación: Salto directo a alta autonomía sin validación = anti-pattern
+```
+
+---
+
+**[FENOTIPO]** - Operacionalización HAIC
+
+```yaml
+NOTA_Fenotipo:
+  "Esta sección describe patrones, modos y estrategias RECOMENDADAS
+   para implementar el núcleo genoma I5. Son contextuales y adaptables."
+
+Espectro_Delegación_M1-M6:
+  
+  Clasificación_Autonomía_Progresiva:
+    "Taxonomía de 6 modos delegación según nivel autonomía algorítmica"
+    
+    M1_Monitorear (Autonomía: 0%):
+      Descripción: AA solo observa, NO actúa
+      Decisión: 100% humano
+      Uso_típico: Nuevas capacidades sin validación, aprendizaje inicial
+      Ejemplos: Dashboard analytics, logging, observability pasiva
+      
+    M2_Informar (Autonomía: 10-20%):
+      Descripción: AA sugiere acciones, humano decide siempre
+      Decisión: 100% humano (AA informa)
+      Uso_típico: Decision support, recomendaciones
+      Ejemplos: BI dashboards con insights, anomaly alerts, recommender systems
+      
+    M3_Habilitar (Autonomía: 30-50%):
+      Descripción: Humano invoca, AA ejecuta bajo supervisión
+      Decisión: Humano inicia, AA ejecuta
+      Uso_típico: Automation on-demand, copilots
+      Ejemplos: GitHub Copilot (humano acepta), RPA invocado manualmente
+      
+    M4_Controlar (Autonomía: 60-70%):
+      Descripción: AA decide dentro reglas claras, humano maneja excepciones
+      Decisión: AA rutina, humano edge cases
+      Uso_típico: Automatización guiada por reglas, workflows establecidos
+      Ejemplos: Approval workflows, rules engines, policy enforcement
+      
+    M5_Coproducir (Autonomía: 50-70%, mixto):
+      Descripción: Humano + AA colaboran simultáneamente en tarea
+      Decisión: Negociada H↔AA
+      Uso_típico: Tareas complejas requiriendo ambos (creatividad + escala)
+      Ejemplos: Pair programming H+AI, content creation asistida
+      
+    M6_Ejecutar (Autonomía: 80-95%):
+      Descripción: AA autónomo dentro bounded autonomy, humano supervisa periódicamente
+      Decisión: AA autonomía acotada, humano override disponible
+      Uso_típico: Operaciones críticas, alta frecuencia, bajo riesgo unitario
+      Ejemplos: Trading algorithms, dynamic pricing, auto-scaling cloud
+
+  Progresión_Recomendada:
+    Principio: "NO saltar niveles sin validación"
+    
+    Patrón_seguro:
+      Nueva_capacidad → M1 (observar)
+        ↓ (validación: patterns identificados)
+      M1 → M2 (sugerir)
+        ↓ (validación: success_rate > 70%)
+      M2 → M3 (habilitar)
+        ↓ (validación: latency crítica AND success_rate > 85%)
+      M3 → M4 (controlar)
+        ↓ (validación: success_rate > 95% AND bajo riesgo)
+      M4 → M6 (ejecutar)
+      
+    Anti-Pattern:
+      M1 → M6 directo (catastrófico)
+      M2 → M5 sin M3/M4 (riesgoso)
+
+Implementaciones_Override:
+  
+  Circuit_Breaker:
+    Descripción: "Kill switch pausar sistema completo"
+    Aplicabilidad: Toda capacidad M4-M6
+    Latencia: <1 segundo acción humana → pausa efectiva
+    Testing: Obligatorio drill mensual
+    
+  Manual_Override:
+    Descripción: "Corregir decisión específica algorítmica"
+    Aplicabilidad: Toda capacidad M2-M6
+    UI: Botón "Override" visible + justification field
+    Audit: Override registrado con (timestamp, user, reason)
+    
+  Escalation_Path:
+    Descripción: "Reglas automáticas escalar a humano"
+    Triggers:
+      - Confidence < threshold (e.g., <0.7)
+      - High-risk scenario detectado
+      - Conflict entre reglas
+      - Novel situation (no precedente en training)
+    Response: Pausar + notificar humano + esperar decisión
+
+Explainability_Patterns:
+  
+  Nivel_Mínimo_Requerido:
+    M1-M2: Explainability nice-to-have (solo observa/sugiere)
+    M3-M4: Explainability OBLIGATORIA (actúa con impacto)
+    M5-M6: Explainability CRÍTICA (alto autonomía)
+    
+  Técnicas_Recomendadas:
+    Model-Agnostic:
+      - LIME (Local Interpretable Model-agnostic Explanations)
+      - SHAP (SHapley Additive exPlanations)
+      - Counterfactual explanations
+      
+    Model-Specific:
+      - Decision trees → path visualization
+      - Neural nets → attention weights, saliency maps
+      - LLMs → chain-of-thought prompting
+      
+    Business-Level:
+      - Natural language explanations (LLM-generated)
+      - Analogías con casos similares
+      - Confidence scores + feature importance rankings
 
 Límites_Primacía:
 
@@ -617,40 +738,84 @@ Validación_Operativa:
 
 ## §7. INVARIANTE I6: TRAJECTORY-AWARENESS
 
+**[GENOMA]** - Teorema Evolución Algorítmica
+
 ```yaml
-I6_TRAJECTORY_AWARENESS:
-  Enunciado:
-    "Capacidad algorítmica evoluciona informada por trayectoria de uso.
-     El sistema registra, aprende y adapta basado en historial de interacciones"
+I6_TRAJECTORY_AWARENESS_Núcleo:
+  
+  Enunciado_Minimal:
+    "∀ capacidad algorítmica: historial uso condiciona su autonomía y evolución.
+     Trayectoria registrada permite mejora continua y ajuste delegation_mode."
      
-  Formulación_Formal:
-    ∀ Capacidad(substrate=Algorítmico):
-      ∃ Trajectory(C) = {
-        executions: List<(timestamp, input, output, context, feedback)>,
-        metrics: (success_rate, latency_trend, drift_detection),
-        adaptations: List<(timestamp, change_type, reason)>
-      }
+  Formulación_Formal_Genoma:
+    ∀ cap ∈ Capacidad:
+      (cap.substrate = Algorítmico) →
+        ∃ trajectory(cap) = {executions, feedback, metrics} ∧
+        trajectory(cap) → {evolution_cap, adjustment_autonomy}
+        
+  Constraints_Fundamentales:
+    
+    C1_Registro_Obligatorio:
+      Definición: "Toda ejecución algorítmica decisional debe registrarse"
+      Mínimo: (timestamp, input, output, success/failure)
+      Fundamentación: I3 (Trazabilidad) + aprendizaje requiere datos
       
-    ∧ ∃ learning_mechanism(Trajectory) → Capacity_Evolution
-
-Motivación_Fundamental:
-
-  Diferencia_Algorítmico_vs_Mecánico:
-    Capacidad_Mecánica:
-      - Deteriora con uso (wear and tear)
-      - No aprende de historial
-      - Mantenimiento preventivo basado en horas uso
+    C2_Trajectory_Informa_Autonomía:
+      Definición: "Progresión delegation_mode debe basarse en trajectory"
+      Forma: trajectory.success_rate → decision(increase/decrease autonomy)
+      Fundamentación: I5 (HAIC bounded autonomy) + evidencia empírica
       
-    Capacidad_Algorítmica:
+    C3_Mejora_Continua:
+      Definición: "Capacidad algorítmica debe mejorar con uso"
+      Distinción: vs mecánica (degrada con uso)
+      Fundamentación: Naturaleza algorítmica (más datos → mejor performance)
+
+Fundamentación_Ontológica_Genoma:
+
+  Diferenciación_Sustrato:
+    
+    Capacidad_Mecánica (P1.substrate = Mecánico):
+      - Entropía: Deteriora con uso (wear and tear físico)
+      - Aprendizaje: NO aprende de historial
+      - Mantenimiento: Preventivo basado tiempo/ciclos uso
+      
+    Capacidad_Algorítmica (P1.substrate = Algorítmico):
       - MEJORA con uso (más datos, más patterns)
       - Aprende de errores y éxitos
       - Evoluciona basada en feedback
       
-  Implicación:
-    Trajectory no es solo audit log
-    Trajectory es MECANISMO DE MEJORA CONTINUA
+  Implicación_Clave:
+    Trajectory NO es solo audit log (compliance)
+    Trajectory ES mecanismo activo mejora continua (learning)
+    
+Propiedades_I6:
+  
+  P_I6_1_Universalidad_Algorítmica:
+    Enunciado: "TODO substrate Algorítmico tiene trajectory"
+    Scope: Capacidades C0+ (incluye mecánicas con sensores digitales)
+    Excepción: Capacidades puramente mecánicas sin telemetría
+    
+  P_I6_2_Progresión_Evidenciada:
+    Enunciado: "Cambio delegation_mode requiere evidencia trajectory"
+    Anti-Pattern: Aumentar autonomía sin datos validación
+    Validación: success_rate, drift_detection, human_override_frequency
+    
+  P_I6_3_Ciclo_Cerrado:
+    Enunciado: "Trajectory → Learning → Evolution → Trajectory'"
+    Propiedad: Sistema auto-mejora (feedback loop positivo)
+    Límite: Bounded por I5 (humano always accountable)
+```
 
-Dimensiones_Trajectory:
+---
+
+**[FENOTIPO]** - Operacionalización Trajectory-Awareness
+
+```yaml
+NOTA_Fenotipo:
+  "Esta sección describe dimensiones, mecanismos y casos uso RECOMENDADOS
+   para implementar trajectory-awareness. Son adaptativos según contexto."
+
+Dimensiones_Trajectory_Detalladas:
 
   D1_Execution_History:
     Registro completo de ejecuciones:

@@ -3,6 +3,12 @@
 **Primitivo:** P3_Información | **Axioma:** A3_Existencia_Información  
 **Dominios:** D2_Percepción, D4_Operación | **Tech:** Data, Analytics, Knowledge
 
+> **📘 GENOMA/FENOTIPO EN TF3**:  
+> - **[GENOMA]**: Schema InformationAsset (Foundation/Analytics/Semantic), invariantes (lineage obligatorio, encryption at rest, PII governance), patterns abstractos (lakehouse layers, data products, RAG retrieval)  
+> - **[FENOTIPO]**: Plataformas específicas (Snowflake, Databricks, Airbyte), vectorstores (Pinecone, Weaviate), embedding models (OpenAI ada-002, Cohere), BI tools (Tableau, Looker)  
+> 
+> **Unificación Data+Analytics+Knowledge**: Evita silos; información fluye Bronze→Silver→Gold→Semantic sin boundaries artificiales.
+
 ---
 
 ## §1. DEFINICIÓN
@@ -278,25 +284,25 @@ Data_Flow:
 ```yaml
 Capabilities:
   Ingestion:
-    - Batch ETL (Airbyte, Fivetran)
-    - Streaming (Kafka, Kinesis)
-    - CDC (Debezium, log-based)
+    - Batch ETL [FENOTIPO] (Airbyte, Fivetran)
+    - Streaming [FENOTIPO] (Kafka, Kinesis)
+    - CDC [FENOTIPO] (Debezium, log-based)
     - APIs (REST, GraphQL)
     
   Storage:
-    - OLTP: PostgreSQL, MySQL (transactional)
-    - OLAP: Snowflake, BigQuery, Databricks (analytical)
-    - Lake: S3, GCS, Azure Blob (object storage)
-    - Lakehouse: Delta Lake, Iceberg, Hudi
+    - OLTP [FENOTIPO]: PostgreSQL, MySQL (transactional)
+    - OLAP [FENOTIPO]: Snowflake, BigQuery, Databricks (analytical)
+    - Lake [FENOTIPO]: S3, GCS, Azure Blob (object storage)
+    - Lakehouse [FENOTIPO]: Delta Lake, Iceberg, Hudi
     
   Processing:
-    - ETL: dbt, Spark, Dataflow
-    - Orchestration: Airflow, Dagster, Prefect
+    - ETL [FENOTIPO]: dbt, Spark, Dataflow
+    - Orchestration [FENOTIPO]: Airflow, Dagster, Prefect
     
   Governance:
-    - Catalog: DataHub, Collibra, Alation
-    - Lineage: OpenLineage, dbt docs
-    - Quality: Great Expectations, Soda, Datafold
+    - Catalog [FENOTIPO]: DataHub, Collibra, Alation
+    - Lineage [FENOTIPO]: OpenLineage, dbt docs
+    - Quality [FENOTIPO]: Great Expectations, Soda, Datafold
     
 Métricas:
   - Data_Quality_Score: AVG(completeness, accuracy, freshness, validity)
@@ -309,7 +315,7 @@ Métricas:
 ```yaml
 Capabilities:
   Descriptive:
-    - Dashboards: Tableau, Looker, PowerBI
+    - Dashboards [FENOTIPO]: Tableau, Looker, PowerBI
     - Reports: Scheduled, parameterized
     - Ad-hoc: SQL editors, notebooks
     
@@ -319,7 +325,7 @@ Capabilities:
     - A/B testing: Statistical significance
     
   Predictive:
-    - Forecasting: Time-series (Prophet, ARIMA)
+    - Forecasting [FENOTIPO]: Time-series (Prophet, ARIMA)
     - Classification: Churn, fraud detection
     - Anomaly detection: Outliers, drift
     
@@ -329,10 +335,10 @@ Capabilities:
     - Simulation: Monte Carlo, what-if
     
   MLOps:
-    - Training: MLflow, Kubeflow, SageMaker
-    - Serving: Seldon, KServe, BentoML
-    - Feature Store: Feast, Tecton
-    - Monitoring: Evidently, WhyLabs
+    - Training [FENOTIPO]: MLflow, Kubeflow, SageMaker
+    - Serving [FENOTIPO]: Seldon, KServe, BentoML
+    - Feature Store [FENOTIPO]: Feast, Tecton
+    - Monitoring [FENOTIPO]: Evidently, WhyLabs
     
 Métricas:
   - Analytics_Coverage: % OKRs con dashboards
@@ -356,9 +362,9 @@ Capabilities:
     - Vigencia: Expiration tracking, review cycles
     
   Indexing:
-    - Vector: Embeddings (OpenAI, Cohere, local)
-    - Keyword: BM25, Elasticsearch
-    - Graph: Neo4j, entity relationships
+    - Vector [FENOTIPO]: Embeddings (OpenAI, Cohere, local)
+    - Keyword [FENOTIPO]: BM25, Elasticsearch
+    - Graph [FENOTIPO]: Neo4j, entity relationships
     - Hybrid: Fusion BM25 + vector
     
   Retrieval:
@@ -376,9 +382,9 @@ Capabilities:
 RAG_Pipeline_Pattern:
   Steps:
     1. Ingestion: Multi-format documents
-    2. Chunking: Semantic boundaries (RecursiveCharacterTextSplitter)
-    3. Embedding: Vector representation (e.g., ada-002)
-    4. Indexing: Vector DB + BM25 (Pinecone, Weaviate)
+    2. Chunking: Semantic boundaries [FENOTIPO] (RecursiveCharacterTextSplitter)
+    3. Embedding: Vector representation [FENOTIPO] (e.g., ada-002)
+    4. Indexing: Vector DB + BM25 [FENOTIPO] (Pinecone, Weaviate)
     5. Retrieval: Hybrid search (reranking)
     6. Generation: LLM with context + citations
     

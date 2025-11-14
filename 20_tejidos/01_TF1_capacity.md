@@ -3,6 +3,12 @@
 **Primitivo:** P1_Capacidad | **Axioma:** A2_Existencia_Capacidad  
 **Dominios:** D1_Arquitectura, D4_Operación | **Tech:** BAD, OCE, Infrastructure
 
+> **📘 GENOMA/FENOTIPO EN TF1**:  
+> - **[GENOMA]**: Schema CapacityAsset, invariantes (accountable_id, substrate constraints), patterns abstractos (HITL, trajectory)  
+> - **[FENOTIPO]**: Tech stacks específicos (MLflow, LangChain, vLLM), guardrails configurables, cost thresholds, tools recomendados  
+> 
+> **Separación clara**: Estructura universal (genoma) vs implementación contextual (fenotipo).
+
 ---
 
 ## §1. DEFINICIÓN
@@ -34,7 +40,7 @@ CapacityAsset:
   ownership:
     accountable_id: UUID(Humano|Mixto)
     delegated_from: UUID(Humano) | null  # Si algorítmico
-    delegation_mode: {M1|M2|M3|M4|M5|M6} | null
+    delegation_mode: DelegationMode | null  # Ver 00_fundamentos_teoricos/03_invariantes.md §6 I5_[FENOTIPO]
     override_enabled: Boolean
     
   # Lifecycle
@@ -95,7 +101,7 @@ Invariantes:
 
 ```yaml
 Steps: Define_Role → Hire/Upskill → Onboard → Monitor_Performance → Optimize
-Tools: HR platforms, LMS, performance management
+Tools: [FENOTIPO] HR platforms, LMS, performance management
 Métricas: Utilization, skill_coverage, retention_rate
 ```
 
@@ -103,7 +109,7 @@ Métricas: Utilization, skill_coverage, retention_rate
 
 ```yaml
 Steps: Define_Problem → Data_Prep → Train → Evaluate → Serve → Monitor/Retrain
-Tools: MLflow, Kubeflow, SageMaker
+Tools: [FENOTIPO] MLflow, Kubeflow, SageMaker
 Métricas: Accuracy, latency_p99, drift_incidents, cost_per_execution
 ```
 
@@ -111,7 +117,7 @@ Métricas: Accuracy, latency_p99, drift_incidents, cost_per_execution
 
 ```yaml
 Steps: Define_Role → Prompt_Engineering → Tool_Integration → Guardrails → HITL → Deploy → Improve
-Tools: LangChain, vLLM, LangGraph
+Tools: [FENOTIPO] LangChain, vLLM, LangGraph
 Métricas: Success_rate, human_override_rate, guardrail_violations
 ```
 
@@ -119,7 +125,7 @@ Métricas: Success_rate, human_override_rate, guardrail_violations
 
 ```yaml
 Steps: Hardware_Selection → Procurement → Configuration → Maintenance → Monitoring
-Tools: CMMS, IoT platforms
+Tools: [FENOTIPO] CMMS, IoT platforms
 Métricas: MTBF, MTTR, availability, calibration_drift
 ```
 

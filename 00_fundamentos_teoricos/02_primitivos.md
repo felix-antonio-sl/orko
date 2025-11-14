@@ -2,6 +2,8 @@
 
 >5 Primitivos Necesarios y Suficientes (P1-P5)
 
+> **Etiquetado Genoma/Fenotipo**: Este documento es mayormente [GENOMA] (derivación P1-P5, formas abstractas). Ejemplos ilustrativos pueden mencionar valores fenotipo (ej: M3_Habilitar) como casos concretos, pero valores M1-M6 se definen en I5_[FENOTIPO]. Ver §0.1 en 00_introduccion.md.
+
 - [PARTE II: DERIVACIÓN DE PRIMITIVOS](#parte-ii-derivación-de-primitivos)
   - [§1. METODOLOGÍA DE DERIVACIÓN](#1-metodología-de-derivación)
   - [§2. PRIMITIVO P1: CAPACIDAD](#2-primitivo-p1-capacidad)
@@ -930,11 +932,11 @@ Capacidad := (
     latency: number,
     cost_per_hour: number,
 
-    # HAIC / Delegación y trazabilidad
-    delegation_mode: {M1, M2, M3, M4, M5, M6}?,
-    accountable_capacity_id: UUID?,   # FK Capacidad (Humano o Mixto)
-    override_capability: boolean?,
-    override_channel: {circuit_breaker, manual_veto, escalation}?
+    # HAIC / Delegación y trazabilidad (ver I5_HAIC)
+    delegation_mode: DelegationMode?,        # Modo autonomía (valores en I5_[FENOTIPO])
+    accountable_capacity_id: UUID?,          # FK Capacidad (Humano o Mixto)
+    override_capability: boolean?,           # Humano puede cambiar decisiones
+    override_channel: OverrideChannel?       # Mecanismo override (valores en I5_[FENOTIPO])
   }
 )
 ```
