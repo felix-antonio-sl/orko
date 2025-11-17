@@ -11,49 +11,65 @@
 
 ## 🎯 ¿Qué es ORKO?
 
-ORKO es un **marco arquitectónico** para la transformación digital, nacido de la necesidad de gestionar y modernizar sistemas complejos en el **Gobierno Regional de Ñuble, Chile**. Desde este origen práctico, el proyecto pivota ambiciosamente para ofrecer un sistema formal y adaptable a cualquier organización.
+**ORKO** es un marco arquitectónico formal para transformación digital organizacional, derivado de primeros principios y validado empíricamente en el **Gobierno Regional de Ñuble, Chile**. A diferencia de frameworks ad-hoc, ORKO ofrece trazabilidad completa desde teoría fundamental hasta implementación operable.
 
-A diferencia de metodologías ad-hoc, ORKO propone:
+### **Estructura en 5 Capas**
 
-- **Fundamento teórico formal** (Axiomas, Primitivos, Invariantes).
-- **Arquitectura operacional** (Contratos, Principios, Relaciones).
-- **Metodología ejecutable** (Fases, Playbooks, Trayectorias).
+```
+Teoría Pura       → Arquitectura Lógica → Tech Fabrics    → Metodología      → Plataforma Software
+(Axiomas, Primitivos) (Contratos, Principios) (OpenAPI, Patterns) (18 Fases, Playbooks) (Runtime, CI/CD)
+```
 
-**Innovaciones Clave:**
+### **Innovaciones Clave**
 
-- **Trazabilidad bidireccional** desde axiomas hasta implementación (contratos OpenAPI).
-- **Framework Genoma/Fenotipo**: Separación explícita entre invariantes arquitectónicos (genoma) y configuraciones contextuales (fenotipo).
-- **Autosuficiencia semántica**: Layers 0+1+2 standalone, referencias académicas como lentes inspiracionales opcionales.
+1. **Framework Genoma/Fenotipo**  
+   Separación explícita entre invariantes universales [GENOMA] (50 elementos: A1-A5, P1-P5, I1-I8, C1-C5, E6-E7, R14-R15, PD1-PD40) y configuraciones contextuales [FENOTIPO] (59 elementos: thresholds, tech stacks, templates). Elimina confusión "ORKO es complejo" → **Genoma ORKO = 41 elementos teóricos**, fenotipo = expresiones aplicadas.
+
+2. **Trazabilidad Bidireccional Completa**  
+   Toda decisión arquitectónica deriva formalmente desde axiomas:  
+   `A1-A5 (axiomas) → P1-P5 (primitivos) → I1-I8 (invariantes) → C1-C5 (contratos) → E1-E7 (entidades) → PD1-PD76 (principios) → TF1-TF3 (tejidos) → OpenAPI 3.1 (APIs)`
+
+3. **Ortogonalidad Verificada**  
+   - **5 primitivos ortogonales** (P1-P5): Capacidad, Flujo, Información, Límite, Propósito (Teorema T2)  
+   - **4 dominios ortogonales** (D1-D4): Arquitectura, Percepción, Decisión, Operación (6 pares validados)  
+   - **3 tejidos ortogonales** (TF1-TF3): Capacity, Flow, Information (simplificación SIGMA 4→3)
+
+4. **Human-AI Collaboration (I5-HAIC)**  
+   Invariante [GENOMA] garantiza primacía humana explícita: toda decisión algorítmica tiene `accountable_human`, 6 modos delegación (M1-M6), explainability obligatoria (PD21), audit trails completos (E7).
+
+5. **Autosuficiencia Semántica**  
+   Layers 0+1+2 operan standalone. Referencias académicas (AOC/Meyer, Kelly/KHM, ADP/Alter) integradas como "protocolo interno" ORKO. Directorio `90_referencias_fundacionales/` opcional para profundización.
 
 ---
 
 ## 🏗️ Arquitectura: Sistema de 5 Capas
 
+**Framework Genoma/Fenotipo**: Separación explícita entre invariantes universales ([GENOMA]) y configuraciones contextuales ([FENOTIPO]) para máxima claridad cognitiva.
+
 ```
 ┌─────────────────────────────────────────────────────────────┐
-│ Capa 4: PLATAFORMA                                          │
-│ Implementación software, artefactos desplegables            │
-│ └─ Estado: En desarrollo                                   │
+│ Layer 4: PLATAFORMA [FENOTIPO]                              │
+│ Runtime, SDKs, CI/CD → Estado: Contratos listos (20_tejidos)│
 ├─────────────────────────────────────────────────────────────┤
-│ Capa 3: METODOLOGÍA                                         │
-│ 18 fases WSLC, playbooks, trayectorias, governance         │
-│ └─ Estado: Diseñada (30_metodologia_orko/)                │
+│ Layer 3: METODOLOGÍA [FENOTIPO] 🟡 80% Completo             │
+│ 18 fases WSLC + 15 playbooks → 30_metodologia_orko/         │
+│ F1-F18 (Kernel+Expansion: ✅), Playbooks P01-P15: 🟡        │
 ├─────────────────────────────────────────────────────────────┤
-│ Capa 2: TEJIDOS TECNOLÓGICOS ✅ PRODUCTION-READY            │
-│ TF1-TF3: Capacity, Flow, Information + Concerns Transv.    │
-│ └─ 20_tejidos/ (specs + OpenAPI 3.1 validados)            │
+│ Layer 2: TEJIDOS [GENOMA+FENOTIPO] ✅ PRODUCTION-READY       │
+│ TF1 Capacity, TF2 Flow, TF3 Information                     │
+│ Contratos OpenAPI 3.1 validados (96% field coverage)        │
 ├─────────────────────────────────────────────────────────────┤
-│ Capa 1: ARQUITECTURA ✅ PRODUCTION-READY                     │
-│ Contratos C1-C5, Principios PD1-PD76, Relaciones R1-R15    │
-│ └─ 10_arquitectura_orko/ (anti-patterns AP1-AP8 completos)│
+│ Layer 1: ARQUITECTURA [GENOMA+FENOTIPO] ✅ PRODUCTION-READY  │
+│ C1-C5 (contratos), E1-E7 (entidades), PD1-PD76 (principios) │
+│ R1-R15 (relaciones), 20+ patterns, AP1-AP8 (anti-patterns)  │
 ├─────────────────────────────────────────────────────────────┤
-│ Capa 0: FUNDAMENTOS TEÓRICOS ✅ PRODUCTION-READY             │
-│ Axiomas A1-A5, Primitivos P1-P5, Invariantes I1-I8         │
-│ └─ 00_fundamentos_teoricos/ (Framework Genoma/Fenotipo)   │
+│ Layer 0: FUNDAMENTOS [GENOMA] ✅ PRODUCTION-READY            │
+│ A1-A5 (axiomas), P1-P5 (primitivos), I1-I8 (invariantes)    │
+│ D1-D4 (dominios), T1-T6 (teoremas), V_org (ecuación)        │
 └─────────────────────────────────────────────────────────────┘
 ```
 
-**Propiedad de Trazabilidad (I3):** Trazabilidad bidireccional completa verificada: A1-A5 → P1-P5 → I1-I8 → C1-C5 → TF1-TF3 → OpenAPI.
+**Trazabilidad Vertical (I3)**: `A1-A5 → P1-P5 → I1-I8 → C1-C5 → E1-E7 → PD1-PD76 → TF1-TF3 → OpenAPI 3.1` (100% verificada).
 
 ---
 
@@ -74,118 +90,222 @@ orko/
 
 ## 🚀 Inicio Rápido
 
-### Para Ejecutivos (30 min lectura)
+### 🎯 Para Tomadores de Decisión (30 min)
 
-1. **[00_fundamentos_teoricos/01_axiomas.md](00_fundamentos_teoricos/01_axiomas.md)** — Los 5 axiomas irreducibles.
-2. **[00_fundamentos_teoricos/02_primitivos.md](00_fundamentos_teoricos/02_primitivos.md)** — Los 5 primitivos mínimos.
-3. **[00_fundamentos_teoricos/03_invariantes.md](00_fundamentos_teoricos/03_invariantes.md)** — Framework Genoma/Fenotipo (I5).
-4. **[10_arquitectura_orko/00_introduccion.md](10_arquitectura_orko/00_introduccion.md)** — Resumen de la arquitectura.
-5. **[20_tejidos/00_introduccion_tejidos.md](20_tejidos/00_introduccion_tejidos.md)** — TF1-TF3 operacionales.
+**Objetivo**: Comprender el núcleo [GENOMA] sin detalles de implementación.
 
-### Para Arquitectos (6-8 horas)
+1. **[README.md §12](#arquitectura-sistema-de-5-capas)** — Arquitectura 5 capas, framework Genoma/Fenotipo
+2. **[00_fundamentos_teoricos/01_axiomas.md](00_fundamentos_teoricos/01_axiomas.md)** — 5 axiomas irreducibles (A1-A5)
+3. **[00_fundamentos_teoricos/02_primitivos.md](00_fundamentos_teoricos/02_primitivos.md)** — 5 primitivos mínimos (P1-P5)
+4. **[00_fundamentos_teoricos/03_invariantes.md §1-5](00_fundamentos_teoricos/03_invariantes.md)** — 8 invariantes (I1-I8: Minimalidad, Ortogonalidad, HAIC)
+5. **[README.md §Estado](#estado-del-proyecto)** — Métricas de calidad y estado actual
 
-1. **Capa 0** (00_fundamentos_teoricos/) — Framework teórico completo + Genoma/Fenotipo.
-2. **Capa 1** (10_arquitectura_orko/) — C1-C5, PD1-PD76, AP1-AP8, patterns y playbooks.
-3. **Capa 2** (20_tejidos/) — TF1-TF3 specs + contratos OpenAPI + validación E6/E7.
-4. **90_referencias_fundacionales/** — Lentes inspiracionales (AOC, Kelly, KHM, STS) [opcional].
+**Resultado**: Capacidad de evaluar adecuación ORKO para contexto organizacional.
+
+### 💻 Para Arquitectos & Metodológos (1-2 días)
+
+**Día 1: Fundamentos + Arquitectura**
+
+1. **Layer 0 - Teoría** (4-6 horas)
+   - [00_fundamentos_teoricos/00_introduccion.md](00_fundamentos_teoricos/00_introduccion.md) — Guía completa
+   - [01_axiomas.md](00_fundamentos_teoricos/01_axiomas.md) → [02_primitivos.md](00_fundamentos_teoricos/02_primitivos.md) → [03_invariantes.md](00_fundamentos_teoricos/03_invariantes.md)
+   - [04_ciclo_fundamental.md](00_fundamentos_teoricos/04_ciclo_fundamental.md) — SDA (Sense-Decide-Act) + WSLC
+   - [05_dominios.md](00_fundamentos_teoricos/05_dominios.md) — D1-D4 ortogonales
+   - [06_teoremas_fundamentales.md](00_fundamentos_teoricos/06_teoremas_fundamentales.md) — T1-T6 validación formal
+
+2. **Layer 1 - Arquitectura** (2-3 horas)
+   - [10_arquitectura_orko/00_introduccion.md](10_arquitectura_orko/00_introduccion.md) — Guía navegación
+   - [01_contratos.md](10_arquitectura_orko/01_contratos.md) — C1-C5, E6-E7 (schemas formales)
+   - [02_diseño.md](10_arquitectura_orko/02_diseño.md) — PD1-PD76 principios (Genoma + Fenotipo)
+   - [03_relaciones.md](10_arquitectura_orko/03_relaciones.md) — R1-R15, Q1-Q28, M1-M17
+
+**Día 2: Tejidos + Metodología**
+
+3. **Layer 2 - Tejidos** (3-4 horas)
+   - [20_tejidos/00_introduccion_tejidos.md](20_tejidos/00_introduccion_tejidos.md) — Derivación P→TF
+   - [01_TF1_capacity.md](20_tejidos/01_TF1_capacity.md) — Capacity management (M1-M6 delegation)
+   - [02_TF2_flow.md](20_tejidos/02_TF2_flow.md) — Flow orchestration (E7 execution tracking)
+   - [03_TF3_information.md](20_tejidos/03_TF3_information.md) — Information lifecycle (lakehouse)
+   - [implementacion_tejidos/contracts/openapi/](20_tejidos/implementacion_tejidos/contracts/openapi/) — Contratos OpenAPI 3.1
+
+4. **Layer 3 - Metodología** (2-3 horas)
+   - [30_metodologia_orko/README.md](30_metodologia_orko/README.md) — 18 fases WSLC overview
+   - [01_fases_initiation/](30_metodologia_orko/01_fases_initiation/) — F1-F3 (Context, Vision, Trajectory)
+   - [02_fases_development/](30_metodologia_orko/02_fases_development/) — F4-F9 (Capability, Flow, State)
+   - [40_implementacion_metodologia/calculadoras/](40_implementacion_metodologia/calculadoras/) — Health score, convergence tracker
+
+**Resultado**: Capacidad de diseñar arquitectura ORKO-compliant y ejecutar metodología.
+
+### 🔧 Para Implementadores (Referencia continua)
+
+- **Contratos OpenAPI**: [20_tejidos/implementacion_tejidos/contracts/openapi/](20_tejidos/implementacion_tejidos/contracts/openapi/)
+- **Schemas**: [40_implementacion_metodologia/dev_specs/schemas/](40_implementacion_metodologia/dev_specs/schemas/)
+- **Scripts validación**: [40_implementacion_metodologia/dev_specs/scripts/](40_implementacion_metodologia/dev_specs/scripts/)
+- **Anti-patterns**: [10_arquitectura_orko/05_patrones.md §6](10_arquitectura_orko/05_patrones.md) (AP1-AP8 a evitar)
+- **Ejemplos casos**: [40_implementacion_metodologia/ejemplos/](40_implementacion_metodologia/ejemplos/) (startup, scaleup, enterprise)
 
 ---
 
 ## ✨ Logros Recientes (Nov 2025)
 
-### **Milestone: Layers 0+1+2 Production-Ready**
+### **Milestone 1: Layers 0+1+2 Production-Ready** ✅
 
-- ✅ **Framework Genoma/Fenotipo**: Clasificación completa de 109 elementos (50 [GENOMA] + 59 [FENOTIPO])
-- ✅ **Anti-Patterns AP1-AP8**: Desarrollo completo con síntoma, problema, consecuencias, remediation y trazabilidad
-- ✅ **Arquitectura TF1-TF3**: Simplificación SIGMA 4 tejidos → ORKO 3 tejidos + 2 concerns transversales
-- ✅ **Autosuficiencia Semántica**: ADP/ALM/KHM integrados como protocolo interno ORKO, 90_referencias opcional
-- ✅ **Contratos OpenAPI 3.1**: TF1, TF2, TF3, E6 validados con DRY enforcement (DelegationMode unificado)
-- ✅ **Coherencia Vertical**: Trazabilidad bidireccional A1-A5 → P1-P5 → I1-I8 → C1-C5 → TF1-TF3 → OpenAPI verificada
-- ✅ **Validación Integral**: 06_validacion_final.md + 07_architectural_state_management.md (E6) completos
+**Fundamentos Teóricos (Layer 0)**
+- ✅ Framework Genoma/Fenotipo: 50 elementos [GENOMA] + 59 [FENOTIPO] clasificados
+- ✅ Trazabilidad formal: A1-A5 → P1-P5 → I1-I8 → D1-D4 + T1-T6 (teoremas) + V_org (ecuación maestra)
+- ✅ Modelo relacional: E1-E5 (primitivos), R1-R13 (relaciones fundamentales)
+- ✅ Autosuficiencia semántica: ADP/ALM/KHM/Kelly integrados, 90_referencias opcional
 
-**Calidad Arquitectónica:**
+**Arquitectura (Layer 1)**
+- ✅ Contratos C1-C5: Especificaciones formales operables desde P1-P5
+- ✅ Entidades extendidas: E6 (Estado Arquitectónico), E7 (Ejecución Flujo)
+- ✅ Relaciones extendidas: R14 (State Transitions), R15 (Transition-Flow)
+- ✅ 76 Principios PD1-PD76: 40 [GENOMA] desde I1-I8, 36 [FENOTIPO] desde AOC/Kelly/G##
+- ✅ Anti-Patterns AP1-AP8: Síntomas, causas, remediation, trazabilidad completa
+- ✅ Queries & Métricas: Q1-Q28 (operacionales), M1-M17 (DORA, health, governance)
 
-- **96% field coverage** specs markdown ↔ contratos OpenAPI (post-cierre gaps críticos TF2)
-- **0 divergencias críticas** (escalation_rule ✅, data_access_scope ✅ cerrados)
-- 7 gaps menores pendientes v2.1 (TF2: 5, TF1: 2) - documentados en [DIVERGENCIAS.md](20_tejidos/implementacion_tejidos/DIVERGENCIAS.md)
-- Deployment-ready para generación SDKs y plataforma CI/CD
+**Tejidos Tecnológicos (Layer 2)**
+- ✅ Arquitectura TF1-TF3: Capacity, Flow, Information (SIGMA 4 tejidos → ORKO 3 tejidos ortogonales)
+- ✅ Contratos OpenAPI 3.1: TF1, TF2, TF3, E6 validados (96% field coverage)
+- ✅ DRY enforcement: Tipos compartidos (DelegationMode) via base.yaml
+- ✅ 0 divergencias críticas: escalation_rule, data_access_scope cerrados
+- ✅ 7 gaps menores v2.1: Documentados en [DIVERGENCIAS.md](20_tejidos/implementacion_tejidos/DIVERGENCIAS.md)
+- ✅ Deployment-ready: SDKs, CI/CD, validación E6/E7
+
+### **Milestone 2: Layer 3 Metodología** 🟡 80% Completo
+
+**18 Fases WSLC (Work System Life Cycle)**
+- ✅ F1-F13: Initiation → Development → Implementation completas
+- ✅ F14-F18: Operation + Evolution con §0 estable (estructura documentada)
+
+**15 Playbooks Operacionales**
+- 🟡 P01-P08: Recovery playbooks (handoff, alignment, capacity)
+- 🟡 P09-P13: Governance playbooks (anti-pattern detection, compliance)
+- 🟡 P14-P15: Client management & expectation setting
+
+**Artefactos de Soporte**
+- ✅ Templates: WSLC phases, playbooks, schemas
+- ✅ Schemas: Context, compliance, calculadoras (health_score, convergence)
+- ✅ Scripts: Validación, generación calculadoras, dependency closure
+- ✅ Ejemplos: 3 casos completos (startup 50p, scaleup 200p, enterprise 2000p)
 
 ---
 
-## 🎯 Roadmap y Desafíos Abiertos
+## 🎯 Roadmap: Próximas Fases
 
-ORKO es un proyecto ambicioso en desarrollo. La siguiente lista representa nuestra hoja de ruta y los desafíos que estamos abordando activamente para fortalecer el framework.
+**Principio**: Desarrollo incremental preservando invariantes [GENOMA], extendiendo [FENOTIPO] según validación empírica.
 
-1. **Validación Formal y Empírica:**
-    - **Desafío:** Las afirmaciones sobre la preservación de invariantes (ej. "100%") y los resultados empíricos (ej. `H_org` 35→72) requieren evidencia robusta.
-    - **Roadmap:** Publicar artefactos de prueba formales (TLA+/Alloy), junto con los datasets y protocolos de las validaciones empíricas para garantizar la reproducibilidad y la revisión por pares.
+### **Phase 1: Layer 3 Completion** 🟡 En Progreso (Q1 2026)
 
-2. **Definición de un "ORKO Mínimo Viable" (MVO):**
-    - **Desafío:** El framework completo (76 principios, 5 capas) puede ser abrumador y costoso de adoptar.
-    - **Roadmap:** Definir un subconjunto priorizado de contratos, principios y artefactos para las trayectorias "Mínima" y "Survival", enfocado en entregar valor rápido con una carga burocrática mínima.
+**Playbooks P01-P15**
+- 🟡 Recovery playbooks (P01-P08): Handoff reduction, OKR alignment, capacity lifecycle
+- 🟡 Governance playbooks (P09-P13): Anti-pattern detection, portfolio optimization
+- 🟡 Client management (P14-P15): Expectation setting, communication protocols
 
-3. **Escalabilidad y Coste de Estados (E6/E7):**
-    - **Desafío:** La captura de snapshots arquitectónicos (E6) y trazas de ejecución (E7) puede generar un volumen de datos masivo.
-    - **Roadmap:** Desarrollar una arquitectura técnica de referencia que aborde la estimación de tamaño, RPO/RTO, políticas de retención (GDPR), y estrategias de compresión para asegurar la viabilidad económica y operativa.
+**Trayectorias Contextuales**
+- 🟡 Survival: Mínimo viable organizacional (H_org ≥70)
+- 🟡 Minimal: Core ORKO (F1-F9, TF1-TF3)
+- 🟡 Standard: Framework completo (F1-F18, P01-P15)
+- 🟡 Advanced: Optimización multi-objetivo (ROI, velocity, resilience)
 
-4. **Gobernanza de la Delegación Humano-IA (M1-M6):**
-    - **Desafío:** La especificación actual de los modos de delegación (TF1) no detalla la responsabilidad legal ni los procesos de auditoría para decisiones algorítmicas.
-    - **Roadmap:** Crear políticas ejecutables que definan la responsabilidad legal por modo, criterios auditables para "guardrails integrales" y playbooks de incidentes para fallos de agentes autónomos.
+**Governance & Métricas**
+- 🟡 Definiciones operacionales: H_org (health score), V_org (value equation), η_org (eficiencia)
+- 🟡 Calculadoras ejecutables: health_score, convergence_tracker, context_decision_matrix
+- 🟡 Gates de validación: Phase gates (VG1-VG4), trayectoria readiness
 
-5. **Catálogo de Controles Regulatorios:**
-    - **Desafío:** Las menciones a MGDE, GDPR e HIPAA son aspiracionales sin un mapeo técnico concreto.
-    - **Roadmap:** Construir una "Matriz de Controles Regulatorios" que mapee requisitos legales a controles técnicos y organizacionales de ORKO, con evidencia de cumplimiento.
+### **Phase 2: Layer 4 Platform** 🔴 Planned (Q2-Q3 2026)
 
-6. **Especificación Operativa de Contratos OpenAPI:** ✅ RESUELTO (Core), 🟡 Extensiones Pendientes
-    - **Completado:** 
-      - ✅ Contratos TF1, TF2, TF3, E6 validados y alineados 96% field coverage
-      - ✅ DRY enforcement implementado (DelegationMode unificado via base.yaml)
-      - ✅ Gaps críticos cerrados (escalation_rule, data_access_scope en TF2)
-      - ✅ Specs actualizadas coherentes con contratos OpenAPI
-    - **Pendiente v2.1:** 
-      - 🟡 Modelo de errores estándar (4xx/5xx)
-      - 🟡 Scopes de seguridad (OAuth/OIDC)
-      - 🟡 Estrategia de versionado (semantic versioning)
-      - 🟡 7 gaps menores documentados en [DIVERGENCIAS.md](20_tejidos/implementacion_tejidos/DIVERGENCIAS.md)
+**Runtime Implementations**
+- 🔴 TF1 SDK (Python): Capacity management APIs
+- 🔴 TF2 SDK (Python): Flow orchestration runtime
+- 🔴 TF3 SDK (Python): Information lifecycle ops
+- 🔴 E6/E7 State Engine: Architectural snapshots & execution tracking
 
-7. **Definiciones Operacionales de Métricas:**
-    - **Desafío:** Métricas como `H_org` y `V_org` necesitan definiciones matemáticas precisas y algoritmos de cálculo transparentes.
-    - **Roadmap:** Publicar la formulación exacta de las métricas clave, incluyendo tratamiento de datos ausentes, ventanas de tiempo y análisis de sensibilidad.
+**Platform Services**
+- 🔴 CI/CD Pipeline: Automated validation (I1-I8 enforcement)
+- 🔴 Observability Stack: Real-time DORA metrics (M1-M4)
+- 🔴 Governance Dashboard: Multi-domain health (Q27, M5-M9)
 
-8. **Estrategia de Migración de Esquemas (PD74):**
-    - **Desafío:** El principio de "Ruta de Migración Documentada" es teórico y necesita ser probado.
-    - **Roadmap:** Desarrollar y probar una estrategia de versionado por entidad, con scripts de migración idempotentes y planes de rollback con SLAs definidos.
+### **Phase 3: Validación & Refinamiento** 🔴 Planned (Q4 2026)
+
+**Validación Formal**
+- 🔴 Mecanización teoremas T1-T6: TLA+ (minimalidad, ortogonalidad, completitud)
+- 🔴 Model checking: Verificación invariantes I1-I8 en estados arquitectónicos E6
+- 🔴 Property-based testing: Generación automática test cases desde contratos C1-C5
+
+**Validación Empírica**
+- 🔴 Caso GORE Ñuble: 18 meses operación, H_org tracking, convergence analysis
+- 🔴 Benchmarks cross-industry: Comparación DORA metrics (deployment frequency, lead time, MTTR, CFR)
+- 🔴 Publicación datasets: Anonymized snapshots E6, lineage graphs R5/R14, transformation trajectories
+
+**Extensiones Regulatorias**
+- 🔴 Matriz de controles: MGDE ↔ P4_Límite, GDPR ↔ TF3_Information, HIPAA ↔ TF1_Capacity
+- 🔴 Gobernanza HAIC (I5): Responsabilidad legal por delegation mode (M1-M6), audit trails (E7), explainability (PD21)
+- 🔴 Playbooks compliance: Incident response (P14), breach notification, rollback procedures
+
+### **Desafíos Arquitectónicos Abiertos**
+
+**Escalabilidad E6/E7** (Prioridad: Alta)
+- Estimación storage: E6 snapshots (daily × 180 days × org_size), compresión (delta encoding)
+- Políticas retención: RPO/RTO trade-offs, GDPR compliance (right to erasure)
+- Performance budgets: Queries Q1-Q28 < 2s p95 (PD73), snapshot generation < 5min
+
+**Migración Esquemas** (Prioridad: Media)
+- Versionado semántico: E1-E7 schemas, backward compatibility guarantees
+- Idempotencia: Migration scripts (up/down), rollback SLAs
+- Blue-green deployments: Zero-downtime transitions, automated testing
 
 ---
 
 ## 📊 Estado del Proyecto
 
-| Capa | Estado | Elementos Clave | Próximos Pasos |
-|------|--------|----------------|----------------|
-| **Layer 0** | ✅ **Production-Ready** | A1-A5, P1-P5, I1-I8, Framework Genoma/Fenotipo | Verificación formal (TLA+) |
-| **Layer 1** | ✅ **Production-Ready** | C1-C5, PD1-PD76, AP1-AP8, R1-R15, E6-E7 | Catálogo controles regulatorios |
-| **Layer 2** | ✅ **Production-Ready** | TF1-TF3, Contratos OpenAPI 3.1 validados | Implementación SDKs + plataforma |
-| **Layer 3** | 🟡 **Diseñada** | 18 fases WSLC, playbooks, trayectorias | Validación empírica metodología |
-| **Layer 4** | 🔴 **En Desarrollo** | Arquitectura definida, contratos listos | Implementación runtime + CI/CD |
+| Layer | Estado | [GENOMA] Invariantes | [FENOTIPO] Instancias | Próximos Pasos |
+|-------|--------|---------------------|----------------------|----------------|
+| **0: Fundamentos** | ✅ 100% | A1-A5, P1-P5, I1-I8, D1-D4, T1-T6, V_org, E1-E5, R1-R13 | H_org thresholds, SADE 16 observables, scores AOC | Mecanización TLA+ (T1-T6) |
+| **1: Arquitectura** | ✅ 100% | C1-C5, E6-E7, R14-R15, PD1-PD40 | PD41-PD76, Q1-Q28, M1-M17, AP1-AP8 | Matriz controles (GDPR/HIPAA) |
+| **2: Tejidos** | ✅ 96% | TF1-TF3 schemas, DelegationMode, E6/E7 APIs | OpenAPI 3.1 (tf1/tf2/tf3/e6.yaml) | SDKs Python (TF1-TF3) |
+| **3: Metodología** | 🟡 80% | F1-F18 (18 fases WSLC) estructura | P01-P15 playbooks, trayectorias, calculadoras | Validación gates VG1-VG4 |
+| **4: Plataforma** | 🔴 30% | Contratos deployment-ready | — | Runtime + CI/CD pipeline |
 
-**Métricas de Calidad:**
+### **Métricas de Calidad**
 
-- ✅ Coherencia vertical: 100% (trazabilidad A→P→I→C→TF→OpenAPI)
-- ✅ Alineamiento specs↔OpenAPI: 96% field coverage (TF1: 95%, TF2: 95%, TF3: 99%, E6: 98%)
-- ✅ Divergencias críticas: 0 (escalation_rule ✅, data_access_scope ✅ cerrados)
-- ✅ Autosuficiencia semántica: Sí (90_referencias opcional)
-- ✅ DRY enforcement: Sí (tipos compartidos en base.yaml)
-- 📈 Completitud documentación: Layers 0+1+2 = 100%, Layer 3 = 80%, Layer 4 = 30%
+**Coherencia Formal**
+- ✅ Trazabilidad vertical: 100% (A1-A5 → P1-P5 → I1-I8 → C1-C5 → E1-E7 → PD1-PD76 → TF1-TF3 → OpenAPI)
+- ✅ Ortogonalidad: P1-P5 independientes (T2), D1-D4 ortogonales (6 pares validados)
+- ✅ Minimalidad: 5 axiomas irreducibles (T3), 5 primitivos necesarios y suficientes (T1)
+- ✅ Completitud ontológica: P1-P5 expresan todo concepto organizacional (T1)
+
+**Alineamiento Specs ↔ Contratos**
+- ✅ TF1 Capacity: 95% field coverage (2 gaps menores v2.1)
+- ✅ TF2 Flow: 95% field coverage (5 gaps menores v2.1)
+- ✅ TF3 Information: 99% field coverage (0 gaps)
+- ✅ E6 State: 98% field coverage (0 gaps)
+- ✅ Divergencias críticas: 0 (escalation_rule ✅, data_access_scope ✅)
+
+**Principios de Diseño**
+- ✅ DRY enforcement: Tipos compartidos (base.yaml), E1-E5 reusados en E6-E7
+- ✅ Autosuficiencia semántica: AOC/Kelly/KHM/ADP integrados, 90_referencias opcional
+- ✅ Framework Genoma/Fenotipo: 50 elementos [GENOMA] + 59 [FENOTIPO] clasificados
+
+**Documentación & Artefactos**
+- ✅ Layers 0+1+2: 100% completo (~165KB specs + ~80KB contratos)
+- 🟡 Layer 3: 80% completo (F1-F18 ✅, P01-P15 🟡, trayectorias 🟡)
+- 🔴 Layer 4: 30% completo (arquitectura definida, specs listos)
 
 ---
 
 ## 🤝 Contribuciones
 
-ORKO es un proyecto en desarrollo activo. Las contribuciones son bienvenidas, especialmente en las áreas de:
+**Estado**: Desarrollo activo, documentación pública.
 
-- **Verificación Formal:** Ayuda para mecanizar pruebas de teoremas (Coq, Isabelle, TLA+).
-- **Casos de Uso:** Aplicación del framework en nuevos contextos y publicación de resultados.
-- **Implementación de Tejidos:** Desarrollo de los paquetes de Python para los tejidos tecnológicos.
+Áreas de interés para colaboración futura:
+
+- **Verificación Formal**: Mecanización teoremas T1-T6 (TLA+, Alloy, Coq, Isabelle)
+- **Validación Empírica**: Aplicación framework en nuevos contextos, publicación datasets
+- **Implementación Layer 4**: SDKs Python (TF1-TF3), runtime E6/E7, CI/CD pipeline
+- **Extensiones Regulatorias**: Mapeo GDPR/HIPAA/MGDE ↔ contratos ORKO
+
+**Contacto**: Felix Sanhueza — [felix-antonio-sl/orko](https://github.com/felix-antonio-sl/orko)
 
 ---
 
@@ -193,10 +313,18 @@ ORKO es un proyecto en desarrollo activo. Las contribuciones son bienvenidas, es
 
 **Propietaria** — © 2024-2025 Felix Sanhueza. Todos los derechos reservados.
 
-Se planea un futuro release bajo una licencia open-source permisiva (Apache 2.0 o MIT).
+Release open-source planificado (Apache 2.0 / MIT) post-validación formal y empírica.
 
 ---
 
-**ORKO** — *Desde Primeros Principios hasta Producción, Rigurosamente.*
+<div align="center">
 
-**Última actualización**: Noviembre 2025 — Milestone: Layers 0+1+2 Production-Ready
+**ORKO Framework**
+
+*Desde Primeros Principios hasta Producción, Rigurosamente.*
+
+**Layers 0+1+2 Production-Ready** | **Layer 3 Metodología 80%** | **Noviembre 2025**
+
+`A1-A5 → P1-P5 → I1-I8 → C1-C5 → E1-E7 → PD1-PD76 → TF1-TF3 → OpenAPI 3.1`
+
+</div>
