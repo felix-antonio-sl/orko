@@ -1,44 +1,37 @@
+# P15 – Adaptive Cadence
 
-# P15_adaptive_cadence
+## Estado: mvo
 
-**Tipo:** Playbook Transformation  
-**ID:** P15  
-**Trigger:** Cambio abrupto de contexto (crisis/hypergrowth) que pone en riesgo `H_org` y obliga a ajustar cadencias (`F15`)  
-**Estimación Ejecución:** `P2W`
+### Propósito
+Ajustar cadencias operativas frente a shocks (hypergrowth / crisis) manteniendo control de riesgo y continuidad.
 
----
+### Trigger
+- hypergrowth flag = true AND handoff_ratio > 0.20 OR G1/G2 activado por F13.
 
-## §0. FUNDAMENTO
+### Fases relacionadas
+F3, F13, F15, F17
 
-**Layer 0:** `A1`, `A3`, `A5`, `P2`, `P5`, `I3`, `I6`, `I8`  
-**Layer 1:** `D1`, `D2`, `D4`, `E6`  
-**Layer 2:** `TF1`, `TF2`
-
-**Justificación:** P15 ajusta cadencias de trabajo (ritmo de ciclos, ceremonias, despliegues) cuando el contexto cambia bruscamente (crisis, hypergrowth, cambios regulatorios), de modo que se preserve `H_org` mientras se responde al nuevo contexto. Trabaja en conjunto con P01/P02 (crisis) y P05–P08 (transformación) para evitar tanto la parálisis como el burnout.
-
----
-
-## §1. INTERFAZ
-
-### Trigger Conditions
-
-```yaml
-triggers:
-  - condition: "Activación de G1 (crisis) o cambios de contexto que disparan escenarios Survival/Minimal/Avanzada extremos"
-    metric: "H_org"
-    threshold: "G1_activo_o_contexto_extremo"
-    source: "02_health_gates.md"
-  - condition: "Entradas desde context_pattern_schema/case_instances con señales de hypergrowth o shock externo"
-    metric: "H_org"
-    threshold: "riesgo_contextual"
-    source: "context_pattern_schema/case_instances"
-```
+### Actividades (pasos)
+1. Immediate cadence freeze: reducir WIP y establecer M1 cadence.  
+2. Triage: identificar backlogs que impactan continuidad.  
+3. Capacity rebalancing: invocar P10 (Capacity Gap Resolution).  
+4. Communication/expectation plan (P14) si clientes afectados.  
+5. Transition plan a steady cadence: roadmap de 4–8 semanas.
 
 ### Outputs
+- `adaptive_cadence_policy.md`  
+- `cadence_rebalancing_plan.xlsx`  
+- `post_adaptation_review.md` 
 
-```yaml
-outputs:
-  - report: "P15_adaptive_cadence_report.md"
-    consumers: ["F3", "F13", "F15", "F17", "E4_governance"]
-  - artifact: "adaptive_cadence_plan.yaml"
-    consumers: ["F15", "F17", "P01", "P02", "P08", "trayectorias.Survival", "trayectorias.Minimal", "trayectorias.Avanzada"]
+### RACI
+- R: Delivery Lead  
+- A: PMO / Sponsor  
+- C: TF1/TF2 leads, HR (if staffing changes)  
+- I: Governance Board
+
+### Acceptance criteria
+- WIP reduzido > 40% en primera fase de 2 semanas o riesgo mitigado  
+- Indicadores DORA/throughput recuperan tendencia esperada en 8 semanas
+
+### Notas
+- Debe estar instrumentado con SLOs en F15 (Continuous Execution).

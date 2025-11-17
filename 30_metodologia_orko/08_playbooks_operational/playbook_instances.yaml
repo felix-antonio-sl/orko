@@ -179,8 +179,8 @@ instances:
     trayectorias_relacionadas: ["Survival", "Minimal", "Avanzada"]
     health_gates_relacionados: []
     duracion_estimada: "P2W"
-    estado: "draft"
-    notas: "Pendiente P14; se apoyará en casos de uso y métricas de valor."
+    estado: "mvo"
+    notas: "P14: handle client expectation management."
 
   - id: "P15"
     nombre: "Adaptive Cadence"
@@ -192,6 +192,6 @@ instances:
     trayectorias_relacionadas: ["Survival", "Minimal", "Avanzada"]
     health_gates_relacionados: []
     duracion_estimada: "P2W"
-    estado: "draft"
-    notas: "Pendiente P15; se apoyará en patrones de contexto y health gates."
+    estado: "mvo"
+    notas: "P15: adaptive cadence policy and plan."
 

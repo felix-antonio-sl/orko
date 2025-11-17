@@ -1,46 +1,44 @@
+# P14 – Client Expectation Management
 
-# P14_client_expectation_mgmt
+## Estado: mvo
 
-**Tipo:** Playbook Recovery  
-**ID:** P14  
-**Trigger:** Brecha relevante entre expectativas de clientes y resultados percibidos reflejada en `H_org`/`eta_org`/`ROI_Habilitacion`  
-**Estimación Ejecución:** `P2W`
+### Propósito
+Mitigar brechas entre expectativas de usuarios/clientes y entregables percibidos que impactan H_org.
 
----
+### Trigger
+- Condición primaria: "Medición de satisfacción/expectativa cruzada con H_org muestra brecha > X y drift detectado por F13"
+- Ejemplo: NPS drop > 10 pts y H_org caída de 8 pts en 30 días.
 
-## §0. FUNDAMENTO
+### Fases relacionadas
+F1, F3, F13, F16
 
-**Layer 0:** `A1`, `A3`, `A5`, `P2`, `P5`, `I3`, `I6`, `I8`  
-**Layer 1:** `D1`, `D2`, `E6`  
-**Layer 2:** `TF1`, `TF2`
+### Entradas
+- dashboards_h_org (F13)
+- customer_feedback.md (TF2/TF3)
+- case_instances (14_casos_uso/case_instances.yaml)
 
-**Justificación:** P14 aborda situaciones donde existe un gap entre lo que clientes esperan y lo que la organización entrega, manifestado en métricas como `H_org`, `eta_org` o `ROI_Habilitacion`. Su objetivo es alinear expectativas, compromisos y capacidades, apoyándose en casos (`14_casos_uso`) y trayectorias para evitar decisiones reactivas que degraden aún más `H_org`.
+### Actividades (pasos)
+1. Confirmar gap: validar datos con TF3, reproducir evidencia.  
+2. Runbook de comunicación: preparar mensaje público/privado.  
+3. Alineamiento interno: convocar SAC/PO/Arquitectura para acciones correctivas.  
+4. Quick wins: priorizar P10/P11 si el gap técnico; P13 si es político.  
+5. Cerrar con informe (customer_commitment.md) y KPI de seguimiento.
 
----
+### Output
+- `client_expectation_action_plan.md` 
+- `communication_pack.zip` 
+- `postmortem_client_expectation.md` 
 
-## §1. INTERFAZ
+### RACI
+- R: Product Owner, Head of Delivery  
+- A: Sponsor L1 (human)  
+- C: Architecture, TF3 lead, Communications  
+- I: Board governance
 
-### Trigger Conditions
+### Acceptance criteria
+- Comunicación emitida y confirmada por stakeholder clave  
+- Plan de acciones priorizado y estimado  
+- Indicadores (NPS/H_org) con mejora en 30–90 días
 
-```yaml
-triggers:
-  - condition: "Feedback sistemático de clientes indica insatisfacción a pesar de métricas internas razonables"
-    metric: "H_org"
-    threshold: "satisfaccion_baja"
-    source: "F13.h_org_dashboard"
-  - condition: "Casos de uso muestran brechas entre promesas comerciales y ejecución real"
-    metric: "eta_org"
-    threshold: "brecha_expectativas"
-    source: "case_instances.yaml"
-```
-
-### Outputs
-
-```yaml
-outputs:
-  - report: "P14_client_expectation_mgmt_report.md"
-    consumers: ["F1", "F3", "F13", "F16", "E4_governance"]
-  - artifact: "client_expectation_alignment_plan.yaml"
-    consumers: ["F1", "F3", "trayectorias.Survival", "trayectorias.Minimal", "trayectorias.Avanzada"]
-```
-
+### Notas
+- Debe enlazarse con `playbook_instances.yaml` y con el dashboard de KPIs.
