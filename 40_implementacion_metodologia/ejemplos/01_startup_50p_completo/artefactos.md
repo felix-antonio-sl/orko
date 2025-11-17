@@ -53,11 +53,13 @@
 ### 5.1 health_score_calculator (M1.1)
 
 **Inputs extraídos:**
+
 - `context.yaml`: tipo_contexto=startup, maturity_level=startup_early, team_size_range=40-60, funding_stage=series_a, tech_stack_maturity=mid, hypergrowth_flags.contratacion_rapida=true
 - `trajectory.md`: trayectoria=Minimal, horizonte=6-12 meses
 - Bandas inferidas: G3 (H_org bueno, eficiencia baja)
 
 **Outputs simulados:**
+
 - H_org baseline: **72.0** (estimado)
 - Contribución A_Score (Arquitectura): **68.0** (medio-bajo por hypergrowth)
 - Contribución P_Score (Procesos): **70.0** (procesos básicos bajo stress)
@@ -68,11 +70,13 @@
 - Banda health gate resultante: **G3** (70 ≤ H_org < 85 - Bueno/Eficiencia baja) ✅
 
 **Trazabilidad F1:**
+
 - Inputs mapeados desde `context.yaml` según contrato F1 documentado en `F1_F3_mapping.md` §1.2
 
 ### 5.2 context_decision_matrix (M1.2)
 
 **Inputs extraídos:**
+
 - H_org baseline: [PENDIENTE - depende de M1.1]
 - Budget: limitado (Series A, típico 1-3M USD runway 12-18 meses)
 - Timeline constraints: 12-18 meses (runway limitado)
@@ -81,6 +85,7 @@
 - Hypergrowth flags: contratacion_rapida=true
 
 **Outputs simulados:**
+
 - Trayectoria recomendada: **Minimal** ✅
 - Reglas DM aplicadas: **DM3** (budget minimal + H_org en G3)
 - Timeline recomendado: **12-18 meses**
@@ -88,21 +93,25 @@
 - Alertas/warnings: "Hypergrowth flag activo - monitorear handoffs y onboarding velocity"
 
 **Validación coherencia F3:**
+
 - Trayectoria actual (`trajectory.md`): Minimal
 - Validación: [PENDIENTE - verificar coherencia decisión matriz vs trayectoria documentada]
 
 **Trazabilidad F3:**
+
 - Outputs validados contra contrato F3 documentado en `F1_F3_mapping.md` §2.2
 
 ### 5.3 convergence_tracker (M1.3)
 
 **Inputs extraídos:**
+
 - E6_current (baseline): [PENDIENTE - depende de M1.1 H_org + estado actual capacidades/flujos/información]
 - E6_target (proyectado desde `trajectory.md`): [PENDIENTE]
 - Horizonte temporal: 6-12 meses (Minimal)
 - Fases activas: F4-F6, F10-F12 (según §1)
 
 **Outputs simulados:**
+
 - E6_current (baseline): **0.43** (normalizado desde H_org=72)
 - E6_target (Minimal 12 meses): **0.70**
 - Gap E6_current → E6_target: **0.27** (27 puntos porcentuales)
@@ -111,12 +120,14 @@
 - Velocidad de convergencia estimada: **~2.25 puntos/mes**
 
 **Trazabilidad F9/F18:**
+
 - Baseline vinculado a estado actual arquitectónico
 - Target vinculado a horizonte de trayectoria Minimal
 
 ### 5.4 Validación coherencia F1/F3 (M1.4)
 
 **Checklist de coherencia:**
+
 - [x] H_org calculado (72.0) coherente con banda G3 inferida en `F1_F3_mapping.md` ✅
 - [x] Trayectoria recomendada por matriz (Minimal) = documentada en `trajectory.md` ✅
 - [x] Playbooks preseleccionados (P01/P03/P09/P10/P11) coherentes con §2 ✅
@@ -132,4 +143,3 @@
 **Versión:** CAP-22 M1.1-M1.4 SIMULADOS (valores estimados)  
 **Última actualización:** 2025-11-18 15:10 (aplicación simulada completada)  
 **Próxima actualización:** Validación con .xlsx operativos en Excel/LibreOffice
-
