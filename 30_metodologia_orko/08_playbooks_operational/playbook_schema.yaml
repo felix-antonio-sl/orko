@@ -1,10 +1,10 @@
 
-# PLAYBOOK SCHEMA (v0.1)
+# PLAYBOOK SCHEMA (v0.2)
 # Basado en SPEC_ARQUITECTURA_DEFINITIVA §5 y PLAN_ETAPA_3_PLAYBOOKS.
 
 schema_id: "Schema_3_Playbook"
 schema_type: "playbook"
-schema_version: "0.1.0"
+schema_version: "0.2.0"
 description: "Schema unificado para describir playbooks P01–P15 (Recovery, Transformation, Operational) alineados con VOCAB y playbooks_triggers_catalog.md."
 
 fields:
@@ -29,6 +29,10 @@ fields:
     type: "string"
     required: true
     description: "Descripción corta de la condición de activación, consistente con playbooks_triggers_catalog.md."
+  - id: "triggers_examples"
+    type: "list[string]"
+    required: false
+    description: "Ejemplos concretos de señales que activan el playbook (alineado a F13 dashboards)."
   - id: "fases_relacionadas"
     type: "list[string]"
     required: true
@@ -49,6 +53,14 @@ fields:
     type: "string"
     required: false
     description: "Duración estimada en formato ISO-8601 (ej. P1D, P2W)."
+  - id: "raci"
+    type: "map[string,string]"
+    required: false
+    description: "RACI simplificado: {R:role, A:role, C:[role], I:[role]}"
+  - id: "acceptance_criteria"
+    type: "string"
+    required: false
+    description: "Criterios medibles para considerar playbook exitoso (SLOs, KPIs)"
   - id: "estado"
     type: "string"
     required: true
@@ -65,6 +77,8 @@ dimensions:
   - fases_relacionadas
   - trayectorias_relacionadas
   - health_gates_relacionados
+  - estado
+  - raci
 
 examples:
   - id: "P01"
