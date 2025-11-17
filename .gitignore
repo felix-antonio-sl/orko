@@ -36,6 +36,7 @@ venv/
 dist/
 build/
 out/
+temp/
 *.log
 
 # Personal notes (opcional)
