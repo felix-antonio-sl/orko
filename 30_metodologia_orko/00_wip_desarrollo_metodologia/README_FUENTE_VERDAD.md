@@ -1,8 +1,9 @@
 # FUENTE DE VERDAD CONSOLIDADA - METODOLOGÍA ORKO
 
-**Estado:** DEFINITIVA - Production Spec  
-**Fecha:** 14 Noviembre 2024  
-**Propósito:** Índice maestro documentos prescriptivos Layer 3
+**Estado original (2024):** DEFINITIVA - Production Spec  
+**Fecha original:** 14 Noviembre 2024  
+**Propósito:** Índice maestro documentos prescriptivos Layer 3  
+**Actualización ORKO v1.0.0 (CAP-21, 2025-11-18):** Este README describe la fuente de verdad de **planificación y diseño** previa al desarrollo. Para el estado validado de la metodología ORKO v1.0.0, la fuente de verdad principal pasa a ser `30_metodologia_orko/17_validacion_final/validation_final_report.md`, junto con `30_metodologia_orko/README.md`, `40_implementacion_metodologia/README.md`, `40_implementacion_metodologia/CHANGELOG.md` y `30_metodologia_orko/00_wip_desarrollo_metodologia/board_coordinación.md` (CAP-14–CAP-21).
 
 ---
 

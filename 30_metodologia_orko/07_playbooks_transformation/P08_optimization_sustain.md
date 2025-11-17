@@ -44,3 +44,21 @@ outputs:
     consumers: ["F15", "F16", "trayectorias.Minimal", "trayectorias.Avanzada"]
 ```
 
+### Casos típicos
+
+- **CT1 – Post‑escala estabilizada:** después de P07, la organización quiere asegurar que `H_org`/`eta_org` se mantienen en rangos G3/G4.  
+- **CT2 – Optimización continua:** ciclos periódicos de revisión de `eta_org`/`ROI_Habilitacion` para evitar drift arquitectónico/operativo.
+
+### Inputs adicionales
+
+- `F13` – series de `H_org`, `eta_org`, `ROI_Habilitacion` post‑escala.  
+- `F16` – learning_loops_log de experimentos anteriores (P05–P08).  
+- `F18` – checks de convergencia frente a objetivos de trayectoria.  
+
+### Riesgos y mitigación
+
+- **R1 – Fatiga de cambio:** mejoras continuas generan desgaste y terminan afectando negativamente `H_org`.  
+  - Mitigación: coordinar con P15 (Adaptive Cadence) para ajustar cadencias en F15.  
+- **R2 – Optimización local subóptima:** se optimizan partes del sistema a costa de `ROI_Habilitacion` global.  
+  - Mitigación: exigir revisión de impactos a nivel de `E6_ArchitecturalState` y trayectorias antes de cambios mayores.
+

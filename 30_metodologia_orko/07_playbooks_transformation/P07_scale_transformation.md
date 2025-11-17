@@ -44,3 +44,22 @@ outputs:
     consumers: ["F11", "F12", "F15", "trayectorias.Minimal", "trayectorias.Avanzada"]
 ```
 
+### Casos típicos
+
+- **CT1 – Escala post‑G4:** G4 activo, piloto (P06) exitoso en un dominio core y decisión de ampliar a varias unidades/regiones.  
+- **CT2 – Escala gradual:** se decide secuenciar la escala en waves para no comprometer `H_org` mientras se incrementa `eta_org` y `ROI_Habilitacion`.
+
+### Inputs adicionales
+
+- Resultados consolidados de P06 (`P06_pilot_transformation_report.md`).  
+- `F11` – blueprint de ejecución de flujos a escala.  
+- `F13` – métricas de `H_org`, `eta_org`, `ROI_Habilitacion` pre/post piloto.  
+- `F16` – aprendizajes clave del piloto y riesgos identificados.
+
+### Riesgos y mitigación
+
+- **R1 – Sobre‑escala:** escalar demasiado rápido y degradar `H_org` a pesar de mejoras locales en `eta_org`.  
+  - Mitigación: usar G1–G4 como frenos de seguridad; si G2/G3 se activan, ralentizar escala y activar P01/P09.  
+- **R2 – Heterogeneidad de contextos:** dominios adicionales con contexto distinto al piloto (ver `context_pattern_schema`).  
+  - Mitigación: coordinar con E2 para validar patrones de contexto y ajustar el plan de escala.
+

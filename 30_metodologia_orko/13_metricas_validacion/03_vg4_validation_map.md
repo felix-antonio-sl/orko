@@ -8,6 +8,7 @@
 - Trayectorias: `Survival`, `Minimal`, `Avanzada`.
 - Governance: `01_team_structure_raci.md` (roles y RACI por gate).
 - Decision support: `03_decision_matrix.md`.
+ - Casos de ejemplo: 6 contextos completos en `40_implementacion_metodologia/ejemplos/*_completo` (startup, scaleup, enterprise, fintech, manufacturing, sector público).
 
 Propósito: mapear, para cada invariante `I1`–`I8`, qué artefactos existentes sirven como evidencia operable para VG4, sin introducir nuevas métricas ni modificar el kernel (`VOCAB` + `DEPENDENCY_GRAPH`). Foco extra en `I3`, `I5`, `I6`, `I8` según CAP-12.
 
@@ -43,7 +44,7 @@ vg4_validation_map:
         artefactos:
           - "out/20_tejidos.md"
     gaps_v0_1:
-      - "Faltan ejemplos completados en 40_implementacion_metodologia/ejemplos que muestren I2 en operación."
+      - "Los 6 casos en 40_implementacion_metodologia/ejemplos muestran I2 en operación en contextos diversos; sigue pendiente sistematizar métricas cuantitativas específicas por caso."
 
   - invariante: "I3"
     prioridad_vg4: "alta"
@@ -138,7 +139,7 @@ vg4_validation_map:
           - "out/30_metodologia_orko.md"
           - "out/20_tejidos.md"
     gaps_v0_1:
-      - "Pendiente conectar I7 con métricas y casos concretos en 40_implementacion_metodologia/ejemplos."
+      - "Conectada conceptualmente a los 6 casos en 40_implementacion_metodologia/ejemplos; permanece pendiente definir métricas cuantitativas y checks específicos para I7 por caso."
 
   - invariante: "I8"
     prioridad_vg4: "alta"

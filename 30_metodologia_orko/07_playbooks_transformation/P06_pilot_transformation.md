@@ -44,3 +44,23 @@ outputs:
     consumers: ["F11", "F15", "P07", "trayectorias.Minimal", "trayectorias.Avanzada"]
 ```
 
+### Casos típicos
+
+- **CT1 – Piloto Avanzada (G4 activo):** G4 (`Ready_For_Avanzada`) se cumple y se decide un piloto limitado en uno o dos dominios críticos antes de escalar (P07).  
+- **CT2 – Piloto de recuperación de eficiencia:** tras P10/P11, se usa P06 para probar combinaciones de cambios de capacidad/flujo en un dominio antes de extenderlas.  
+- **CT3 – Piloto de contexto nuevo:** entrada a un nuevo mercado/unidad donde se requiere validar impacto en `H_org`/`eta_org` con bajo riesgo.
+
+### Inputs adicionales
+
+- `F4/F5` – mapas de capacidades y flujos objetivo.  
+- `F9` – arquitectura objetivo del dominio piloto.  
+- `F13` – series históricas de `H_org`, `eta_org`, `ROI_Habilitacion` del dominio.  
+- `F16` – hipótesis y aprendizajes previos relevantes (learning_loops_log).
+
+### Riesgos y mitigación
+
+- **R1 – Piloto mal acotado:** el dominio piloto es demasiado amplio y el impacto negativo en `H_org` sería alto si falla.  
+  - Mitigación: usar `03_decision_matrix.md` y G4 para acotar alcance y revisar runway/budget.  
+- **R2 – Falta de trazabilidad:** cambios del piloto no quedan reflejados en F16/F17, dificultando evaluar `eta_org`/`ROI_Habilitacion`.  
+  - Mitigación: exigir registro en `learning_loops_log` y vincular outputs de P06 a recomendaciones de trayectoria.
+
