@@ -1,0 +1,80 @@
+generator client {
+  provider = "prisma-client-js"
+}
+
+datasource db {
+  provider = "postgresql"
+  url      = env("DATABASE_URL")
+}
+
+model Organization {
+  id        String   @id @default(uuid())
+  name      String
+  slug      String   @unique
+  createdAt DateTime @default(now())
+  updatedAt DateTime @updatedAt
+
+  context   Context?
+  snapshots Snapshot[]
+  playbookRuns PlaybookRun[]
+}
+
+model Context {
+  id             String       @id @default(uuid())
+  organizationId String       @unique
+  organization   Organization @relation(fields: [organizationId], references: [id])
+  
+  // JSONB for flexible metadata (Team Size, Funding, Risk Profile)
+  attributes     Json
+  
+  validFrom      DateTime     @default(now())
+  validTo        DateTime?
+}
+
+model Snapshot {
+  id             String       @id @default(uuid())
+  organizationId String
+  organization   Organization @relation(fields: [organizationId], references: [id])
+  
+  recordedAt     DateTime     @default(now())
+  triggerSource  String       // "manual", "agent", "automation"
+  
+  hOrgScore      HOrgScore?
+}
+
+model HOrgScore {
+  id         String   @id @default(uuid())
+  snapshotId String   @unique
+  snapshot   Snapshot @relation(fields: [snapshotId], references: [id])
+  
+  value      Float    // 0-100
+  healthGate String   // "G1", "G2", "G3", "G4"
+  
+  dimensions DimensionScore[]
+}
+
+model DimensionScore {
+  id          String    @id @default(uuid())
+  hOrgScoreId String
+  hOrgScore   HOrgScore @relation(fields: [hOrgScoreId], references: [id])
+  
+  dimension   String    // "Architecture", "Processes", "Data", "Operation"
+  value       Float     // 0-100
+  
+  @@unique([hOrgScoreId, dimension])
+}
+
+model PlaybookRun {
+  id             String       @id @default(uuid())
+  organizationId String
+  organization   Organization @relation(fields: [organizationId], references: [id])
+  
+  playbookId     String       // Reference to Playbook Template ID (in Code/Graph)
+  status         String       // "IN_PROGRESS", "COMPLETED", "FAILED"
+  startedAt      DateTime     @default(now())
+  completedAt    DateTime?
+  
+  // Link to Snapshot BEFORE and AFTER execution for traceability
+  snapshotBeforeId String?
+  snapshotAfterId  String?
+}

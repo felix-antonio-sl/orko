@@ -1,0 +1,38 @@
+version: '3.8'
+
+services:
+  postgres:
+    image: postgres:15-alpine
+    container_name: orko-postgres
+    environment:
+      POSTGRES_USER: orko
+      POSTGRES_PASSWORD: orkopassword
+      POSTGRES_DB: orko_platform
+    ports:
+      - "5432:5432"
+    volumes:
+      - postgres_data:/var/lib/postgresql/data
+    networks:
+      - orko-network
+
+  neo4j:
+    image: neo4j:5-community
+    container_name: orko-neo4j
+    environment:
+      NEO4J_AUTH: neo4j/orkopassword
+      NEO4J_dbms_memory_pagecache_size: 512M
+    ports:
+      - "7474:7474" # HTTP
+      - "7687:7687" # Bolt
+    volumes:
+      - neo4j_data:/data
+    networks:
+      - orko-network
+
+volumes:
+  postgres_data:
+  neo4j_data:
+
+networks:
+  orko-network:
+    driver: bridge
