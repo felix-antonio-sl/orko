@@ -20,6 +20,8 @@ export const metadata: Metadata = {
 
 import Providers from '@/lib/query-client';
 
+import { OrganizationProvider } from '@/context/OrganizationContext';
+
 export default function RootLayout({
   children,
 }: Readonly<{
@@ -29,9 +31,11 @@ export default function RootLayout({
     <html lang="es">
       <body className="antialiased bg-background text-foreground">
         <Providers>
-          <MainLayout>
-            {children}
-          </MainLayout>
+          <OrganizationProvider>
+            <MainLayout>
+              {children}
+            </MainLayout>
+          </OrganizationProvider>
         </Providers>
       </body>
     </html>

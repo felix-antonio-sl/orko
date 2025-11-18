@@ -1,14 +1,27 @@
-import { Bell, Search, ChevronDown } from 'lucide-react';
+'use client';
+
+import { Bell, Search } from 'lucide-react';
+
+import { useOrganizationContext } from '@/context/OrganizationContext';
 
 export function Header() {
+    const { currentOrgSlug, setOrganization } = useOrganizationContext();
+
     return (
-        <header className="flex items-center justify-between h-16 px-6 bg-surface/50 backdrop-blur-md border-b border-surface-highlight sticky top-0 z-10">
-            <div className="flex items-center">
-                <div className="relative group">
-                    <button className="flex items-center space-x-2 text-sm font-medium text-gray-300 hover:text-white transition-colors">
-                        <span>Organización: <span className="text-white">Generic Corp</span></span>
-                        <ChevronDown className="w-4 h-4" />
-                    </button>
+        <header className="h-16 border-b border-white/10 bg-surface/50 backdrop-blur-md flex items-center justify-between px-6 sticky top-0 z-10">
+            <div className="flex items-center space-x-4">
+                <h1 className="text-xl font-bold text-primary tracking-tight">ORKO</h1>
+                <div className="h-6 w-px bg-white/10"></div>
+                <div className="flex items-center space-x-2 text-sm">
+                    <span className="text-gray-400">Organización:</span>
+                    <select
+                        value={currentOrgSlug}
+                        onChange={(e) => setOrganization(e.target.value)}
+                        className="bg-transparent text-white font-medium focus:outline-none cursor-pointer"
+                    >
+                        <option value="generic-corp" className="bg-surface text-white">Generic Corp</option>
+                        <option value="gore-nuble" className="bg-surface text-white">GORE Ñuble</option>
+                    </select>
                 </div>
             </div>
 
