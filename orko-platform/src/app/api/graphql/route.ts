@@ -9,10 +9,12 @@ const typeDefs = `
     organization(slug: String!): Organization
     health(orgId: ID!): HealthState
     strategy(orgId: ID!): Strategy
+    activePlaybooks(orgId: ID!): [PlaybookRun!]!
   }
 
   type Mutation {
     recordAssessment(input: AssessmentInput!): HealthState
+    startPlaybook(orgId: ID!, code: String!): PlaybookRun
   }
 
   type Organization {
@@ -22,6 +24,7 @@ const typeDefs = `
     health: HealthState
     fabric: FabricGraph
     strategy: Strategy
+    activePlaybooks: [PlaybookRun!]!
   }
 
   type HealthState {
@@ -57,7 +60,29 @@ const typeDefs = `
   }
 
   type FabricGraph {
-    teams: [Team!]!
+    nodes: [FabricNode!]!
+    links: [FabricLink!]!
+  }
+
+  type FabricNode {
+    id: ID!
+    label: String!
+    type: String!
+    group: String
+  }
+
+  type FabricLink {
+    source: ID!
+    target: ID!
+    type: String!
+  }
+
+  type PlaybookRun {
+    id: ID!
+    playbookCode: String!
+    status: String!
+    progress: Float!
+    startedAt: String!
   }
 
   type Team {
@@ -137,6 +162,15 @@ const resolvers = {
                 focus,
                 playbooks
             };
+        },
+        activePlaybooks: async (_: any, { orgId }: { orgId: string }) => {
+            return await prisma.playbookRun.findMany({
+                where: {
+                    organizationId: orgId,
+                    status: { in: ['IN_PROGRESS', 'PLANNED'] }
+                },
+                orderBy: { startedAt: 'desc' }
+            });
         }
     },
     Mutation: {
@@ -176,6 +210,16 @@ const resolvers = {
                 gate: snapshot.hOrgScore!.healthGate,
                 dimensions: snapshot.hOrgScore!.dimensions,
             };
+        },
+        startPlaybook: async (_: any, { orgId, code }: { orgId: string, code: string }) => {
+            return await prisma.playbookRun.create({
+                data: {
+                    organizationId: orgId,
+                    playbookId: code,
+                    status: 'IN_PROGRESS',
+                    progress: 0
+                }
+            });
         }
     },
     Organization: {
@@ -239,10 +283,70 @@ const resolvers = {
             return { trajectory, description, focus, playbooks };
         },
         fabric: async (parent: any) => {
-            // Fetch teams from Neo4j
-            const result = await read(`MATCH (t:Team) RETURN t`);
-            const teams = result.map((r: any) => r.t.properties);
-            return { teams };
+            try {
+                // Fetch all nodes and relationships
+                // In a real app, we would filter by organization ID (e.g. MATCH (o:Organization {id: $id})-... )
+                // For MVP, we assume the whole graph belongs to the org or we just show everything.
+
+                const query = `
+          MATCH (n)
+          OPTIONAL MATCH (n)-[r]->(m)
+          RETURN n, r, m
+        `;
+
+                const result = await read(query);
+
+                const nodesMap = new Map();
+                const links: any[] = [];
+
+                result.forEach((record: any) => {
+                    const n = record.n;
+                    if (n) {
+                        nodesMap.set(n.elementId, {
+                            id: n.elementId,
+                            label: n.properties.name || n.labels[0],
+                            type: n.labels[0],
+                            group: n.labels[0]
+                        });
+                    }
+
+                    const m = record.m;
+                    if (m) {
+                        nodesMap.set(m.elementId, {
+                            id: m.elementId,
+                            label: m.properties.name || m.labels[0],
+                            type: m.labels[0],
+                            group: m.labels[0]
+                        });
+                    }
+
+                    const r = record.r;
+                    if (r) {
+                        links.push({
+                            source: r.startNodeElementId,
+                            target: r.endNodeElementId,
+                            type: r.type
+                        });
+                    }
+                });
+
+                return {
+                    nodes: Array.from(nodesMap.values()),
+                    links: links
+                };
+            } catch (error) {
+                console.error("Neo4j Error:", error);
+                return { nodes: [], links: [] };
+            }
+        },
+        activePlaybooks: async (parent: any) => {
+            return await prisma.playbookRun.findMany({
+                where: {
+                    organizationId: parent.id,
+                    status: { in: ['IN_PROGRESS', 'PLANNED'] }
+                },
+                orderBy: { startedAt: 'desc' }
+            });
         }
     }
 };

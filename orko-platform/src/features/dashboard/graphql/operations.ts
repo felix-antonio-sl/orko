@@ -25,6 +25,35 @@ export const GET_ORGANIZATION = gql(`
           description
         }
       }
+      fabric {
+        nodes {
+          id
+          label
+          type
+          group
+        }
+        links {
+          source
+          target
+          type
+        }
+      }
+      activePlaybooks {
+        id
+        playbookCode
+        status
+        progress
+        startedAt
+      }
+    }
+  }
+`);
+
+export const START_PLAYBOOK = gql(`
+  mutation StartPlaybook($orgId: ID!, $code: String!) {
+    startPlaybook(orgId: $orgId, code: $code) {
+      id
+      status
     }
   }
 `);

@@ -71,6 +71,7 @@ model PlaybookRun {
   
   playbookId     String       // Reference to Playbook Template ID (in Code/Graph)
   status         String       // "IN_PROGRESS", "COMPLETED", "FAILED"
+  progress       Float        @default(0)
   startedAt      DateTime     @default(now())
   completedAt    DateTime?
   
