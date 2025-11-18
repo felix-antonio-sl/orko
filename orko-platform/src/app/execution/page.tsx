@@ -24,6 +24,11 @@ export default function ExecutionPage() {
             queryClient.invalidateQueries({ queryKey: ['organization'] });
             setIsStarting(false);
         },
+        onError: (error) => {
+            console.error("Failed to start playbook:", error);
+            alert("Error al iniciar playbook. Revisa la consola.");
+            setIsStarting(false);
+        }
     });
 
     if (isLoading) return <div className="text-white">Cargando ejecución...</div>;
@@ -71,7 +76,7 @@ export default function ExecutionPage() {
                                             </h4>
                                         </div>
                                         <div className="flex items-center space-x-4 text-sm text-gray-400">
-                                            <span>Iniciado: {new Date(parseInt(run.startedAt)).toLocaleDateString()}</span>
+                                            <span>Iniciado: {new Date(run.startedAt).toLocaleDateString()}</span>
                                             <span>Estado: {run.status}</span>
                                         </div>
                                     </div>

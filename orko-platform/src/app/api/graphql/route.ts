@@ -348,6 +348,10 @@ const resolvers = {
                 orderBy: { startedAt: 'desc' }
             });
         }
+    },
+    PlaybookRun: {
+        playbookCode: (parent: any) => parent.playbookId,
+        startedAt: (parent: any) => parent.startedAt.toISOString()
     }
 };
 
