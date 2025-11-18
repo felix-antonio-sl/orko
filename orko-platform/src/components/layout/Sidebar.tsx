@@ -3,7 +3,7 @@ import { LayoutDashboard, Activity, Compass, PlayCircle, Layers } from 'lucide-r
 
 const navigation = [
   { name: 'Tablero', icon: LayoutDashboard, href: '/' },
-  { name: 'Diagnóstico', icon: Activity, href: '/' }, // TODO: Separate page
+  { name: 'Diagnóstico', icon: Activity, href: '/assessment' },
   { name: 'Estrategia', icon: Compass, href: '/strategy' },
   { name: 'Ejecución', icon: PlayCircle, href: '/execution' },
   { name: 'Tejidos', icon: Layers, href: '/fabrics' },
