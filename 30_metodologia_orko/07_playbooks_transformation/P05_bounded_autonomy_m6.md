@@ -50,3 +50,18 @@ outputs:
     consumers: ["F13", "F17"]
 ```
 
+---
+
+## §2. EJECUCIÓN
+**Pasos**: 1) Diseñar modelo M6 autonomía, 2) Pilotear con 1-2 equipos, 3) Escalar, 4) Monitorear eta_org
+
+---
+
+## §3. RACI
+```yaml
+raci:
+  responsible: ["Role_Architect", "Transformation_Lead"]
+  accountable: "Role_Captain"
+  consulted: ["Team_Leads", "TF1_Lead", "TF2_Lead"]
+  informed: ["Sponsor_L1_Human", "All_Teams"]
+```

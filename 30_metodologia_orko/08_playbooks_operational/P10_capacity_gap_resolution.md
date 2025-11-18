@@ -44,3 +44,19 @@ outputs:
     consumers: ["F10", "F17", "P05", "P06"]
 ```
 
+
+---
+
+## §2. EJECUCIÓN
+**Pasos**: 1) Identificar gap capacidad (TF1), 2) Evaluar opciones (hire/buy/build/borrow), 3) Ejecutar adquisición, 4) Onboard, 5) Validar gap cerrado
+
+---
+
+## §3. RACI
+```yaml
+raci:
+  responsible: ["Role_CapacityOwner", "TF1_Lead", "HR"]
+  accountable: "Role_Captain"
+  consulted: ["Role_Architect", "Finance"]
+  informed: ["Sponsor_L1_Human", "Affected_Teams"]
+```

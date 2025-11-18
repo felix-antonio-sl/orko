@@ -1,37 +1,109 @@
 # P15 – Adaptive Cadence
 
-## Estado: mvo
+## §0. FUNDAMENTO
 
-### Propósito
-Ajustar cadencias operativas frente a shocks (hypergrowth / crisis) manteniendo control de riesgo y continuidad.
+```yaml
+playbook_id: P15
+nombre_canonico: "Adaptive Cadence"
+familia: "Operational"
+estado: "stable"
 
-### Trigger
-- hypergrowth flag = true AND handoff_ratio > 0.20 OR G1/G2 activado por F13.
+vocabulos_referencia:
+  axiomas:
+    - A4_Contexto
+    - A5_Cambio
+  primitivos:
+    - P2_Flujo
+    - P4_Limite
+  invariantes:
+    - I6_Trajectory_Awareness
+    - I8_Adaptacion_Contextual
+  dominios:
+    - D4_Operacion
 
-### Fases relacionadas
-F3, F13, F15, F17
+metricas_canonicas:
+  - H_org
+  - eta_org
+  - custom: handoff_ratio, WIP_level
 
-### Actividades (pasos)
-1. Immediate cadence freeze: reducir WIP y establecer M1 cadence.  
-2. Triage: identificar backlogs que impactan continuidad.  
-3. Capacity rebalancing: invocar P10 (Capacity Gap Resolution).  
-4. Communication/expectation plan (P14) si clientes afectados.  
-5. Transition plan a steady cadence: roadmap de 4–8 semanas.
+health_gates_asociados:
+  - G1_H_org_Critico
+  - G2_H_org_Bajo_Riesgo
 
-### Outputs
-- `adaptive_cadence_policy.md`  
-- `cadence_rebalancing_plan.xlsx`  
-- `post_adaptation_review.md` 
+justificacion:
+  "Ajustar cadencias operativas ante shocks contextuales (hypergrowth, crisis) para mantener continuidad sin colapsar eta_org"
+```
 
-### RACI
-- R: Delivery Lead  
-- A: PMO / Sponsor  
-- C: TF1/TF2 leads, HR (if staffing changes)  
-- I: Governance Board
+---
 
-### Acceptance criteria
-- WIP reduzido > 40% en primera fase de 2 semanas o riesgo mitigado  
-- Indicadores DORA/throughput recuperan tendencia esperada en 8 semanas
+## §1. INTERFAZ
 
-### Notas
-- Debe estar instrumentado con SLOs en F15 (Continuous Execution).
+```yaml
+triggers:
+  - condition: "context.growth_rate = hypergrowth AND handoff_ratio > 0.20"
+    health_gate: "G2"
+    description: "Crecimiento rápido genera handoffs excesivos"
+  
+  - condition: "H_org < 60 AND context.crisis_mode = true"
+    health_gate: "G1"
+    description: "Crisis requiere reducción WIP inmediata"
+  
+  - condition: "eta_org < 0.60 AND throughput_dropping = true"
+    source: "F13"
+    description: "Eficiencia colapsando requiere ajuste cadencia"
+
+inputs:
+  - F13.h_org_current
+  - F13.eta_org
+  - F15.execution_log
+  - context.growth_rate
+  - context.crisis_flag
+
+outputs:
+  - adaptive_cadence_policy.md
+  - cadence_rebalancing_plan.xlsx
+  - post_adaptation_review.md
+  - wip_reduction_report.yaml
+
+dependencies:
+  reads_from: ["F13", "F15"]
+  writes_to: ["F15", "F17"]
+  may_trigger: ["P10", "P14"]
+
+duracion_estimada: "P2W - P8W"
+```
+
+---
+
+## §2. EJECUCIÓN
+
+**Pasos**:
+1. **Immediate cadence freeze**: Reducir WIP 40% en 2 semanas
+2. **Triage**: Identificar backlogs críticos continuidad
+3. **Capacity rebalancing**: Invocar P10 si gaps capacidad
+4. **Communication plan**: P14 si impacto clientes
+5. **Transition roadmap**: 4-8 semanas a steady cadence
+
+**Modos adaptación**:
+- **Crisis mode**: Sprint 1→2 semanas, deploy diario→semanal
+- **Hypergrowth mode**: Aumentar parallelismo pero con handoff control
+
+---
+
+## §3. RACI
+
+```yaml
+raci:
+  responsible: ["Delivery_Lead", "PMO"]
+  accountable: "Sponsor_L1_Human"
+  consulted: ["TF1_Lead", "TF2_Lead", "HR"]
+  informed: ["Board_Governance"]
+```
+
+---
+
+## §4. ACCEPTANCE
+
+- WIP reducido >40% en fase inicial (2 semanas)
+- DORA metrics (throughput, lead time) recuperan tendencia 8 semanas
+- eta_org mejora >0.10 puntos post-adaptación

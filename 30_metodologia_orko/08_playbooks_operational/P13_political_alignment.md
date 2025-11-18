@@ -44,3 +44,19 @@ outputs:
     consumers: ["F3", "F7", "F17", "trayectorias.Survival", "trayectorias.Minimal", "trayectorias.Avanzada"]
 ```
 
+
+---
+
+## §2. EJECUCIÓN
+**Pasos**: 1) Identificar stakeholders clave, 2) Mapear intereses y resistencias, 3) Plan influencia, 4) Ejecutar engagements, 5) Validar alignment
+
+---
+
+## §3. RACI
+```yaml
+raci:
+  responsible: ["Role_Captain", "Stakeholder_Manager"]
+  accountable: "Sponsor_L1_Human"
+  consulted: ["Communications", "Change_Management"]
+  informed: ["Board_Governance", "Key_Stakeholders"]
+```

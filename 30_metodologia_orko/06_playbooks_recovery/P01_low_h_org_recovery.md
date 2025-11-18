@@ -49,3 +49,30 @@ outputs:
     consumers: ["F13", "G1", "G2"]
 ```
 
+---
+
+## §2. EJECUCIÓN
+
+**Pasos**:
+1. **Diagnóstico inmediato** (2-4h): Identificar componentes H_org degradados (H1-H4)
+2. **Priorizar acciones** (2h): Top-3 gaps críticos por impacto×urgencia
+3. **Plan recuperación** (4h): Crear h_org_recovery_plan.yaml con timeline
+4. **Ejecutar quick wins** (1-3 días): Acciones inmediatas (P10, P11, P12)
+5. **Monitoreo recovery** (continuo): Track H_org improvement vía F13
+
+**Criterios éxito**:
+- H_org > 65 en 7-14 días
+- Ningún componente H1-H4 < 50
+- Recovery plan aprobado por Sponsor_L1_Human
+
+---
+
+## §3. RACI
+
+```yaml
+raci:
+  responsible: ["Role_HealthOwner", "Role_Delivery_Lead"]
+  accountable: "Sponsor_L1_Human"
+  consulted: ["Role_Captain", "TF1_Lead", "TF2_Lead", "TF3_Lead"]
+  informed: ["Board_Governance", "All_Stakeholders"]
+```

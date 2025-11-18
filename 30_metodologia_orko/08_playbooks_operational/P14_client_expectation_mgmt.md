@@ -1,44 +1,101 @@
 # P14 – Client Expectation Management
 
-## Estado: mvo
+## §0. FUNDAMENTO
 
-### Propósito
-Mitigar brechas entre expectativas de usuarios/clientes y entregables percibidos que impactan H_org.
+```yaml
+playbook_id: P14
+nombre_canonico: "Client Expectation Management"
+familia: "Operational"
+estado: "stable"
 
-### Trigger
-- Condición primaria: "Medición de satisfacción/expectativa cruzada con H_org muestra brecha > X y drift detectado por F13"
-- Ejemplo: NPS drop > 10 pts y H_org caída de 8 pts en 30 días.
+vocabulos_referencia:
+  axiomas:
+    - A1_Organizacion
+    - A5_Cambio
+  primitivos:
+    - P4_Limite
+    - P5_Proposito
+  invariantes:
+    - I3_Trazabilidad
+    - I5_HAIC
+    - I6_Trajectory_Awareness
+  dominios:
+    - D2_Percepcion
+    - D3_Decision
 
-### Fases relacionadas
-F1, F3, F13, F16
+metricas_canonicas:
+  - H_org (componente H4_Percepcion)
+  - custom: stakeholder_satisfaction
 
-### Entradas
-- dashboards_h_org (F13)
-- customer_feedback.md (TF2/TF3)
-- case_instances (14_casos_uso/case_instances.yaml)
+health_gates_asociados:
+  - G2_H_org_Bajo_Riesgo
+  - G3_H_org_Moderado
 
-### Actividades (pasos)
-1. Confirmar gap: validar datos con TF3, reproducir evidencia.  
-2. Runbook de comunicación: preparar mensaje público/privado.  
-3. Alineamiento interno: convocar SAC/PO/Arquitectura para acciones correctivas.  
-4. Quick wins: priorizar P10/P11 si el gap técnico; P13 si es político.  
-5. Cerrar con informe (customer_commitment.md) y KPI de seguimiento.
+justificacion:
+  "Mitigar brechas entre expectativas stakeholders y entregables que degradan H4_Percepcion (componente H_org)"
+```
 
-### Output
-- `client_expectation_action_plan.md` 
-- `communication_pack.zip` 
-- `postmortem_client_expectation.md` 
+---
 
-### RACI
-- R: Product Owner, Head of Delivery  
-- A: Sponsor L1 (human)  
-- C: Architecture, TF3 lead, Communications  
-- I: Board governance
+## §1. INTERFAZ
 
-### Acceptance criteria
-- Comunicación emitida y confirmada por stakeholder clave  
-- Plan de acciones priorizado y estimado  
-- Indicadores (NPS/H_org) con mejora en 30–90 días
+```yaml
+triggers:
+  - condition: "H4_Percepcion < 60 AND customer_feedback = degraded"
+    health_gate: "G2"
+    description: "Drop en satisfacción cliente impacta H_org"
+  
+  - condition: "stakeholder_escalation AND expectation_mismatch = true"
+    source: "F13 o manual"
+    description: "Escalamiento stakeholder requiere gestión expectativas"
 
-### Notas
-- Debe enlazarse con `playbook_instances.yaml` y con el dashboard de KPIs.
+inputs:
+  - F13.h_org_current (componente H4_Percepcion)
+  - F13.stakeholder_feedback
+  - customer_satisfaction_metrics
+  - case_instances.yaml
+
+outputs:
+  - client_expectation_action_plan.md
+  - communication_pack.zip
+  - postmortem_client_expectation.md
+  - h4_percepcion_recovery_report.yaml
+
+dependencies:
+  reads_from: ["F13"]
+  writes_to: ["F16"]
+  may_trigger: ["P13"]
+
+duracion_estimada: "P3D - P7D"
+```
+
+---
+
+## §2. EJECUCIÓN
+
+**Pasos**:
+1. Confirmar gap con datos F13 + customer_feedback
+2. Preparar runbook comunicación (interno/externo)
+3. Alineamiento SAC/PO/Architecture
+4. Priorizar acciones correctivas (P10/P11 técnico, P13 político)
+5. Ejecutar plan + monitorear H4_Percepcion recovery
+
+---
+
+## §3. RACI
+
+```yaml
+raci:
+  responsible: ["Product_Owner", "Delivery_Lead"]
+  accountable: "Sponsor_L1_Human"
+  consulted: ["Role_Architect", "TF3_Lead", "Communications"]
+  informed: ["Board_Governance"]
+```
+
+---
+
+## §4. ACCEPTANCE
+
+- Comunicación confirmada por stakeholder clave
+- Plan acciones priorizado y estimado
+- H4_Percepcion mejora 30-90 días

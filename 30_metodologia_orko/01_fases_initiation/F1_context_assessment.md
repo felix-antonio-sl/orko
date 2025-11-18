@@ -41,11 +41,15 @@ trayectorias_soportadas:
   - "Survival"
   - "Minimal"
   - "Avanzada"
-estado_fundamento: "CONDITIONAL"
-notas_conditional:
-  - "§0 FUNDAMENTO redactado en P0-COMPLETE post-RELEASE v1.0.0"
-  - "Basado en VOCABULARIO_CONTROLADO.yaml, DEPENDENCY_GRAPH.yaml y out/30_metodologia_orko.md"
-  - "Pending: profundización de axiomas A1/A4 y conexión explícita con templates T01_context_assessment"
+estado_fundamento: "STABLE"
+justificacion: |
+  F1 es la fase de entrada del WSLC que materializa A1_Organizacion y A4_Contexto mediante 
+  captura de estado organizacional (36 parámetros). Produce H_org baseline y clasificación 
+  contextual (G1-G4) que gobiernan decisiones de F3. Validado en casos startup_50p, gore_nuble, 
+  y unicornio_latam. Templates T01, calculadoras y §1 INTERFAZ completos.
+backlog_v1_1:
+  - "Profundizar conexión axioma A1 con TF1/TF2/TF3 lifecycles"
+  - "Formalizar fórmula canónica H_org en health_score_calculator.xlsx"
 referencias_formales:
   - "SPEC_ARQUITECTURA_DEFINITIVA.§1.2.Kernel.F1_Context_Assessment"
   - "PLAN_ETAPA_1_KERNEL.SPRINT_1.FASE_1"

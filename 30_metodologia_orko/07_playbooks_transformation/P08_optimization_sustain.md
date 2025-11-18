@@ -62,3 +62,19 @@ outputs:
 - **R2 – Optimización local subóptima:** se optimizan partes del sistema a costa de `ROI_Habilitacion` global.  
   - Mitigación: exigir revisión de impactos a nivel de `E6_ArchitecturalState` y trayectorias antes de cambios mayores.
 
+
+---
+
+## §2. EJECUCIÓN
+**Pasos**: 1) Identificar oportunidades optimización, 2) Evaluar impacto global (ROI_Habilitacion), 3) Implementar mejoras, 4) Monitorear sostenibilidad
+
+---
+
+## §3. RACI
+```yaml
+raci:
+  responsible: ["Continuous_Improvement_Lead", "Operations_Lead"]
+  accountable: "Role_Captain"
+  consulted: ["Role_Architect", "Role_HealthOwner"]
+  informed: ["Sponsor_L1_Human"]
+```

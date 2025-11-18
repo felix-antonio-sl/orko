@@ -1,18 +1,14 @@
-## 15_instrumentacion – Métricas, efectividad y auditorías
+# 15_instrumentacion – Métricas, efectividad y auditorías
 
 Este directorio describe la **instrumentación** necesaria para observar el comportamiento de la metodología ORKO en práctica: cómo se miden adopción, efectividad y coherencia, y cómo se conectan esas observaciones con health gates y decisiones de evolución.
 
----
-
-### §0 Relación con métricas y health gates
+## §0 Relación con métricas y health gates
 
 - Las métricas canónicas (por ejemplo `H_org`, `eta_org`, `ROI_Habilitacion`) se definen en `VOCABULARIO_CONTROLADO.yaml` y se usan en los health gates G1–G4 (`13_metricas_validacion/02_health_gates.md`).
 - Este bloque **no introduce métricas nuevas**: cualquier métrica adicional debe tratarse como candidata y documentarse en `VOCAB_v1.1.x_NOTAS.md` antes de convertirse en canónica en futuras versiones.
 - La instrumentación se entiende como el conjunto de **métodos, pipelines y dashboards** que capturan y exponen estas métricas para soportar decisiones de playbooks, trayectorias y evolución (F13–F18).
 
----
-
-### §1 Componentes de este directorio
+## §1 Componentes de este directorio
 
 - `01_metricas_adopcion_metodologia.md`
   - Espacio para describir cómo se mide la **adopción** de la metodología (por ejemplo, uso efectivo de fases, playbooks, templates) usando métricas existentes o derivadas.
@@ -28,9 +24,7 @@ Este directorio describe la **instrumentación** necesaria para observar el comp
 
 En v1.0.0, estos documentos funcionan principalmente como **marcos de referencia**: indican qué tipos de instrumentación son relevantes sin especificar aún todos los detalles de implementación técnica.
 
----
-
-### §2 Conexión con calculadoras y dashboards
+## §2 Conexión con calculadoras y dashboards
 
 - Las calculadoras en `40_implementacion_metodologia/calculadoras/` (p.ej. `context_decision_matrix.xlsx`, `convergence_tracker.xlsx`, `health_score_calculator.xlsx`) aportan artefactos de análisis que pueden alimentar la instrumentación descrita aquí.
 - Los futuros dashboards y reportes se documentan en `13_metricas_validacion/03_dashboards_reporting.md` (esqueleto), que debe mantenerse alineado con este bloque.

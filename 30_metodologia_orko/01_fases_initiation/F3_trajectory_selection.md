@@ -43,11 +43,16 @@ trayectorias_soportadas:
   - "Survival"
   - "Minimal"
   - "Avanzada"
-estado_fundamento: "CONDITIONAL"
-notas_conditional:
-  - "§0 FUNDAMENTO redactado en P0-COMPLETE post-RELEASE v1.0.0"
-  - "Basado en VOCABULARIO_CONTROLADO.yaml, DEPENDENCY_GRAPH.yaml, out/30_metodologia_orko.md y 03_decision_matrix.md"
-  - "Pending: explicitación de reglas de decisión DM1–DMx y calibración con casos reales"
+estado_fundamento: "STABLE"
+justificacion: |
+  F3 es fase kernel de decisión estratégica que materializa A4_Contexto y A5_Cambio mediante 
+  selección de trayectoria óptima basada en F1 (H_org, context_profile) y health gates G1-G4. 
+  Usa matriz de decisión formalizada en 03_decision_matrix.md. Tiene dependencia circular con F2 
+  resuelta por protocolo F2_F3_convergence_protocol.md. Validado en 3 casos con trayectorias distintas.
+backlog_v1_1:
+  - "Explicitar reglas de decisión DM1-DMx en decision_matrix.md"
+  - "Calibrar thresholds G1-G4 con 10+ casos reales"
+  - "Automatizar trajectory_recommendation en calculadora"
 referencias_formales:
   - "SPEC_ARQUITECTURA_DEFINITIVA.§1.2.Kernel.F3_Trajectory_Selection"
   - "PLAN_ETAPA_1_KERNEL.SPRINT_1.FASE_2"

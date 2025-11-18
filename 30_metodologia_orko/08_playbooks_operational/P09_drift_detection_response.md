@@ -50,3 +50,19 @@ outputs:
     consumers: ["F13", "G1", "G2", "G3"]
 ```
 
+
+---
+
+## §2. EJECUCIÓN
+**Pasos**: 1) Detectar drift E6_current vs E6_target, 2) Clasificar severidad, 3) Plan corrección, 4) Ejecutar, 5) Validar convergencia
+
+---
+
+## §3. RACI
+```yaml
+raci:
+  responsible: ["Role_Architect", "Role_HealthOwner"]
+  accountable: "Role_Captain"
+  consulted: ["TF1_Lead", "TF2_Lead", "TF3_Lead"]
+  informed: ["Sponsor_L1_Human"]
+```

@@ -44,3 +44,19 @@ outputs:
     consumers: ["F6", "F11", "P09", "P10"]
 ```
 
+
+---
+
+## §2. EJECUCIÓN
+**Pasos**: 1) Auditar calidad datos TF3, 2) Priorizar gaps críticos, 3) Plan remediación, 4) Ejecutar, 5) Validar quality improvement
+
+---
+
+## §3. RACI
+```yaml
+raci:
+  responsible: ["Data_Quality_Owner", "TF3_Lead"]
+  accountable: "Role_Captain"
+  consulted: ["Data_Engineers", "Business_Analysts"]
+  informed: ["Sponsor_L1_Human", "Data_Consumers"]
+```

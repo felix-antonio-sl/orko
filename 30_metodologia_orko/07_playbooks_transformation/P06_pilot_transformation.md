@@ -64,3 +64,19 @@ outputs:
 - **R2 – Falta de trazabilidad:** cambios del piloto no quedan reflejados en F16/F17, dificultando evaluar `eta_org`/`ROI_Habilitacion`.  
   - Mitigación: exigir registro en `learning_loops_log` y vincular outputs de P06 a recomendaciones de trayectoria.
 
+
+---
+
+## §2. EJECUCIÓN
+**Pasos**: 1) Seleccionar dominio piloto acotado, 2) Diseñar intervención, 3) Ejecutar piloto (2-4 semanas), 4) Evaluar resultados, 5) Decidir escala
+
+---
+
+## §3. RACI
+```yaml
+raci:
+  responsible: ["Transformation_Lead", "Pilot_Team_Lead"]
+  accountable: "Role_Captain"
+  consulted: ["Role_Architect", "Role_HealthOwner"]
+  informed: ["Sponsor_L1_Human", "Steering_Committee"]
+```

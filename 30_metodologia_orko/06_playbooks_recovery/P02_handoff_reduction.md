@@ -49,3 +49,30 @@ outputs:
     consumers: ["F13", "G1"]
 ```
 
+---
+
+## §2. EJECUCIÓN
+
+**Pasos**:
+1. **Mapeo flujos** (4-6h): Identificar handoffs críticos en TF2
+2. **Análisis impacto** (2h): Cuantificar delay por handoff
+3. **Rediseño flujos** (1 día): Reducir handoffs, aumentar bounded autonomy
+4. **Implementación** (2-3 días): Ejecutar cambios flujo
+5. **Validación** (continuo): Medir ROI_Habilitacion improvement
+
+**Criterios éxito**:
+- Reducción >30% handoffs críticos
+- ROI_Habilitacion > 1.0
+- H_org recovery
+
+---
+
+## §3. RACI
+
+```yaml
+raci:
+  responsible: ["Role_FlowOwner", "TF2_Lead"]
+  accountable: "Role_Captain"
+  consulted: ["Role_Architect", "Delivery_Lead"]
+  informed: ["Sponsor_L1_Human", "Board_Governance"]
+```

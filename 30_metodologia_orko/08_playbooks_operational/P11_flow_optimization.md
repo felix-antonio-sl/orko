@@ -44,3 +44,19 @@ outputs:
     consumers: ["F11", "F16", "P02", "P08"]
 ```
 
+
+---
+
+## §2. EJECUCIÓN
+**Pasos**: 1) Analizar flujos TF2, 2) Identificar cuellos botella, 3) Rediseñar, 4) Implementar, 5) Medir eta_org improvement
+
+---
+
+## §3. RACI
+```yaml
+raci:
+  responsible: ["Role_FlowOwner", "TF2_Lead"]
+  accountable: "Role_Captain"
+  consulted: ["Role_Architect", "Process_Owners"]
+  informed: ["Sponsor_L1_Human", "All_Teams"]
+```

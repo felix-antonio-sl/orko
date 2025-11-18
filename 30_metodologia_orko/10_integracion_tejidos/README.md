@@ -1,5 +1,8 @@
 # 10_integracion_tejidos – Layer 2 ↔ Layer 3
 
+> ⚠️ **DISCLAIMER v1.0.0**: Los archivos `01_metodologia_usa_tf1.md`, `02_metodologia_usa_tf2.md`, `03_metodologia_usa_tf3.md` y `04_casos_integracion_e2e.md` son **PLACEHOLDERS** en esta versión. El contenido descrito en este README está en desarrollo para v1.1.0.  
+> **Estado actual**: Este directorio documenta la intención y estructura de integración Layer 2↔3, pero la implementación detallada está en backlog. Para v1.0.0, los casos reales en `/40_implementacion_metodologia/ejemplos/` demuestran la integración práctica de tejidos con fases WSLC.
+
 ## Propósito del bloque
 
 - Explicar **cómo se conectan los tejidos tecnológicos** (`TF1_Capacity`, `TF2_Flow`, `TF3_Information`) definidos en `20_tejidos/` con:

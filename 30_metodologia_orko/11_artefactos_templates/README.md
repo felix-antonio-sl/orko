@@ -1,5 +1,8 @@
 # 11_artefactos_templates – Templates y artefactos de soporte
 
+> ⚠️ **DISCLAIMER v1.0.0**: Los archivos de categorías (`01_templates_assessment.md`, `02_templates_planning.md`, etc.) en este directorio son **ÍNDICES CONCEPTUALES VACÍOS**. Los templates REALES operativos están ubicados en `/40_implementacion_metodologia/templates/` y son completamente funcionales.  
+> **Decisión arquitectónica**: Para v1.0.0, este directorio documenta la taxonomía y propósito de templates, pero el contenido ejecutable vive en Layer 4 (implementación). Ver `GAPS_DIRECTORIOS_10_13.md` GAP-D1 para detalles.
+
 Este directorio agrupa **templates y artefactos de trabajo** que soportan la ejecución de la metodología ORKO v1.0.0 en fases F1–F18 y playbooks P01–P15.
 
 > Importante: este directorio **no define contratos canónicos**. Los contratos viven en `VOCABULARIO_CONTROLADO.yaml`, `DEPENDENCY_GRAPH.yaml`, los schemas (`context_pattern_schema.yaml`, `playbook_schema.yaml`, etc.) y los propios playbooks P01–P15. Los templates son artefactos operativos que instancian esos contratos en contextos concretos.

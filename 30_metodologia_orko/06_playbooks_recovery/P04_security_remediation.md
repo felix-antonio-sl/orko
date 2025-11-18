@@ -49,3 +49,31 @@ outputs:
     consumers: ["F13", "G1", "G2"]
 ```
 
+---
+
+## §2. EJECUCIÓN
+
+**Pasos**:
+1. **Contención** (inmediato): Mitigar riesgo security/compliance
+2. **Análisis impacto** (4h): Evaluar impacto H_org y ROI_Habilitacion
+3. **Plan remediación** (1 día): Definir acciones correctivas
+4. **Implementación** (2-5 días): Ejecutar remediation plan
+5. **Post-mortem** (4h): Documentar learnings y prevención
+
+**Criterios éxito**:
+- Incident cerrado
+- Compliance gap remediado
+- H_org recovery
+- Post-mortem publicado
+
+---
+
+## §3. RACI
+
+```yaml
+raci:
+  responsible: ["Role_SecurityOwner", "Role_ComplianceOfficer"]
+  accountable: "Role_Captain"
+  consulted: ["TF3_Lead", "Legal", "Infosec_Team"]
+  informed: ["Sponsor_L1_Human", "Board_Governance", "Regulators"]
+```

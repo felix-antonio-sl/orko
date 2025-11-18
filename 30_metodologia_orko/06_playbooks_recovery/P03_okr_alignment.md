@@ -49,3 +49,30 @@ outputs:
     consumers: ["F13", "G2"]
 ```
 
+---
+
+## §2. EJECUCIÓN
+
+**Pasos**:
+1. **Auditoría OKR** (4h): Revisar cascade F7 vs resultados actuales
+2. **Gap analysis** (4h): Identificar desconexión propósito-ejecución
+3. **Realinear OKRs** (1 día): Ajustar o refinar OKRs con stakeholders
+4. **Communication plan** (4h): Comunicar cambios a equipos
+5. **Tracking** (continuo): Monitorear alineamiento post-ajuste
+
+**Criterios éxito**:
+- 90% OKRs L4-L1 alineados
+- H_org improvement >5 puntos en 30 días
+- Sponsor approval
+
+---
+
+## §3. RACI
+
+```yaml
+raci:
+  responsible: ["Role_Captain", "Role_PurposeOwner"]
+  accountable: "Sponsor_L1_Human"
+  consulted: ["Role_Architect", "Area_Leads"]
+  informed: ["All_Stakeholders", "Board_Governance"]
+```

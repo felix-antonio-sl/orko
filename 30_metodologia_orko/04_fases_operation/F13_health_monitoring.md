@@ -49,17 +49,20 @@ trayectorias_soportadas:
   - "Minimal"
   - "Avanzada"
   - "Survival"
+estado_fundamento: "STABLE"
+justificacion: |
+  F13 es fase continua de monitoreo que materializa A1_Organizacion y A3_Flujo mediante tracking 
+  de métricas canónicas (H_org, eta_org, ROI_Habilitacion) derivadas de TF1/TF2/TF3. Implementa 
+  health gates G1-G4 que triggerea playbooks y decisiones adaptativas (F14/F17). Garantiza I5_HAIC 
+  con accountability humana explícita en dashboards. §1 INTERFAZ completo con observability tools.
+backlog_v1_1:
+  - "Automatizar drift detection E6_current vs E6_target"
+  - "Integrar alerting con playbook triggers automáticos"
+  - "Calibrar thresholds G1-G4 por industria/contexto"
 referencias_formales:
   - "SPEC_ARQUITECTURA_DEFINITIVA.§1.4.Operation.F13_Health_Monitoring"
   - "30_metodologia_orko/13_metricas_validacion/02_health_gates.md"
   - "30_metodologia_orko/04_fases_operation/README.md"
-notas_fundamento: |
-  F13 es la fase de monitoreo continuo de la salud organizacional (A1) y del flujo de trabajo (A3) a través 
-  de los cinco primitivos (P1–P5) y las tres métricas canónicas (H_org, eta_org, ROI_Habilitacion). Lee señales 
-  de los tres tejidos (TF1/TF2/TF3) y del estado arquitectónico (E6) para evaluar coherencia del sistema (I7) 
-  y detectar drift respecto al diseño objetivo (F9). Los health gates (G1–G4) estructuran la interpretación 
-  de H_org y disparan decisiones adaptativas (I8) en F14/F17. La accountability humana (I5) se mantiene 
-  explícita en dashboards y decisiones de escalamiento.
 ```
 
 ## §1 INTERFAZ

@@ -63,3 +63,19 @@ outputs:
 - **R2 – Heterogeneidad de contextos:** dominios adicionales con contexto distinto al piloto (ver `context_pattern_schema`).  
   - Mitigación: coordinar con E2 para validar patrones de contexto y ajustar el plan de escala.
 
+
+---
+
+## §2. EJECUCIÓN
+**Pasos**: 1) Validar piloto éxitoso, 2) Planificar escala multi-dominio, 3) Secuenciar rollout, 4) Monitorear H_org durante escala, 5) Ajustar según feedback
+
+---
+
+## §3. RACI
+```yaml
+raci:
+  responsible: ["Transformation_Lead", "Program_Manager"]
+  accountable: "Role_Captain"
+  consulted: ["Domain_Leads", "Role_HealthOwner"]
+  informed: ["Sponsor_L1_Human", "All_Organization"]
+```

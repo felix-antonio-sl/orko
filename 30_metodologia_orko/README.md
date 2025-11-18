@@ -17,13 +17,7 @@ Para ORKO **v1.0.0**:
   - `13_metricas_validacion/02_health_gates.md` – definición de G1–G4 y métricas canónicas.
   - `09_trayectorias/03_decision_matrix.md` – matriz de decisión para Survival/Minimal/Avanzada.
 
-El Capitán evalúa la **RELEASE 1.0.0 de la metodología** principalmente a partir de `17_validacion_final/validation_final_report.md`, que integra:
-
-- Validación de kernel/VOCAB/DEP_GRAPH (CAP-14).
-- Evidencias de casos (CAP-15) y playbooks (CAP-16).
-- Auditorías globales VG4 + clasificación `PASSED`/`CONDITIONAL` de `I1`–`I8` (CAP-17/CAP-19).
-
-### Release ORKO v1.0.0 – estado de invariantes I1–I8
+## Release ORKO v1.0.0 – estado de invariantes I1–I8
 
 En `17_validacion_final/validation_final_report.md` §3, la release ORKO v1.0.0 queda evaluada así:
 
