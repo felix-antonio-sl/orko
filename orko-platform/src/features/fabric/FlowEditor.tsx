@@ -15,8 +15,12 @@ export function FlowEditor({ orgSlug, flowId, onClose, onSuccess }: FlowEditorPr
     const [description, setDescription] = useState('');
     const [flowType, setFlowType] = useState('CORE');
     const [cognitiveLevel, setCognitiveLevel] = useState('C0');
-    const [steps, setSteps] = useState<{ name: string; capacityId: string; timeoutSeconds: number }[]>([
-        { name: 'Inicio', capacityId: '', timeoutSeconds: 0 }
+    const [outcome, setOutcome] = useState('');
+    const [customer, setCustomer] = useState('');
+    const [owner, setOwner] = useState('');
+    const [criticality, setCriticality] = useState('MEDIUM');
+    const [steps, setSteps] = useState<{ name: string; capacityId: string; timeoutSeconds: number; inputs: string; outputs: string }[]>([
+        { name: 'Inicio', capacityId: '', timeoutSeconds: 0, inputs: '', outputs: '' }
     ]);
 
     const { data: flowData, isLoading: isLoadingFlow } = useFlow(flowId);
@@ -29,18 +33,24 @@ export function FlowEditor({ orgSlug, flowId, onClose, onSuccess }: FlowEditorPr
             setDescription(flowData.description || '');
             setFlowType(flowData.flowType);
             setCognitiveLevel(flowData.cognitiveLevel);
+            setOutcome(flowData.outcome || '');
+            setCustomer(flowData.customer || '');
+            setOwner(flowData.owner || '');
+            setCriticality(flowData.criticality || 'MEDIUM');
             if (flowData.steps && flowData.steps.length > 0) {
                 setSteps(flowData.steps.map((s: any) => ({
                     name: s.name,
                     capacityId: s.capacityId || '',
-                    timeoutSeconds: s.timeoutSeconds || 0
+                    timeoutSeconds: s.timeoutSeconds || 0,
+                    inputs: s.inputs || '',
+                    outputs: s.outputs || ''
                 })));
             }
         }
     }, [flowData]);
 
     const handleAddStep = () => {
-        setSteps([...steps, { name: '', capacityId: '', timeoutSeconds: 0 }]);
+        setSteps([...steps, { name: '', capacityId: '', timeoutSeconds: 0, inputs: '', outputs: '' }]);
     };
 
     const handleRemoveStep = (index: number) => {
@@ -62,10 +72,16 @@ export function FlowEditor({ orgSlug, flowId, onClose, onSuccess }: FlowEditorPr
             description,
             flowType,
             cognitiveLevel,
+            outcome,
+            customer,
+            owner,
+            criticality,
             steps: steps.map(s => ({
                 name: s.name,
                 capacityId: s.capacityId || null,
-                timeoutSeconds: parseInt(s.timeoutSeconds as any) || 0
+                timeoutSeconds: parseInt(s.timeoutSeconds as any) || 0,
+                inputs: s.inputs || null,
+                outputs: s.outputs || null
             }))
         };
 
@@ -154,6 +170,79 @@ export function FlowEditor({ orgSlug, flowId, onClose, onSuccess }: FlowEditorPr
                                         <option value="C2">C2: Adaptativo (Alta incertidumbre)</option>
                                     </select>
                                     <p className="text-xs text-gray-500 mt-1">Define la autonomía y guardarraíles necesarios.</p>
+                                </div>
+                            </div>
+                        </div>
+
+                        {/* Teleological Validation (Axiom A3) */}
+                        <div className="border border-surface-highlight rounded-lg p-6 space-y-4 bg-surface-highlight/20">
+                            <div className="flex items-center gap-2 mb-2">
+                                <svg xmlns="http://www.w3.org/2000/svg" className="h-5 w-5 text-primary" fill="none" viewBox="0 0 24 24" stroke="currentColor">
+                                    <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M9 12l2 2 4-4m6 2a9 9 0 11-18 0 9 9 0 0118 0z" />
+                                </svg>
+                                <h3 className="text-lg font-semibold text-white">Validación Teleológica (A3)</h3>
+                            </div>
+                            <div className="grid grid-cols-1 md:grid-cols-2 gap-4">
+                                <div>
+                                    <label className="block text-sm font-medium text-gray-400 mb-1">
+                                        Outcome (Resultado Esperado) <span className="text-red-500">*</span>
+                                    </label>
+                                    <textarea
+                                        value={outcome}
+                                        onChange={(e) => setOutcome(e.target.value)}
+                                        className="w-full bg-surface border border-gray-700 rounded-lg px-4 py-2 text-white focus:outline-none focus:border-primary h-20"
+                                        placeholder="¿Qué entrega este flujo?"
+                                        required
+                                    />
+                                </div>
+                                <div>
+                                    <label className="block text-sm font-medium text-gray-400 mb-1">
+                                        Customer (Cliente) <span className="text-red-500">*</span>
+                                    </label>
+                                    <input
+                                        type="text"
+                                        value={customer}
+                                        onChange={(e) => setCustomer(e.target.value)}
+                                        className="w-full bg-surface border border-gray-700 rounded-lg px-4 py-2 text-white focus:outline-none focus:border-primary"
+                                        placeholder="¿Quién recibe el valor?"
+                                        required
+                                    />
+                                    <p className="text-xs text-gray-500 mt-1">Interno o Externo</p>
+                                </div>
+                            </div>
+
+                            {!customer && (
+                                <div className="bg-yellow-500/10 border border-yellow-500/50 text-yellow-500 p-3 rounded-lg text-sm flex items-start gap-2">
+                                    <svg xmlns="http://www.w3.org/2000/svg" className="h-5 w-5 shrink-0 mt-0.5" fill="none" viewBox="0 0 24 24" stroke="currentColor">
+                                        <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M12 9v2m0 4h.01m-6.938 4h13.856c1.54 0 2.502-1.667 1.732-3L13.732 4c-.77-1.333-2.694-1.333-3.464 0L3.34 16c-.77 1.333.192 3 1.732 3z" />
+                                    </svg>
+                                    <span><strong>Flujo Huérfano:</strong> Un flujo sin cliente definido es "Grasa" (Waste) según Axiom A3.</span>
+                                </div>
+                            )}
+
+                            <div className="grid grid-cols-1 md:grid-cols-2 gap-4">
+                                <div>
+                                    <label className="block text-sm font-medium text-gray-400 mb-1">Owner (Responsable)</label>
+                                    <input
+                                        type="text"
+                                        value={owner}
+                                        onChange={(e) => setOwner(e.target.value)}
+                                        className="w-full bg-surface border border-gray-700 rounded-lg px-4 py-2 text-white focus:outline-none focus:border-primary"
+                                        placeholder="Persona/Equipo responsable"
+                                    />
+                                </div>
+                                <div>
+                                    <label className="block text-sm font-medium text-gray-400 mb-1">Criticidad</label>
+                                    <select
+                                        value={criticality}
+                                        onChange={(e) => setCriticality(e.target.value)}
+                                        className="w-full bg-surface border border-gray-700 rounded-lg px-4 py-2 text-white focus:outline-none focus:border-primary"
+                                    >
+                                        <option value="LOW">Baja</option>
+                                        <option value="MEDIUM">Media</option>
+                                        <option value="HIGH">Alta</option>
+                                        <option value="CRITICAL">Crítica</option>
+                                    </select>
                                 </div>
                             </div>
                         </div>

@@ -6,13 +6,17 @@ import crypto from 'crypto';
 const prisma = new PrismaClient();
 
 const CREATE_FLOW_QUERY = `
-  MERGE (o:Organization {slug: $orgSlug})
+  MATCH (o:Organization {slug: $orgSlug})
   CREATE (f:FlowAsset:ValueStream {
     id: $flowId,
     name: $name,
     description: $description,
     flow_type: $flowType,
     cognitive_level: $cognitiveLevel,
+    outcome: $outcome,
+    customer: $customer,
+    owner: $owner,
+    criticality: $criticality,
     org: $orgSlug
   })
   CREATE (f)-[:BELONGS_TO]->(o)
@@ -24,7 +28,9 @@ const CREATE_STEP_QUERY = `
   CREATE (s:FlowStep {
     id: $stepId,
     name: $name,
-    timeout_seconds: $timeout
+    timeout_seconds: $timeout,
+    inputs: $inputs,
+    outputs: $outputs
   })
   CREATE (f)-[:HAS_STEP {order: $order}]->(s)
   RETURN s
@@ -61,7 +67,11 @@ const UPDATE_FLOW_QUERY = `
   SET f.name = $name,
       f.description = $description,
       f.flow_type = $flowType,
-      f.cognitive_level = $cognitiveLevel
+      f.cognitive_level = $cognitiveLevel,
+      f.outcome = $outcome,
+      f.customer = $customer,
+      f.owner = $owner,
+      f.criticality = $criticality
   RETURN f
 `;
 
@@ -173,7 +183,12 @@ const typeDefs = `
     description: String
     flowType: String!
     cognitiveLevel: String!
+    outcome: String
+    customer: String
+    owner: String
+    criticality: String
     steps: [FlowStep!]!
+    isOrphaned: Boolean!
   }
 
   type FlowStep {
@@ -181,6 +196,8 @@ const typeDefs = `
     name: String!
     capacityId: String
     timeoutSeconds: Int
+    inputs: String
+    outputs: String
   }
 
   input FlowInput {
@@ -189,6 +206,10 @@ const typeDefs = `
     description: String
     flowType: String!
     cognitiveLevel: String!
+    outcome: String
+    customer: String
+    owner: String
+    criticality: String
     steps: [FlowStepInput!]!
   }
 
@@ -196,6 +217,8 @@ const typeDefs = `
     name: String!
     capacityId: String
     timeoutSeconds: Int
+    inputs: String
+    outputs: String
   }
 `;
 
@@ -279,7 +302,7 @@ const resolvers = {
 
                 const record = result[0];
                 const f = record.f.properties;
-                const steps = record.steps.filter((s: any) => s !== null); // Filter out nulls from optional match
+                const steps = record.steps.filter((s: any) => s !== null);
 
                 return {
                     id: f.id,
@@ -287,7 +310,12 @@ const resolvers = {
                     description: f.description,
                     flowType: f.flow_type,
                     cognitiveLevel: f.cognitive_level,
-                    steps: steps
+                    outcome: f.outcome,
+                    customer: f.customer,
+                    owner: f.owner,
+                    criticality: f.criticality,
+                    steps: steps,
+                    isOrphaned: !f.customer || f.customer.trim() === ''
                 };
             } catch (error) {
                 console.error("Error fetching flow:", error);
@@ -344,7 +372,7 @@ const resolvers = {
             });
         },
         createFlow: async (_: any, { input }: { input: any }) => {
-            const { orgSlug, name, description, flowType, cognitiveLevel, steps } = input;
+            const { orgSlug, name, description, flowType, cognitiveLevel, outcome, customer, owner, criticality, steps } = input;
             const flowId = crypto.randomUUID();
 
             try {
@@ -355,7 +383,11 @@ const resolvers = {
                     name,
                     description,
                     flowType,
-                    cognitiveLevel
+                    cognitiveLevel,
+                    outcome: outcome || null,
+                    customer: customer || null,
+                    owner: owner || null,
+                    criticality: criticality || null
                 });
 
                 // 2. Create Steps
@@ -370,6 +402,8 @@ const resolvers = {
                         stepId,
                         name: step.name,
                         timeout: step.timeoutSeconds || 0,
+                        inputs: step.inputs || null,
+                        outputs: step.outputs || null,
                         order: i
                     });
 
@@ -406,7 +440,7 @@ const resolvers = {
             }
         },
         updateFlow: async (_: any, { id, input }: { id: string, input: any }) => {
-            const { name, description, flowType, cognitiveLevel, steps } = input;
+            const { name, description, flowType, cognitiveLevel, outcome, customer, owner, criticality, steps } = input;
 
             try {
                 // 1. Update Flow Node properties
@@ -415,7 +449,11 @@ const resolvers = {
                     name,
                     description,
                     flowType,
-                    cognitiveLevel
+                    cognitiveLevel,
+                    outcome: outcome || null,
+                    customer: customer || null,
+                    owner: owner || null,
+                    criticality: criticality || null
                 });
 
                 // 2. Delete existing steps
@@ -433,6 +471,8 @@ const resolvers = {
                         stepId,
                         name: step.name,
                         timeout: step.timeoutSeconds || 0,
+                        inputs: step.inputs || null,
+                        outputs: step.outputs || null,
                         order: i
                     });
 
