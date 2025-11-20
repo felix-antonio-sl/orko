@@ -40,6 +40,7 @@ export function GraphCanvas({ data, onNodeClick }: GraphCanvasProps) {
                     if (node.type === 'Team') return '#3b82f6'; // Blue
                     if (node.type === 'Person') return '#10b981'; // Green
                     if (node.type === 'ValueStream') return '#f59e0b'; // Yellow
+                    if (node.type === 'FlowStep') return '#8b5cf6'; // Violet
                     return '#6b7280'; // Gray
                 }}
                 nodeRelSize={6}

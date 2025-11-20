@@ -23,7 +23,8 @@
     "react-dom": "19.2.0",
     "react-force-graph-2d": "^1.29.0",
     "recharts": "^3.4.1",
-    "tailwind-merge": "^3.4.0"
+    "tailwind-merge": "^3.4.0",
+    "urql": "^5.0.1"
   },
   "devDependencies": {
     "@graphql-codegen/cli": "^6.0.2",

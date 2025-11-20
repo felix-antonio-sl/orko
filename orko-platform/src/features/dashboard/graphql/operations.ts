@@ -70,3 +70,19 @@ export const RECORD_ASSESSMENT = gql(`
     }
   }
 `);
+export const CREATE_FLOW = gql(`
+  mutation CreateFlow($input: FlowInput!) {
+    createFlow(input: $input) {
+      id
+      name
+      flowType
+      cognitiveLevel
+      steps {
+        id
+        name
+        capacityId
+        timeoutSeconds
+      }
+    }
+  }
+`);

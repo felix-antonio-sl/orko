@@ -1,8 +1,74 @@
 import { createSchema, createYoga } from 'graphql-yoga';
 import { PrismaClient } from '@prisma/client';
-import { read } from '@/lib/neo4j';
+import { write, read } from '@/lib/neo4j';
+import crypto from 'crypto';
 
 const prisma = new PrismaClient();
+
+const CREATE_FLOW_QUERY = `
+  MERGE (o:Organization {slug: $orgSlug})
+  CREATE (f:FlowAsset:ValueStream {
+    id: $flowId,
+    name: $name,
+    description: $description,
+    flow_type: $flowType,
+    cognitive_level: $cognitiveLevel,
+    org: $orgSlug
+  })
+  CREATE (f)-[:BELONGS_TO]->(o)
+  RETURN f
+`;
+
+const CREATE_STEP_QUERY = `
+  MATCH (f:FlowAsset {id: $flowId})
+  CREATE (s:FlowStep {
+    id: $stepId,
+    name: $name,
+    timeout_seconds: $timeout
+  })
+  CREATE (f)-[:HAS_STEP {order: $order}]->(s)
+  RETURN s
+`;
+
+const LINK_CAPACITY_QUERY = `
+  MATCH (s:FlowStep {id: $stepId})
+  MATCH (c) WHERE elementId(c) = $capId OR c.name = $capId
+  CREATE (s)-[:EXECUTED_BY]->(c)
+`;
+
+const LINK_STEPS_QUERY = `
+  MATCH (prev:FlowStep {id: $prevId})
+  MATCH (curr:FlowStep {id: $currId})
+  CREATE (prev)-[:NEXT]->(curr)
+`;
+
+const GET_FLOW_QUERY = `
+  MATCH (f:FlowAsset {id: $flowId})
+  OPTIONAL MATCH (f)-[r:HAS_STEP]->(s:FlowStep)
+  OPTIONAL MATCH (s)-[:EXECUTED_BY]->(c)
+  WITH f, s, r, c
+  ORDER BY r.order
+  RETURN f, collect(CASE WHEN s IS NOT NULL THEN {
+    id: s.id,
+    name: s.name,
+    timeoutSeconds: s.timeout_seconds,
+    capacityId: CASE WHEN c IS NOT NULL THEN elementId(c) ELSE null END
+  } ELSE null END) as steps
+`;
+
+const UPDATE_FLOW_QUERY = `
+  MATCH (f:FlowAsset {id: $flowId})
+  SET f.name = $name,
+      f.description = $description,
+      f.flow_type = $flowType,
+      f.cognitive_level = $cognitiveLevel
+  RETURN f
+`;
+
+const DELETE_FLOW_STEPS_QUERY = `
+  MATCH (f:FlowAsset {id: $flowId})-[r:HAS_STEP]->(s:FlowStep)
+  DETACH DELETE s
+`;
 
 const typeDefs = `
   type Query {
@@ -10,11 +76,14 @@ const typeDefs = `
     health(orgId: ID!): HealthState
     strategy(orgId: ID!): Strategy
     activePlaybooks(orgId: ID!): [PlaybookRun!]!
+    flow(id: ID!): FlowAsset
   }
 
   type Mutation {
     recordAssessment(input: AssessmentInput!): HealthState
     startPlaybook(orgId: ID!, code: String!): PlaybookRun
+    createFlow(input: FlowInput!): FlowAsset
+    updateFlow(id: ID!, input: FlowInput!): FlowAsset
   }
 
   type Organization {
@@ -97,6 +166,37 @@ const typeDefs = `
     data: Float!
     ops: Float!
   }
+
+  type FlowAsset {
+    id: ID!
+    name: String!
+    description: String
+    flowType: String!
+    cognitiveLevel: String!
+    steps: [FlowStep!]!
+  }
+
+  type FlowStep {
+    id: ID!
+    name: String!
+    capacityId: String
+    timeoutSeconds: Int
+  }
+
+  input FlowInput {
+    orgSlug: String!
+    name: String!
+    description: String
+    flowType: String!
+    cognitiveLevel: String!
+    steps: [FlowStepInput!]!
+  }
+
+  input FlowStepInput {
+    name: String!
+    capacityId: String
+    timeoutSeconds: Int
+  }
 `;
 
 const resolvers = {
@@ -171,6 +271,28 @@ const resolvers = {
                 },
                 orderBy: { startedAt: 'desc' }
             });
+        },
+        flow: async (_: any, { id }: { id: string }) => {
+            try {
+                const result = await read(GET_FLOW_QUERY, { flowId: id });
+                if (result.length === 0) return null;
+
+                const record = result[0];
+                const f = record.f.properties;
+                const steps = record.steps.filter((s: any) => s !== null); // Filter out nulls from optional match
+
+                return {
+                    id: f.id,
+                    name: f.name,
+                    description: f.description,
+                    flowType: f.flow_type,
+                    cognitiveLevel: f.cognitive_level,
+                    steps: steps
+                };
+            } catch (error) {
+                console.error("Error fetching flow:", error);
+                return null;
+            }
         }
     },
     Mutation: {
@@ -220,7 +342,132 @@ const resolvers = {
                     progress: 0
                 }
             });
-        }
+        },
+        createFlow: async (_: any, { input }: { input: any }) => {
+            const { orgSlug, name, description, flowType, cognitiveLevel, steps } = input;
+            const flowId = crypto.randomUUID();
+
+            try {
+                // 1. Create Flow Node
+                await write(CREATE_FLOW_QUERY, {
+                    orgSlug,
+                    flowId,
+                    name,
+                    description,
+                    flowType,
+                    cognitiveLevel
+                });
+
+                // 2. Create Steps
+                let previousStepId = null;
+
+                for (let i = 0; i < steps.length; i++) {
+                    const step = steps[i];
+                    const stepId = crypto.randomUUID();
+
+                    await write(CREATE_STEP_QUERY, {
+                        flowId,
+                        stepId,
+                        name: step.name,
+                        timeout: step.timeoutSeconds || 0,
+                        order: i
+                    });
+
+                    // Link to Capacity
+                    if (step.capacityId) {
+                        await write(LINK_CAPACITY_QUERY, { stepId, capId: step.capacityId });
+                    }
+
+                    // Link steps sequentially
+                    if (previousStepId) {
+                        await write(LINK_STEPS_QUERY, { prevId: previousStepId, currId: stepId });
+                    }
+
+                    previousStepId = stepId;
+                }
+
+                return {
+                    id: flowId,
+                    name,
+                    description,
+                    flowType,
+                    cognitiveLevel,
+                    steps: steps.map((s: any, i: number) => ({
+                        id: `step-${i}`,
+                        name: s.name,
+                        capacityId: s.capacityId,
+                        timeoutSeconds: s.timeoutSeconds
+                    }))
+                };
+
+            } catch (error) {
+                console.error("Error creating flow:", error);
+                throw new Error("Failed to create flow in Neo4j");
+            }
+        },
+        updateFlow: async (_: any, { id, input }: { id: string, input: any }) => {
+            const { name, description, flowType, cognitiveLevel, steps } = input;
+
+            try {
+                // 1. Update Flow Node properties
+                await write(UPDATE_FLOW_QUERY, {
+                    flowId: id,
+                    name,
+                    description,
+                    flowType,
+                    cognitiveLevel
+                });
+
+                // 2. Delete existing steps
+                await write(DELETE_FLOW_STEPS_QUERY, { flowId: id });
+
+                // 3. Re-create Steps
+                let previousStepId = null;
+
+                for (let i = 0; i < steps.length; i++) {
+                    const step = steps[i];
+                    const stepId = crypto.randomUUID();
+
+                    await write(CREATE_STEP_QUERY, {
+                        flowId: id,
+                        stepId,
+                        name: step.name,
+                        timeout: step.timeoutSeconds || 0,
+                        order: i
+                    });
+
+                    // Link to Capacity
+                    if (step.capacityId) {
+                        await write(LINK_CAPACITY_QUERY, { stepId, capId: step.capacityId });
+                    }
+
+                    // Link steps sequentially
+                    if (previousStepId) {
+                        await write(LINK_STEPS_QUERY, { prevId: previousStepId, currId: stepId });
+                    }
+
+                    previousStepId = stepId;
+                }
+
+                return {
+                    id,
+                    name,
+                    description,
+                    flowType,
+                    cognitiveLevel,
+                    steps: steps.map((s: any, i: number) => ({
+                        id: `step-${i}`,
+                        name: s.name,
+                        capacityId: s.capacityId,
+                        timeoutSeconds: s.timeoutSeconds
+                    }))
+                };
+
+            } catch (error) {
+                console.error("Error updating flow:", error);
+                throw new Error("Failed to update flow in Neo4j");
+            }
+        },
     },
     Organization: {
         health: async (parent: any) => {
@@ -239,21 +486,15 @@ const resolvers = {
             };
         },
         strategy: async (parent: any) => {
-            // Re-use the strategy logic or call the resolver
-            // For simplicity in this MVP, we'll just call the logic again or delegate
-            // But since we have the ID, we can just return null and let the client query 'strategy(orgId)'
-            // Or better, implement it here too for nested queries.
-
             const snapshot = await prisma.snapshot.findFirst({
                 where: { organizationId: parent.id },
                 orderBy: { recordedAt: 'desc' },
-                include: { hOrgScore: true }
+                include: { hOrgScore: { include: { dimensions: true } } }
             });
 
             if (!snapshot || !snapshot.hOrgScore) return null;
             const hOrg = snapshot.hOrgScore.value;
 
-            // Logic duplication for MVP speed - in real app extract to service
             let trajectory = 'SURVIVAL';
             let description = 'Modo Supervivencia: Riesgo inminente de colapso sistémico.';
             let focus = 'Estabilidad Operativa';
@@ -284,15 +525,11 @@ const resolvers = {
         },
         fabric: async (parent: any) => {
             try {
-                // Fetch all nodes and relationships
-                // In a real app, we would filter by organization ID (e.g. MATCH (o:Organization {id: $id})-... )
-                // For MVP, we assume the whole graph belongs to the org or we just show everything.
-
                 const query = `
-          MATCH (n)
-          OPTIONAL MATCH (n)-[r]->(m)
-          RETURN n, r, m
-        `;
+                    MATCH (n)
+                    OPTIONAL MATCH (n)-[r]->(m)
+                    RETURN n, r, m
+                `;
 
                 const result = await read(query);
 

@@ -35,3 +35,84 @@ export function useRecordAssessment() {
         },
     });
 }
+
+export function useCreateFlow() {
+    const queryClient = useQueryClient();
+
+    return useMutation({
+        mutationFn: async (input: any) => {
+            const query = `
+              mutation CreateFlow($input: FlowInput!) {
+                createFlow(input: $input) {
+                  id
+                  name
+                  flowType
+                  cognitiveLevel
+                  steps {
+                    id
+                    name
+                    capacityId
+                    timeoutSeconds
+                  }
+                }
+              }
+            `;
+            const data = await request(API_URL, query, { input });
+            return data.createFlow;
+        },
+        onSuccess: () => {
+            queryClient.invalidateQueries({ queryKey: ['organization'] });
+        },
+    });
+}
+
+export function useFlow(id?: string) {
+    return useQuery({
+        queryKey: ['flow', id],
+        queryFn: async () => {
+            if (!id) return null;
+            const query = `
+              query GetFlow($id: ID!) {
+                flow(id: $id) {
+                  id
+                  name
+                  description
+                  flowType
+                  cognitiveLevel
+                  steps {
+                    id
+                    name
+                    capacityId
+                    timeoutSeconds
+                  }
+                }
+              }
+            `;
+            const data = await request(API_URL, query, { id });
+            return data.flow;
+        },
+        enabled: !!id
+    });
+}
+
+export function useUpdateFlow() {
+    const queryClient = useQueryClient();
+
+    return useMutation({
+        mutationFn: async ({ id, input }: { id: string, input: any }) => {
+            const query = `
+              mutation UpdateFlow($id: ID!, $input: FlowInput!) {
+                updateFlow(id: $id, input: $input) {
+                  id
+                }
+              }
+            `;
+            const data = await request(API_URL, query, { id, input });
+            return data.updateFlow;
+        },
+        onSuccess: () => {
+            queryClient.invalidateQueries({ queryKey: ['organization'] });
+            queryClient.invalidateQueries({ queryKey: ['flow'] });
+        },
+    });
+}
