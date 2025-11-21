@@ -1,7 +1,7 @@
 'use client';
 
 import { useState, useEffect } from 'react';
-import { useCreateFlow, useFlow, useUpdateFlow } from '../dashboard/hooks';
+import { useCreateFlow, useFlow, useUpdateFlow, useCapacities, useDataAssets, useStrategicObjectives } from '../dashboard/hooks';
 
 interface FlowEditorProps {
     orgSlug: string;
@@ -19,11 +19,23 @@ export function FlowEditor({ orgSlug, flowId, onClose, onSuccess }: FlowEditorPr
     const [customer, setCustomer] = useState('');
     const [owner, setOwner] = useState('');
     const [criticality, setCriticality] = useState('MEDIUM');
-    const [steps, setSteps] = useState<{ name: string; capacityId: string; timeoutSeconds: number; inputs: string; outputs: string }[]>([
-        { name: 'Inicio', capacityId: '', timeoutSeconds: 0, inputs: '', outputs: '' }
+    const [steps, setSteps] = useState<{
+        name: string;
+        capacityId: string;
+        timeoutSeconds: number;
+        inputs: string;
+        outputs: string;
+        consumedAssetIds: string[];
+        producedAssetIds: string[];
+    }[]>([
+        { name: 'Inicio', capacityId: '', timeoutSeconds: 0, inputs: '', outputs: '', consumedAssetIds: [], producedAssetIds: [] }
     ]);
+    const [objectiveId, setObjectiveId] = useState('');
 
     const { data: flowData, isLoading: isLoadingFlow } = useFlow(flowId);
+    const { data: capacities, isLoading: isLoadingCapacities } = useCapacities(orgSlug);
+    const { data: dataAssets } = useDataAssets(orgSlug);
+    const { data: objectives } = useStrategicObjectives(orgSlug);
     const { mutate: createFlow, isPending: isCreating, error: createError } = useCreateFlow();
     const { mutate: updateFlow, isPending: isUpdating, error: updateError } = useUpdateFlow();
 
@@ -37,20 +49,23 @@ export function FlowEditor({ orgSlug, flowId, onClose, onSuccess }: FlowEditorPr
             setCustomer(flowData.customer || '');
             setOwner(flowData.owner || '');
             setCriticality(flowData.criticality || 'MEDIUM');
+            setObjectiveId(flowData.objectiveId || '');
             if (flowData.steps && flowData.steps.length > 0) {
                 setSteps(flowData.steps.map((s: any) => ({
                     name: s.name,
                     capacityId: s.capacityId || '',
                     timeoutSeconds: s.timeoutSeconds || 0,
                     inputs: s.inputs || '',
-                    outputs: s.outputs || ''
+                    outputs: s.outputs || '',
+                    consumedAssetIds: s.consumedAssetIds || [],
+                    producedAssetIds: s.producedAssetIds || []
                 })));
             }
         }
     }, [flowData]);
 
     const handleAddStep = () => {
-        setSteps([...steps, { name: '', capacityId: '', timeoutSeconds: 0, inputs: '', outputs: '' }]);
+        setSteps([...steps, { name: '', capacityId: '', timeoutSeconds: 0, inputs: '', outputs: '', consumedAssetIds: [], producedAssetIds: [] }]);
     };
 
     const handleRemoveStep = (index: number) => {
@@ -81,8 +96,11 @@ export function FlowEditor({ orgSlug, flowId, onClose, onSuccess }: FlowEditorPr
                 capacityId: s.capacityId || null,
                 timeoutSeconds: parseInt(s.timeoutSeconds as any) || 0,
                 inputs: s.inputs || null,
-                outputs: s.outputs || null
-            }))
+                outputs: s.outputs || null,
+                consumedAssetIds: s.consumedAssetIds,
+                producedAssetIds: s.producedAssetIds
+            })),
+            objectiveId: objectiveId || null
         };
 
         if (flowId) {
@@ -244,6 +262,22 @@ export function FlowEditor({ orgSlug, flowId, onClose, onSuccess }: FlowEditorPr
                                         <option value="CRITICAL">Crítica</option>
                                     </select>
                                 </div>
+                                <div>
+                                    <label className="block text-sm font-medium text-gray-400 mb-1">Alineación Estratégica</label>
+                                    <select
+                                        value={objectiveId}
+                                        onChange={(e) => setObjectiveId(e.target.value)}
+                                        className="w-full bg-surface border border-gray-700 rounded-lg px-4 py-2 text-white focus:outline-none focus:border-primary"
+                                    >
+                                        <option value="">Sin objetivo vinculado</option>
+                                        {objectives?.map((obj: any) => (
+                                            <option key={obj.id} value={obj.id}>
+                                                {obj.type}: {obj.description.substring(0, 60)}{obj.description.length > 60 ? '...' : ''}
+                                            </option>
+                                        ))}
+                                    </select>
+                                    <p className="text-xs text-gray-500 mt-1">Vincula el flujo a un objetivo estratégico (Invariant I3)</p>
+                                </div>
                             </div>
                         </div>
 
@@ -274,13 +308,18 @@ export function FlowEditor({ orgSlug, flowId, onClose, onSuccess }: FlowEditorPr
                                                 className="bg-surface border border-gray-700 rounded px-3 py-2 text-white text-sm focus:border-primary outline-none"
                                                 required
                                             />
-                                            <input
-                                                type="text"
+                                            <select
                                                 value={step.capacityId}
                                                 onChange={(e) => handleStepChange(index, 'capacityId', e.target.value)}
-                                                placeholder="Ejecutado por (Capacidad/Rol)"
-                                                className="bg-surface border border-gray-700 rounded px-3 py-2 text-white text-sm focus:border-primary outline-none"
-                                            />
+                                                className="bg-surface border border-gray-700 rounded px-3 py-2 text-white text-sm focus:border-primary outline-none appearance-none"
+                                            >
+                                                <option value="">Seleccionar Ejecutor...</option>
+                                                {capacities?.map((cap: any) => (
+                                                    <option key={cap.id} value={cap.id}>
+                                                        {cap.name} ({cap.type === 'Team' ? 'Equipo' : 'Persona'})
+                                                    </option>
+                                                ))}
+                                            </select>
                                             <input
                                                 type="number"
                                                 value={step.timeoutSeconds}

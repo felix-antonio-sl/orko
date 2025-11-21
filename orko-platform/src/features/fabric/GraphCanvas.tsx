@@ -41,10 +41,19 @@ export function GraphCanvas({ data, onNodeClick }: GraphCanvasProps) {
                     if (node.type === 'Person') return '#10b981'; // Green
                     if (node.type === 'ValueStream') return '#f59e0b'; // Yellow
                     if (node.type === 'FlowStep') return '#8b5cf6'; // Violet
+                    if (node.type === 'DataAsset') return '#a855f7'; // Purple
+                    if (node.type === 'StrategicObjective') return '#ef4444'; // Red
                     return '#6b7280'; // Gray
                 }}
                 nodeRelSize={6}
-                linkColor={() => '#ffffff30'}
+                linkColor={(link: any) => {
+                    if (link.type === 'PRODUCES') return '#a855f7'; // Purple
+                    if (link.type === 'CONSUMES') return '#d8b4fe'; // Light Purple
+                    if (link.type === 'MEMBER_OF') return '#3b82f6'; // Blue
+                    if (link.type === 'EXECUTED_BY') return '#f59e0b'; // Yellow
+                    if (link.type === 'CONTRIBUTES_TO') return '#ef4444'; // Red
+                    return '#ffffff30';
+                }}
                 onNodeClick={onNodeClick}
                 backgroundColor="#00000000" // Transparent
             />
