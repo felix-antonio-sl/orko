@@ -1,0 +1,1 @@
+/Users/felixsanhueza/fx_maquineando/asta-sigma-kore/ASTA-KORE fundamentos y manual operacional/guias tecnicas/implementaciones/marco_curacion_gestion_conocimiento_consumible_ia/guide_core_003_khm-master_sts.md

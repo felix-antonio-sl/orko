@@ -1,0 +1,1 @@
+/Users/felixsanhueza/fx_maquineando/asta-sigma-kore/ASTA-KORE fundamentos y manual operacional/guias tecnicas/implementaciones/marco_ingenieria_asistentes_ai_conversacionales_declarativos/guide_core_004_adp-master_sts.md
